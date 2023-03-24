@@ -1,5 +1,4 @@
 // import 'package:final_project/screens/search_result_page.dart';
-import 'package:final_project/codes%20to%20try/example.dart';
 import 'package:final_project/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

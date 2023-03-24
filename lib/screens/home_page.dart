@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
+//cards for containers
   Container containerCards() {
     return Container(
       padding: const EdgeInsets.only(left: 10),
@@ -374,7 +374,7 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-
+//drawer
   Drawer drawer() {
     return Drawer(
       elevation: 5,
