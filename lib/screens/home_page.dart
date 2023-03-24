@@ -1,26 +1,146 @@
+import 'package:animate_do/animate_do.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
+import '../models/app_data.dart';
+import 'base_model.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final PageController _pageController =
+      PageController(viewportFraction: 0.75, initialPage: 2);
+
+  late ScrollController _scrollController;
+  double offset = 0.0;
+  var _currentPage = 2.0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // _pageController = PageController(initialPage: 2);
+    _scrollController = ScrollController();
+    _scrollController.addListener(swapPageListener);
+    _pageController.addListener(() {
+      setState(() {
+        _currentPage = _pageController.page!;
+      });
+    });
+  }
+
+  void swapPageListener() {
+    offset = _scrollController.offset;
+    setState(() {
+      _pageController.hasClients;
+      if (offset > _scrollController.position.maxScrollExtent + 100) {
+        _pageController.animateToPage(1,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.bounceIn);
+      }
+      if (offset < _scrollController.position.minScrollExtent - 100) {
+        _pageController.animateToPage(0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.bounceInOut);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: appBar(),
       drawer: drawer(),
       body: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              "Top Trending",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+                child: Text(
+                  "Available for sell",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, left: 40),
+                child: Text(
+                  "View more",
+                  style: TextStyle(
+                    color: colorCurveSecondary,
+                    fontSize: 18,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          FadeInUp(
+            delay: const Duration(milliseconds: 550),
+            child: Container(
+              margin: const EdgeInsets.all(20),
+              width: size.width,
+              height: size.height * 0.45,
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: categories.length,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return GestureDetector(child: view(index, textTheme, size));
+                },
               ),
             ),
+          ),
+          DotsIndicator(
+            dotsCount: categories.length,
+            position: _currentPage,
+            decorator: const DotsDecorator(
+              color: Colors.grey, // Inactive color
+              activeColor: Colors.deepPurple,
+            ),
+          ),
+          Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                child: Text(
+                  "Recently Added",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, left: 60),
+                child: Text(
+                  "View more",
+                  style: TextStyle(
+                    color: colorCurveSecondary,
+                    fontSize: 18,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 250,
@@ -31,34 +151,31 @@ class HomePage extends StatelessWidget {
                   return containerCards();
                 }),
           ),
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              "Recently Added",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+          Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                child: Text(
+                  "Available for rent",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
-          ),
-          SizedBox(
-            height: 250,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return containerCards();
-                }),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              "Luxury",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, left: 60),
+                child: Text(
+                  "View more",
+                  style: TextStyle(
+                    color: colorCurveSecondary,
+                    fontSize: 18,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
           SizedBox(
             height: 250,
@@ -110,11 +227,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             textWidget(
-                color: colorCurve,
-                size: 18,
-                title: "Noah Real Estate",
-                weight: FontWeight.bold),
-            textWidget(
               color: textPrimaryDarkColor,
               size: 15,
               title: "Addis Ababa",
@@ -153,13 +265,94 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  /// Page View
+  Widget view(int index, TextTheme theme, Size size) {
+    return AnimatedBuilder(
+        animation: _pageController,
+        builder: (context, child) {
+          double value = 0.0;
+          if (_pageController.position.haveDimensions) {
+            value = index.toDouble() - (_pageController.page ?? 0);
+            value = (value * 0.04).clamp(-2, 2);
+          }
+          return Transform.rotate(
+            angle: 3.14 * value,
+            child: card(mainList[index], theme, size),
+          );
+        });
+  }
+
+  /// Page view Cards
+  Widget card(BaseModel data, TextTheme theme, Size size) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 0.0),
+      child: Column(
+        children: [
+          Hero(
+            tag: data.id,
+            child: Container(
+              width: 270,
+              height: size.height * 0.35,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(13),
+                image: DecorationImage(
+                  image: AssetImage(data.imageUrl),
+                  fit: BoxFit.cover,
+                ),
+                boxShadow: const [
+                  BoxShadow(
+                      offset: Offset(0, 4),
+                      blurRadius: 4,
+                      color: Color.fromARGB(61, 0, 0, 0))
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 18.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.location_on_outlined,
+                  color: Colors.grey,
+                ),
+                textWidget(
+                    title: "Addis Ababa",
+                    color: Colors.grey.shade700,
+                    size: 15,
+                    weight: FontWeight.normal),
+              ],
+            ),
+          ),
+          textWidget(
+              title: "Birr 400,000,000",
+              color: colorCurve,
+              size: 18,
+              weight: FontWeight.bold),
+        ],
+      ),
+    );
+  }
+
   AppBar appBar() {
     return AppBar(
-      title: const Text(
-        "Topia Rentals ",
-        style: TextStyle(
-            fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white),
-        textAlign: TextAlign.center,
+      title: Column(
+        children: [
+          const Text(
+            "Topia Rentals ",
+            style: TextStyle(
+                fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+            child: Text(
+              "Hello 👋, Bethelhem...",
+              style: TextStyle(fontSize: 18, color: Colors.grey.shade300),
+            ),
+          ),
+        ],
       ),
       toolbarHeight: 100,
       toolbarOpacity: 0.8,
@@ -229,7 +422,7 @@ class HomePage extends StatelessWidget {
                 ],
               )),
           ListTile(
-            leading: const Icon(Icons.shopping_cart, color: Colors.green),
+            leading: const Icon(Icons.search, color: Colors.blue),
             title: const Text(
               ' Search property',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -255,12 +448,8 @@ class HomePage extends StatelessWidget {
               // Navigator.pop(context);
             },
           ),
-          const Divider(
-            height: 5,
-            color: Colors.green,
-          ),
           ListTile(
-            leading: const Icon(Icons.person, color: Colors.blue),
+            leading: const Icon(Icons.groups, color: Colors.orange),
             title: const Text(
               ' Contact Users ',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -275,10 +464,10 @@ class HomePage extends StatelessWidget {
           ),
           const Divider(
             height: 5,
-            color: Colors.green,
+            color: Colors.deepPurple,
           ),
           ListTile(
-            leading: const Icon(Icons.groups, color: Colors.orange),
+            leading: const Icon(Icons.code, color: Colors.blueGrey),
             title: const Text(
               ' About Developers ',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -286,17 +475,6 @@ class HomePage extends StatelessWidget {
             onTap: () {
               // Navigator.push(context,
               //     MaterialPageRoute(builder: ((context) => const AboutDevelopers())));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.question_mark, color: Colors.deepPurple),
-            title: const Text(
-              ' About Company ',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            onTap: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: ((context) => const About())));
             },
           ),
           ListTile(

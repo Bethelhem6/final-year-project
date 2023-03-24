@@ -28,9 +28,11 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  animate_do: ^3.0.2
   connectivity: ^3.0.6
   cupertino_icons: ^1.0.2
   custom_clippers: ^2.0.0
+  dots_indicator: ^2.1.0
   flutter:
     sdk: flutter
   google_fonts: ^4.0.3
