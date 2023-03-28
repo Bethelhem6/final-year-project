@@ -3,9 +3,9 @@ import 'package:final_project/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../models/app_data.dart';
+import '../models/base_model.dart';
 
 
-import '../screens/base_model.dart';
 
 
 class Home extends StatefulWidget {

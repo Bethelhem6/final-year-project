@@ -1,5 +1,5 @@
 
-import '../screens/base_model.dart';
+import 'base_model.dart';
 import 'categories_model.dart';
 
 List<CategoriesModel> categories = [

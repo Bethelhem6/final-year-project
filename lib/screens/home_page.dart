@@ -1,10 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:final_project/screens/search_result_page.dart';
 import 'package:flutter/material.dart';
 
+import '../models/base_model.dart';
 import '../utils/colors.dart';
 import '../models/app_data.dart';
-import 'base_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -190,6 +191,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
 //cards for containers
   Container containerCards() {
     return Container(
@@ -365,15 +367,25 @@ class _HomePageState extends State<HomePage> {
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 18.0, left: 10),
-          child: Icon(
-            Icons.search,
-            color: textPrimaryLightColor,
-            size: 33,
+          child: IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchResult(),
+                  ));
+            },
+            icon: Icon(
+              Icons.search,
+              color: textPrimaryLightColor,
+              size: 33,
+            ),
           ),
         )
       ],
     );
   }
+
 //drawer
   Drawer drawer() {
     return Drawer(
