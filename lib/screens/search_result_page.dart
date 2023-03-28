@@ -114,7 +114,7 @@ class SearchResult extends StatelessWidget {
                     topRight: Radius.circular(20),
                   ),
                   image: DecorationImage(
-                    image: AssetImage("assets/house1.jpeg"),
+                    image: AssetImage("assets/house1.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),

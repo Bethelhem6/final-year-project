@@ -69,24 +69,25 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
                 child: Text(
                   "Available for sell",
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10.0, left: 40),
+                padding: const EdgeInsets.only(top: 10.0, right: 20),
                 child: Text(
                   "View more",
                   style: TextStyle(
                     color: colorCurveSecondary,
-                    fontSize: 18,
+                    fontSize: 16,
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -118,6 +119,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -125,18 +127,18 @@ class _HomePageState extends State<HomePage> {
                   "Recently Added",
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10.0, left: 60),
+                padding: const EdgeInsets.only(top: 10.0, right: 20),
                 child: Text(
                   "View more",
                   style: TextStyle(
                     color: colorCurveSecondary,
-                    fontSize: 18,
+                    fontSize: 16,
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -153,6 +155,7 @@ class _HomePageState extends State<HomePage> {
                 }),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -160,19 +163,24 @@ class _HomePageState extends State<HomePage> {
                   "Available for rent",
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0, left: 60),
-                child: Text(
-                  "View more",
-                  style: TextStyle(
-                    color: colorCurveSecondary,
-                    fontSize: 18,
-                    decoration: TextDecoration.underline,
+              GestureDetector(
+                onTap: () {
+                  
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0, right: 20),
+                  child: Text(
+                    "View more",
+                    style: TextStyle(
+                      color: colorCurveSecondary,
+                      fontSize: 16,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
               ),
@@ -223,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                   topRight: Radius.circular(20),
                 ),
                 image: DecorationImage(
-                  image: AssetImage("assets/house1.jpeg"),
+                  image: AssetImage("assets/house1.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),
