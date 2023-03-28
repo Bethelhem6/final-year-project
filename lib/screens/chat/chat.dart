@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'screens.dart';
+import '../screens.dart';
 
 class ConversationList extends StatefulWidget{
   String name;

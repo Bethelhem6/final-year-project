@@ -1,8 +1,7 @@
-export '../screens/search_result_page.dart';
-export '../screens/home_page.dart';
-export '../screens/forget_pasword.dart';
-export '../screens/login.dart';
-export '../screens/chat.dart'
-;export '../screens//chat_detail.dart';
-export '../screens/signup.dart';
-
+export 'search/search_result_page.dart';
+export 'home/home_page.dart';
+export 'auth_screen/forget_pasword.dart';
+export 'auth_screen/login.dart';
+export 'chat/chat.dart';
+export 'chat/chat_detail.dart';
+export 'auth_screen/signup.dart';

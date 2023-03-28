@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/widgets.dart';
-import 'screens.dart';
+import '../../../widgets/widgets.dart';
+import '../screens.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -166,8 +166,16 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   height: 15,
                 ),
-                const Textbutton(
-                  text: 'Login',
+                GestureDetector(
+                  onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+                    },
+                  child: const Textbutton(
+                    text: 'Login',
+                  ),
                 ),
                 const SizedBox(
                   height: 10,

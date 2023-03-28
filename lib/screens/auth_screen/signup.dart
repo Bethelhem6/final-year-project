@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/widgets.dart';
-import 'screens.dart';
+import '../../../widgets/widgets.dart';
+import '../screens.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -32,7 +32,7 @@ class _SignupState extends State<Signup> {
             backgroundColor: Colors.transparent,
             automaticallyImplyLeading: false,
             elevation: 0.0,
-            shadowColor: Color.fromARGB(255, 188, 176, 209),
+            shadowColor: const Color.fromARGB(255, 188, 176, 209),
             flexibleSpace: ClipPath(
               clipper: Customeshape(),
               child: Container(
@@ -260,8 +260,16 @@ class _SignupState extends State<Signup> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Textbutton(
-                    text: 'Sign Up',
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+                    },
+                    child: const Textbutton(
+                      text: 'Sign Up',
+                    ),
                   ),
                   const SizedBox(
                     height: 10,

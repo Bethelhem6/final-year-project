@@ -1,11 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:final_project/screens/search_result_page.dart';
+import 'package:final_project/models/chat_user_model.dart';
+import 'package:final_project/screens/chat/chat.dart';
+import 'package:final_project/screens/search/search_result_page.dart';
 import 'package:flutter/material.dart';
 
-import '../models/base_model.dart';
-import '../utils/colors.dart';
-import '../models/app_data.dart';
+import '../../models/base_model.dart';
+import '../../utils/colors.dart';
+import '../../models/app_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -169,9 +171,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  
-                },
+                onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10.0, right: 20),
                   child: Text(
@@ -347,6 +347,7 @@ class _HomePageState extends State<HomePage> {
 
   AppBar appBar() {
     return AppBar(
+      backgroundColor: Colors.deepPurple[400],
       title: Column(
         children: [
           const Text(
@@ -403,7 +404,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           DrawerHeader(
               decoration: BoxDecoration(
-                color: colorCurveSecondary,
+                color: Colors.deepPurple.shade400,
               ),
               child: Column(
                 children: [
@@ -436,7 +437,8 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       overflow: TextOverflow.ellipsis,
                       fontSize: 16,
-                      color: Colors.grey[400],
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey[300],
                     ),
                   ),
                 ],
@@ -445,7 +447,7 @@ class _HomePageState extends State<HomePage> {
             leading: const Icon(Icons.search, color: Colors.blue),
             title: const Text(
               ' Search property',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
               // Navigator.push(
@@ -458,7 +460,7 @@ class _HomePageState extends State<HomePage> {
             leading: const Icon(Icons.favorite, color: Colors.red),
             title: const Text(
               ' My Favorites ',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
               // Navigator.push(
@@ -472,14 +474,14 @@ class _HomePageState extends State<HomePage> {
             leading: const Icon(Icons.groups, color: Colors.orange),
             title: const Text(
               ' Contact Users ',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
               // Navigator.push(
               //     context,
               //     MaterialPageRoute(
-              //         builder: ((context) => const UserScreen())));
-              // Navigator.pop(context);
+              //         builder: ((context) =>  ConversationList())));
+              // // Navigator.pop(context);
             },
           ),
           const Divider(
@@ -490,7 +492,7 @@ class _HomePageState extends State<HomePage> {
             leading: const Icon(Icons.code, color: Colors.blueGrey),
             title: const Text(
               ' About Developers ',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
               // Navigator.push(context,
@@ -501,7 +503,7 @@ class _HomePageState extends State<HomePage> {
             leading: Icon(Icons.logout, color: Colors.red.shade700),
             title: const Text(
               'LogOut',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () async {
               // await FirebaseAuth.instance.signOut();

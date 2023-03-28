@@ -17,7 +17,7 @@ class SearchResult extends StatelessWidget {
                   height: 160,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: colorCurveSecondary,
+                    color: Colors.deepPurple.shade400,
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(90),
                       bottomRight: Radius.circular(90),
