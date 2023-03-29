@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'AR based properties sell and rent',
+      title: 'AR based Properties Sell and Rent',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
         // textTheme: TextTheme(
