@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:final_project/models/chat_user_model.dart';
 import 'package:final_project/screens/chat/chat.dart';
 import 'package:final_project/screens/search/search_result_page.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   "View more",
                   style: TextStyle(
-                    color: colorCurveSecondary,
+                    color: buttonColor,
                     fontSize: 16,
                     decoration: TextDecoration.underline,
                   ),
@@ -139,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   "View more",
                   style: TextStyle(
-                    color: colorCurveSecondary,
+                    color: buttonColor,
                     fontSize: 16,
                     decoration: TextDecoration.underline,
                   ),
@@ -177,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     "View more",
                     style: TextStyle(
-                      color: colorCurveSecondary,
+                      color: buttonColor,
                       fontSize: 16,
                       decoration: TextDecoration.underline,
                     ),
@@ -242,7 +241,7 @@ class _HomePageState extends State<HomePage> {
               title: "Addis Ababa",
             ),
             textWidget(
-              color: colorCurve,
+              color: appbarColor,
               size: 17,
               title: "Birr 2,0000,000,000",
               weight: FontWeight.bold,
@@ -337,7 +336,7 @@ class _HomePageState extends State<HomePage> {
           ),
           textWidget(
               title: "Birr 400,000,000",
-              color: colorCurve,
+              color: appbarColor,
               size: 18,
               weight: FontWeight.bold),
         ],
@@ -347,7 +346,7 @@ class _HomePageState extends State<HomePage> {
 
   AppBar appBar() {
     return AppBar(
-      backgroundColor: Colors.deepPurple[400],
+      backgroundColor: appbarColor,
       title: Column(
         children: [
           const Text(
@@ -477,11 +476,11 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: ((context) =>  ConversationList())));
-              // // Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) =>  ChatPage())));
+              // Navigator.pop(context);
             },
           ),
           const Divider(
