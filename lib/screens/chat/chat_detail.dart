@@ -5,6 +5,8 @@ import '../../models/chat_message_model.dart';
 
 
 class ChatDetailPage extends StatefulWidget{
+  const ChatDetailPage({super.key});
+
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
@@ -48,7 +50,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const Text("betty",style: TextStyle( fontSize: 16 ,fontWeight: FontWeight.w600),),
+                      const Text("Betty",style: TextStyle( fontSize: 16 ,fontWeight: FontWeight.w600),),
                       const SizedBox(height: 6,),
                       Text("Online",style: TextStyle(color: Colors.grey.shade600, fontSize: 13),),
                     ],
