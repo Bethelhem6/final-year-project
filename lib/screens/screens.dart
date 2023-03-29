@@ -5,3 +5,4 @@ export 'auth_screen/login.dart';
 export 'chat/chat.dart';
 export 'chat/chat_detail.dart';
 export 'auth_screen/signup.dart';
+export '../screens/home/detail_page.dart';

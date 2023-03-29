@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_project/screens/chat/chat.dart';
+import 'package:final_project/screens/home/detail_page.dart';
 import 'package:final_project/screens/search/search_result_page.dart';
 import 'package:flutter/material.dart';
 
@@ -203,53 +204,59 @@ class _HomePageState extends State<HomePage> {
   Container containerCards() {
     return Container(
       padding: const EdgeInsets.only(left: 10),
-      child: Container(
-        // padding: const EdgeInsets.only(left: 20),
-        margin: const EdgeInsets.only(left: 10, bottom: 10),
-        decoration: BoxDecoration(
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(0.0, 1.0), //(x,y)
-              blurRadius: 6.0,
-            ),
-          ],
-          color: textPrimaryLightColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        height: 200,
-        width: 250,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 120,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                image: DecorationImage(
-                  image: AssetImage("assets/house1.jpg"),
-                  fit: BoxFit.cover,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const DetailPage()),);
+        },
+        child: Container(
+          // padding: const EdgeInsets.only(left: 20),
+          margin: const EdgeInsets.only(left: 10, bottom: 10),
+          decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0.0, 1.0), //(x,y)
+                blurRadius: 6.0,
+              ),
+            ],
+            color: textPrimaryLightColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          height: 200,
+          width: 250,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 120,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  image: DecorationImage(
+                    image: AssetImage("assets/house1.jpg"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            textWidget(
-              color: textPrimaryDarkColor,
-              size: 15,
-              title: "Addis Ababa",
-            ),
-            textWidget(
-              color: appbarColor,
-              size: 17,
-              title: "Birr 2,0000,000,000",
-              weight: FontWeight.bold,
-            ),
-            const SizedBox(
-              height: 10,
-            )
-          ],
+              textWidget(
+                color: textPrimaryDarkColor,
+                size: 15,
+                title: "Addis Ababa",
+              ),
+              textWidget(
+                color: appbarColor,
+                size: 17,
+                title: "Birr 2,0000,000,000",
+                weight: FontWeight.bold,
+              ),
+              const SizedBox(
+                height: 10,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -380,7 +387,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SearchResult(),
+                    builder: (context) => const SearchResult(),
                   ));
             },
             icon: Icon(
@@ -476,10 +483,8 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) =>  ChatPage())));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => ChatPage())));
               // Navigator.pop(context);
             },
           ),
