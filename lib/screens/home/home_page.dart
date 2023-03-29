@@ -300,53 +300,58 @@ class _HomePageState extends State<HomePage> {
 
   /// Page view Cards
   Widget card(BaseModel data, TextTheme theme, Size size) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 0.0),
-      child: Column(
-        children: [
-          Hero(
-            tag: data.id,
-            child: Container(
-              width: 270,
-              height: size.height * 0.35,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(13),
-                image: DecorationImage(
-                  image: AssetImage(data.imageUrl),
-                  fit: BoxFit.cover,
+    return GestureDetector(
+     onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const DetailPage()),);},
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 0.0),
+        child: Column(
+          children: [
+            Hero(
+              tag: data.id,
+              child: Container(
+                width: 270,
+                height: size.height * 0.35,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(13),
+                  image: DecorationImage(
+                    image: AssetImage(data.imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                        offset: Offset(0, 4),
+                        blurRadius: 4,
+                        color: Color.fromARGB(61, 0, 0, 0))
+                  ],
                 ),
-                boxShadow: const [
-                  BoxShadow(
-                      offset: Offset(0, 4),
-                      blurRadius: 4,
-                      color: Color.fromARGB(61, 0, 0, 0))
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.location_on_outlined,
+                    color: Colors.grey,
+                  ),
+                  textWidget(
+                      title: "Addis Ababa",
+                      color: Colors.grey.shade700,
+                      size: 15,
+                      weight: FontWeight.normal),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 18.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.grey,
-                ),
-                textWidget(
-                    title: "Addis Ababa",
-                    color: Colors.grey.shade700,
-                    size: 15,
-                    weight: FontWeight.normal),
-              ],
-            ),
-          ),
-          textWidget(
-              title: "Birr 400,000,000",
-              color: appbarColor,
-              size: 18,
-              weight: FontWeight.bold),
-        ],
+            textWidget(
+                title: "Birr 400,000,000",
+                color: appbarColor,
+                size: 18,
+                weight: FontWeight.bold),
+          ],
+        ),
       ),
     );
   }
