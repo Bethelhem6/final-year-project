@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import '../../models/base_model.dart';
 import '../../utils/colors.dart';
 import '../../models/app_data.dart';
-import '../auth_screens/login.dart';
+import '../auth_screen/login.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
