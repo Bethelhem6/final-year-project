@@ -1,6 +1,5 @@
 // import 'package:final_project/screens/search_result_page.dart';
-// import 'package:final_project/screens/screens.dart';
-import 'package:final_project/screens/screens.dart';
+import 'package:final_project/screens/auth/auth_screen.dart';
 import 'package:final_project/screens/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

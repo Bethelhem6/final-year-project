@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:final_project/models/chat_user_model.dart';
 import 'package:final_project/screens/chat/chat.dart';
+import 'package:final_project/screens/home/detail_page.dart';
 import 'package:final_project/screens/search/search_result_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   "View more",
                   style: TextStyle(
-                    color: colorCurveSecondary,
+                    color: buttonColor,
                     fontSize: 16,
                     decoration: TextDecoration.underline,
                   ),
@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   "View more",
                   style: TextStyle(
-                    color: colorCurveSecondary,
+                    color: buttonColor,
                     fontSize: 16,
                     decoration: TextDecoration.underline,
                   ),
@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     "View more",
                     style: TextStyle(
-                      color: colorCurveSecondary,
+                      color: buttonColor,
                       fontSize: 16,
                       decoration: TextDecoration.underline,
                     ),
@@ -212,53 +212,59 @@ class _HomePageState extends State<HomePage> {
   Container containerCards() {
     return Container(
       padding: const EdgeInsets.only(left: 10),
-      child: Container(
-        // padding: const EdgeInsets.only(left: 20),
-        margin: const EdgeInsets.only(left: 10, bottom: 10),
-        decoration: BoxDecoration(
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(0.0, 1.0), //(x,y)
-              blurRadius: 6.0,
-            ),
-          ],
-          color: textPrimaryLightColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        height: 200,
-        width: 250,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 120,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                image: DecorationImage(
-                  image: AssetImage("assets/house1.jpg"),
-                  fit: BoxFit.cover,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const DetailPage()),);
+        },
+        child: Container(
+          // padding: const EdgeInsets.only(left: 20),
+          margin: const EdgeInsets.only(left: 10, bottom: 10),
+          decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0.0, 1.0), //(x,y)
+                blurRadius: 6.0,
+              ),
+            ],
+            color: textPrimaryLightColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          height: 200,
+          width: 250,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 120,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  image: DecorationImage(
+                    image: AssetImage("assets/house1.jpg"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            textWidget(
-              color: textPrimaryDarkColor,
-              size: 15,
-              title: "Addis Ababa",
-            ),
-            textWidget(
-              color: colorCurve,
-              size: 17,
-              title: "Birr 2,0000,000,000",
-              weight: FontWeight.bold,
-            ),
-            const SizedBox(
-              height: 10,
-            )
-          ],
+              textWidget(
+                color: textPrimaryDarkColor,
+                size: 15,
+                title: "Addis Ababa",
+              ),
+              textWidget(
+                color: appbarColor,
+                size: 17,
+                title: "Birr 2,0000,000,000",
+                weight: FontWeight.bold,
+              ),
+              const SizedBox(
+                height: 10,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -302,53 +308,58 @@ class _HomePageState extends State<HomePage> {
 
   /// Page view Cards
   Widget card(BaseModel data, TextTheme theme, Size size) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 0.0),
-      child: Column(
-        children: [
-          Hero(
-            tag: data.id,
-            child: Container(
-              width: 270,
-              height: size.height * 0.35,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(13),
-                image: DecorationImage(
-                  image: AssetImage(data.imageUrl),
-                  fit: BoxFit.cover,
+    return GestureDetector(
+     onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const DetailPage()),);},
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 0.0),
+        child: Column(
+          children: [
+            Hero(
+              tag: data.id,
+              child: Container(
+                width: 270,
+                height: size.height * 0.35,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(13),
+                  image: DecorationImage(
+                    image: AssetImage(data.imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                        offset: Offset(0, 4),
+                        blurRadius: 4,
+                        color: Color.fromARGB(61, 0, 0, 0))
+                  ],
                 ),
-                boxShadow: const [
-                  BoxShadow(
-                      offset: Offset(0, 4),
-                      blurRadius: 4,
-                      color: Color.fromARGB(61, 0, 0, 0))
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.location_on_outlined,
+                    color: Colors.grey,
+                  ),
+                  textWidget(
+                      title: "Addis Ababa",
+                      color: Colors.grey.shade700,
+                      size: 15,
+                      weight: FontWeight.normal),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 18.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.grey,
-                ),
-                textWidget(
-                    title: "Addis Ababa",
-                    color: Colors.grey.shade700,
-                    size: 15,
-                    weight: FontWeight.normal),
-              ],
-            ),
-          ),
-          textWidget(
-              title: "Birr 400,000,000",
-              color: colorCurve,
-              size: 18,
-              weight: FontWeight.bold),
-        ],
+            textWidget(
+                title: "Birr 400,000,000",
+                color: appbarColor,
+                size: 18,
+                weight: FontWeight.bold),
+          ],
+        ),
       ),
     );
   }
@@ -356,7 +367,7 @@ class _HomePageState extends State<HomePage> {
   AppBar appBar() {
     final user = FirebaseAuth.instance.currentUser!;
     return AppBar(
-      backgroundColor: Colors.deepPurple[400],
+      backgroundColor: appbarColor,
       title: Column(
         children: [
           const Text(
@@ -390,7 +401,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SearchResult(),
+                    builder: (context) => const SearchResult(),
                   ));
             },
             icon: Icon(
@@ -486,11 +497,9 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: ((context) =>  ConversationList())));
-              // // Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => ChatPage())));
+              // Navigator.pop(context);
             },
           ),
           const Divider(

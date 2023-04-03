@@ -52,7 +52,7 @@ class SearchResult extends StatelessWidget {
                           ),
                           AppBar(
                             backgroundColor: Colors.white,
-                            leading: Icon(Icons.search, color: colorCurve),
+                            leading: Icon(Icons.search, color: buttonColor),
                             primary: false,
                             title: const TextField(
                                 decoration: InputDecoration(

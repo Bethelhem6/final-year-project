@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:final_project/screens/screens.dart';
+import 'package:final_project/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor:appbarColor,
           body: Padding(
               padding: const EdgeInsets.all(52.0),
               child: Column(

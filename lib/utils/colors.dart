@@ -1,8 +1,7 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
-Color colorCurve = Colors.deepPurple;
-Color? colorCurveSecondary =
+Color appbarColor = Colors.deepPurple.shade400;
+Color? buttonColor =
     Colors.deepPurple; //Color.fromRGBO(97, 10, 155, 0.6);
 Color backgroundColor = Colors.grey.shade200;
 Color textPrimaryColor = Colors.black87;
