@@ -29,21 +29,34 @@ class Textfield extends StatelessWidget {
   final double iconSize;
   final double textSize;
   final Color iconColor;
+  final  controller;
+  final keyboardType;
+ 
 
-  const Textfield({
+  Textfield({
     Key? key,
     required this.name,
     required this.icon,
+    this.controller,
+    this.keyboardType,
+    
     this.iconSize = 25,
     this.textSize = 15,
     this.iconColor = Colors.deepPurple,
   }) : super(key: key);
+
+  
+  final textfield = TextEditingController();
+  void clearText() {
+    textfield.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.white),
@@ -65,6 +78,73 @@ class Textfield extends StatelessWidget {
   }
 }
 
+class Emailfield extends StatefulWidget {
+  final String name;
+  final IconData icon;
+  final double iconSize;
+  final double textSize;
+  final Color iconColor;
+
+  const Emailfield({
+    Key? key,
+    required this.name,
+    required this.icon,
+    this.iconSize = 25,
+    this.textSize = 15,
+    this.iconColor = Colors.deepPurple,
+  }) : super(key: key);
+
+  @override
+  State<Emailfield> createState() => _EmailfieldState();
+}
+
+class _EmailfieldState extends State<Emailfield> {
+  final textfield = TextEditingController();
+  final _emailController = TextEditingController();
+
+  void clearText() {
+    textfield.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: TextField(
+        controller: _emailController,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(18)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.deepPurple),
+              borderRadius: BorderRadius.circular(18)),
+          prefixIcon: Icon(
+            widget.icon,
+            size: widget.iconSize,
+            color: widget.iconColor,
+          ),
+          suffixIcon: GestureDetector(
+            onTap: () {
+              clearText();
+            },
+            child: Icon(
+              Icons.clear,
+              size: widget.iconSize,
+              color: Colors.grey,
+            ),
+          ),
+          hintText: widget.name,
+          fillColor: Colors.grey[200],
+          filled: true,
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+        ),
+      ),
+    );
+  }
+}
+
 AppBar customeAppBar({required Text title}) {
   return AppBar(
     title: title,
@@ -79,14 +159,20 @@ AppBar customeAppBar({required Text title}) {
   );
 }
 
-class Textbutton extends StatelessWidget {
+class Textbutton extends StatefulWidget {
   final String text;
-  
-   const Textbutton({
+
+  const Textbutton({
     Key? key,
     required this.text,
   }) : super(key: key);
 
+  @override
+  State<Textbutton> createState() => _TextbuttonState();
+}
+
+class _TextbuttonState extends State<Textbutton> {
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -98,116 +184,10 @@ class Textbutton extends StatelessWidget {
             color: Colors.deepPurple, borderRadius: BorderRadius.circular(15)),
         child: Center(
             child: Text(
-          text,
+          widget.text,
           style: const TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
         )),
-      ),
-    );
-  }
-}
-
-class Passwordfield extends StatefulWidget {
-  final String pname;
-  final IconData picon;
-
-  final double piconSize;
-  final double ptextSize;
-  final Color piconColor;
-
-  const Passwordfield({
-    Key? key,
-    required this.pname,
-    required this.picon,
-    this.piconSize = 25,
-    this.ptextSize = 15,
-    this.piconColor = Colors.deepPurple,
-  }) : super(key: key);
-
-  @override
-  State<Passwordfield> createState() => _PasswordfieldState();
-}
-
-class _PasswordfieldState extends State<Passwordfield> {
-  bool obscureText = true;
-  bool _isVisible = false;
-  String _password = '';
-
-  get iconColor => null;
-
-  get iconSize => null;
-
-  IconData? get picon => null;
-
-  get name => null;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: TextField(
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(18),
-              borderSide: const BorderSide(color: Colors.white),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(18),
-              borderSide: const BorderSide(color: Colors.deepPurple),
-            ),
-            prefixIcon: Icon(
-              picon,
-              size: iconSize,
-              color: iconColor,
-            ),
-            hintText: name,
-            fillColor: Colors.grey[200],
-            filled: true,
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-            suffixIcon: _isVisible
-                ? GestureDetector(
-                    child: obscureText
-                        ? Container(
-                            width: 25,
-                            height: 25,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            alignment: Alignment.center,
-                            child: const Icon(
-                              Icons.visibility,
-                              color: Colors.deepPurple,
-                            ),
-                          )
-                        : Container(
-                            width: 25,
-                            height: 25,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            alignment: Alignment.center,
-                            child: const Icon(
-                              Icons.visibility_off,
-                              color: Colors.deepPurple,
-                            ),
-                          ),
-                    onTap: () {
-                      setState(() {
-                        obscureText = !obscureText;
-                      });
-                    },
-                  )
-                : null),
-        obscureText: _isVisible ? obscureText : true,
-        onChanged: (enteredPassword) {
-          _password = enteredPassword;
-          if (enteredPassword.isEmpty) {
-            setState(() {
-              _isVisible = false;
-            });
-          } else {
-            if (!_isVisible) {
-              setState(() {
-                _isVisible = !_isVisible;
-              });
-            }
-          }
-        },
       ),
     );
   }

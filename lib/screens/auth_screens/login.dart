@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/widgets.dart';
@@ -13,7 +14,57 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool obscureText = true;
   bool _isVisible = false;
+
   String _password = '';
+  String _email = '';
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future signIn() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      // Navigator.of(context).pop();
+    } on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
+      showErrorMessage(e.code);
+    }
+    Navigator.of(context).pop();
+  }
+
+  void showErrorMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Color.fromARGB(255, 192, 175, 219),
+          title: Text(
+            message,
+            style: const TextStyle(color: Colors.white),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,7 +79,7 @@ class _LoginState extends State<Login> {
               child: Container(
                 height: 360,
                 width: MediaQuery.of(context).size.width,
-                color: Color.fromARGB(255, 200, 185, 224),
+                color: const Color.fromARGB(255, 200, 185, 224),
               ),
             ),
             actions: <Widget>[
@@ -64,9 +115,31 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   height: 60,
                 ),
-                const Textfield(
-                  icon: Icons.email,
-                  name: "E-mail",
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: TextField(
+                    // onChanged: (val){ _email= val;},
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(18)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(18)),
+                      prefixIcon: const Icon(
+                        Icons.email,
+                        size: 25,
+                        color: Colors.deepPurple,
+                      ),
+                      hintText: "E-mail",
+                      fillColor: Colors.grey[200],
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -74,6 +147,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextField(
+                    controller: _passwordController,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(18),
@@ -138,6 +212,7 @@ class _LoginState extends State<Login> {
                           });
                         }
                       }
+                      // enteredPassword= _password;
                     },
                   ),
                 ),
@@ -167,12 +242,11 @@ class _LoginState extends State<Login> {
                   height: 15,
                 ),
                 GestureDetector(
-                  onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()));
-                    },
+                  onTap: signIn,
+                  // () async { 
+                  // print(_email);
+                  // print(_password);
+                  // },
                   child: const Textbutton(
                     text: 'Login',
                   ),

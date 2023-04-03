@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/widgets.dart';
@@ -11,17 +13,95 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  // final _emailController = TextEditingController();
-  // final _passwordController = TextEditingController();
-  // final _confirmPasswordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _lastnameController = TextEditingController();
+  final _firstnameController = TextEditingController();
+  final _phonenumberController = TextEditingController();
 
   bool obscureText = true;
   bool _encryptPassword = true;
   bool _isVisible = false;
   bool showEye = false;
+  final bool _isLoading = false;
+
   String _password = '';
 
-  signUp() {}
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _firstnameController.dispose();
+    _lastnameController.dispose();
+    _phonenumberController.dispose();
+    super.dispose();
+  }
+
+  Future signUp() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    try {
+      if (passwordConfirmed()) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        // Navigator.of(context).pop();
+      }
+    } on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
+      showErrorMessage(e.code);
+    }
+    userDetails(
+      _firstnameController.text.trim(),
+      _lastnameController.text.trim(),
+      int.parse(_phonenumberController.text.trim()),
+      _emailController.text.trim(),
+    );
+    Navigator.of(context);
+  }
+
+  Future userDetails(
+      String firstname, String lastname, int phonenumber, String email) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'firstname': firstname,
+      'lastname': lastname,
+      'phonenumber': phonenumber,
+      'email': email,
+    });
+  }
+
+  bool passwordConfirmed() {
+    if (_passwordController.text.trim() ==
+        _confirmPasswordController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void showErrorMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 14, 0, 37),
+          title: Text(
+            message,
+            style: const TextStyle(color: Colors.white),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,30 +157,54 @@ class _SignupState extends State<Signup> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Textfield(
+                  Textfield(
+                    controller: _firstnameController,
                     icon: Icons.person,
                     name: "First Name",
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Textfield(
+                  Textfield(
+                    controller: _lastnameController,
                     icon: Icons.person,
                     name: "Last Name",
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Textfield(
+                  Textfield(
+                    controller: _phonenumberController,
                     icon: Icons.phone_outlined,
                     name: "Phone Number",
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Textfield(
-                    icon: Icons.email,
-                    name: "E-mail",
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: TextField(
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(18)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Colors.deepPurple),
+                            borderRadius: BorderRadius.circular(18)),
+                        prefixIcon: const Icon(
+                          Icons.email,
+                          size: 25,
+                          color: Colors.deepPurple,
+                        ),
+                        hintText: "E-mail",
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -109,8 +213,7 @@ class _SignupState extends State<Signup> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: TextField(
-                      // controller: _passwordController,
-                      // onChanged: (value) {},
+                      controller: _passwordController,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(18),
@@ -185,8 +288,7 @@ class _SignupState extends State<Signup> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: TextField(
-                      // controller: _passwordController,
-                      // onChanged: (value) {},
+                      controller: _confirmPasswordController,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(18),
@@ -261,14 +363,35 @@ class _SignupState extends State<Signup> {
                     height: 10,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()));
-                    },
-                    child: const Textbutton(
-                      text: 'Sign Up',
+                    onTap: signUp,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Container(
+                        width: 250,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()));
+                            },
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(

@@ -3,14 +3,17 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_project/models/chat_user_model.dart';
 import 'package:final_project/screens/chat/chat.dart';
 import 'package:final_project/screens/search/search_result_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/base_model.dart';
 import '../../utils/colors.dart';
 import '../../models/app_data.dart';
+import '../auth_screens/login.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -23,6 +26,10 @@ class _HomePageState extends State<HomePage> {
   late ScrollController _scrollController;
   double offset = 0.0;
   var _currentPage = 2.0;
+
+  void signOut() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
   void initState() {
@@ -65,6 +72,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: appBar(),
       drawer: drawer(),
@@ -346,6 +354,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   AppBar appBar() {
+    final user = FirebaseAuth.instance.currentUser!;
     return AppBar(
       backgroundColor: Colors.deepPurple[400],
       title: Column(
@@ -359,7 +368,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
             child: Text(
-              "Hello 👋, Bethelhem...",
+              "Hello 👋,${user.email!}",
               style: TextStyle(fontSize: 18, color: Colors.grey.shade300),
             ),
           ),
@@ -501,20 +510,13 @@ class _HomePageState extends State<HomePage> {
           ),
           ListTile(
             leading: Icon(Icons.logout, color: Colors.red.shade700),
-            title: const Text(
-              'LogOut',
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+            title: GestureDetector(
+              onTap: signOut,
+              child: const Text(
+                'LogOut',
+                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+              ),
             ),
-            onTap: () async {
-              // await FirebaseAuth.instance.signOut();
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: ((context) => const Login()),
-              //   ),
-              // );
-              // Navigator.pop(context);
-            },
           ),
         ],
       ),

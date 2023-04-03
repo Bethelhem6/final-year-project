@@ -1,10 +1,14 @@
 // import 'package:final_project/screens/search_result_page.dart';
+// import 'package:final_project/screens/screens.dart';
 import 'package:final_project/screens/screens.dart';
 import 'package:final_project/screens/splash_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -24,7 +28,7 @@ class MyApp extends StatelessWidget {
         //   bodyLarge: GoogleFonts.cormorantGaramond(),
         // ),
       ),
-      home: const SplashScreen(),
+      home: const AuthStateScreen(),
     );
   }
 }

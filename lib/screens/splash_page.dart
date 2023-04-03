@@ -15,7 +15,7 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        const Duration(seconds: 3),
+        const Duration(seconds: 5),
         () => Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const Login())));
   }
@@ -46,7 +46,7 @@ class SplashScreenState extends State<SplashScreen> {
                     ),
                     const Center(
                         child: Text(
-                      'ABYs',
+                      'ABY\'s',
                       style: TextStyle(
                           letterSpacing: 5,
                           color: Colors.white,
