@@ -22,7 +22,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Password Reset"),
+          title: const Text("Password Reset Page"),
           centerTitle: true,
           elevation: 0,
           backgroundColor: Colors.deepPurple,
