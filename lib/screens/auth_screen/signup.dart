@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_project/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,11 @@ class _SignupState extends State<Signup> {
   bool showEye = false;
   final bool _isLoading = false;
 
+  final formKey = GlobalKey<FormState>();
+  String email = '';
   String _password = '';
+  String firstname='';
+  AuthService authService = AuthService();
 
   @override
   void dispose() {

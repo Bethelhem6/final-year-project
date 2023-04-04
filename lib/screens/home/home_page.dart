@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:final_project/fav/favourite.dart';
 import 'package:final_project/screens/chat/chat.dart';
 import 'package:final_project/screens/home/detail_page.dart';
 import 'package:final_project/screens/search/search_result_page.dart';
@@ -483,10 +484,10 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: ((context) => const WhishlistPage())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => const Favourite())));
               // Navigator.pop(context);
             },
           ),
