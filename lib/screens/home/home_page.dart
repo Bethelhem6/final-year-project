@@ -463,7 +463,7 @@ class _HomePageState extends State<HomePage> {
                         child: CircleAvatar(
                           // backgroundColor: textPrimaryLightColor,
                           backgroundImage:
-                              _image == null ? null : NetworkImage(_image!),
+                              _image == null ? null : NetworkImage(_image),
                           radius: 35,
                         ),
                       ),
