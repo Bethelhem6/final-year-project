@@ -11,6 +11,7 @@ import 'package:http/http.dart';
 import '../models/chat_user.dart';
 import '../models/message.dart';
 
+
 class APIs {
   // for authentication
   static FirebaseAuth auth = FirebaseAuth.instance;

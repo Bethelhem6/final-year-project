@@ -1,14 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:final_project/widgets/profile_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../api/apis.dart';
-import '../../../helper/my_date_util.dart';
-import '../../../main.dart';
-import '../../../models/chat_user.dart';
-import '../../../models/message.dart';
-import '../chat_screen.dart';
-import 'dialogs/profile_dialog.dart';
+import '../api/apis.dart';
+import '../helper/helper.dart';
+import '../models/model.dart';
+import '../screens/screens.dart';
 
 //card to represent a single user in home screen
 class ChatUserCard extends StatefulWidget {
@@ -26,8 +23,9 @@ class _ChatUserCardState extends State<ChatUserCard> {
 
   @override
   Widget build(BuildContext context) {
+    // Size mq = MediaQuery.of(context).size;
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: mq.width * .04, vertical: 4),
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       // color: Colors.blue.shade100,
       elevation: 0.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -56,13 +54,18 @@ class _ChatUserCardState extends State<ChatUserCard> {
                         builder: (_) => ProfileDialog(user: widget.user));
                   },
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(mq.height * .03),
-                    child: CachedNetworkImage(
-                      width: mq.height * .055,
-                      height: mq.height * .055,
-                      imageUrl: widget.user.image,
-                      errorWidget: (context, url, error) => const CircleAvatar(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      // width: 80,
+                      // height: 80,
+                      decoration: BoxDecoration(
+                          // color:,
+                          image: DecorationImage(
+                              image: NetworkImage(widget.user.image))),
+                      child: const CircleAvatar(
                           child: Icon(CupertinoIcons.person)),
+                      // errorWidget: (context, url, error) => const CircleAvatar(
+                      //     child: Icon(CupertinoIcons.person)),
                     ),
                   ),
                 ),

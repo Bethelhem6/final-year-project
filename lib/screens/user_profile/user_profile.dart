@@ -65,7 +65,7 @@ class _user_profileState extends State<user_profile> {
                         child: CircleAvatar(
                           radius: 75.0,
                           backgroundImage:
-                             AssetImage('asset/profile1.jpg'),
+                             AssetImage('assets/profile1.jpg'),
                         ),
                       ),
                       // CircleAvatar(

@@ -1,18 +1,18 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:final_project/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../api/apis.dart';
-import '../../helper/my_date_util.dart';
-import '../../main.dart';
-import '../../models/chat_user.dart';
-import '../../models/message.dart';
-import 'widgets/message_card.dart';
+import '../../helper/helper.dart';
+import '../../models/model.dart';
+import '../../utils/Constants.dart';
+import '../../widgets/widgets.dart';
+import '../screens.dart';
+
 
 class ChatScreen extends StatefulWidget {
   final ChatUser user;
@@ -85,7 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             return ListView.builder(
                                 reverse: true,
                                 itemCount: _list.length,
-                                padding: EdgeInsets.only(top: mq.height * .01),
+                                padding: EdgeInsets.only(top: Constants.mq["height"]! * .01),
                                 physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return MessageCard(message: _list[index]);
@@ -116,7 +116,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 //show emojis on keyboard emoji button click & vice versa
                 if (_showEmoji)
                   SizedBox(
-                    height: mq.height * .35,
+                    height: Constants.mq["height"]! * .35,
                     child: EmojiPicker(
                       textEditingController: _textController,
                       config: Config(
@@ -160,14 +160,19 @@ class _ChatScreenState extends State<ChatScreen> {
 
                   //user profile picture
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(mq.height * .03),
-                    child: CachedNetworkImage(
-                      width: mq.height * .05,
-                      height: mq.height * .05,
-                      imageUrl:
-                          list.isNotEmpty ? list[0].image : widget.user.image,
-                      errorWidget: (context, url, error) => const CircleAvatar(
-                          child: Icon(CupertinoIcons.person)),
+                    borderRadius: BorderRadius.circular(Constants.mq["height"]! * .03),
+                    child: Container(
+                      width: Constants.mq["height"]! * .05,
+                      height: Constants.mq["height"]! * .05,
+                      
+                        decoration: BoxDecoration(
+                          color:Colors.black,
+                          image: DecorationImage(
+                              image: NetworkImage(widget.user.image))),
+                      // imageUrl:
+                      //     list.isNotEmpty ? list[0].image : widget.user.image,
+                      // errorWidget: (context, url, error) => const CircleAvatar(
+                      //     child: Icon(CupertinoIcons.person)),
                     ),
                   ),
 
@@ -213,7 +218,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _chatInput() {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: mq.height * .01, horizontal: mq.width * .025),
+          vertical: Constants.mq["height"]! * .01, horizontal: Constants.mq["width"]! * .025),
       child: Row(
         children: [
           //input field & buttons
@@ -229,8 +234,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         FocusScope.of(context).unfocus();
                         setState(() => _showEmoji = !_showEmoji);
                       },
-                      icon: const Icon(Icons.emoji_emotions,
-                          color: Colors.blueAccent, size: 25)),
+                      icon:  Icon(Icons.emoji_emotions,
+                          color: buttonColor, size: 25)),
 
                   Expanded(
                       child: TextField(
@@ -240,9 +245,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     onTap: () {
                       if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
                     },
-                    decoration: const InputDecoration(
+                    decoration:  InputDecoration(
                         hintText: 'Type Something...',
-                        hintStyle: TextStyle(color: Colors.blueAccent),
+                        hintStyle: TextStyle(color: buttonColor),
                         border: InputBorder.none),
                   )),
 
@@ -263,8 +268,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() => _isUploading = false);
                         }
                       },
-                      icon: const Icon(Icons.image,
-                          color: Colors.blueAccent, size: 26)),
+                      icon:  Icon(Icons.image,
+                          color: buttonColor, size: 26)),
 
                   //take image from camera button
                   IconButton(
@@ -283,11 +288,11 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() => _isUploading = false);
                         }
                       },
-                      icon: const Icon(Icons.camera_alt_rounded,
-                          color: Colors.blueAccent, size: 26)),
+                      icon:  Icon(Icons.camera_alt_rounded,
+                          color: buttonColor, size: 26)),
 
                   //adding some space
-                  SizedBox(width: mq.width * .02),
+                  SizedBox(width: Constants.mq["width"]! * .02),
                 ],
               ),
             ),

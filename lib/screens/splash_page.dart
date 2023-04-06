@@ -16,16 +16,19 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        const Duration(seconds: 5),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const Login())));
+        const Duration(seconds: 2),
+        () => Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LoginPage())));
   }
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.height);
+    print(MediaQuery.of(context).size.width);
+
     return SafeArea(
       child: Scaffold(
-          backgroundColor:appbarColor,
+          backgroundColor: appbarColor,
           body: Padding(
               padding: const EdgeInsets.all(52.0),
               child: Column(

@@ -1,23 +1,38 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:final_project/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
 
-class AuthService{
+
+import 'database_service.dart';
+
+class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  File? _image;
 
-  Future register(String firstname, String lastname, String email, int phonenumber, String password) async{
-    try{
-      User? user = (await firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password)).user;
-      if(user != null){
-        await DatabaseService(uid: user.uid).updateUserData(firstname,email);
-        return true;
-      }
-    } on FirebaseAuthException catch (e){
-      print(e);
-      return e; 
+  Future loginUser(
+    String email,
+    String password,
+  ) async {
+    try {
+      User user = (await firebaseAuth.signInWithEmailAndPassword(
+              email: email, password: password))
+          .user!;
+      return true;
+    } on FirebaseAuthException catch (e) {
+      return e.message;
     }
   }
 
+  Future registerUser(String fullname, String email, String password,
+      String phonenumber, String image) async {
+    try {
+      User user = (await firebaseAuth.createUserWithEmailAndPassword(
+              email: email, password: password))
+          .user!;
+      await DatabaseService(uid: user.uid)
+          .updateUserData(email, fullname,phonenumber, image,);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
+  }
 }
-

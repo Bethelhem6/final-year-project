@@ -1,10 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../main.dart';
-import '../../../../models/chat_user.dart';
-import '../../../view_profile_screen.dart';
+import '../../models/model.dart';
+import '../screens/screens.dart';
+import '../utils/Constants.dart';
 
 class ProfileDialog extends StatelessWidget {
   const ProfileDialog({super.key, required this.user});
@@ -18,31 +16,31 @@ class ProfileDialog extends StatelessWidget {
       backgroundColor: Colors.white.withOpacity(.9),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       content: SizedBox(
-          width: mq.width * .6,
-          height: mq.height * .35,
+          width: Constants.mq["width"]!* .6,
+          height: Constants.mq["height"]!* .35,
           child: Stack(
             children: [
               //user profile picture
-              Positioned(
-                top: mq.height * .075,
-                left: mq.width * .1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(mq.height * .25),
-                  child: CachedNetworkImage(
-                    width: mq.width * .5,
-                    fit: BoxFit.cover,
-                    imageUrl: user.image,
-                    errorWidget: (context, url, error) =>
-                        const CircleAvatar(child: Icon(CupertinoIcons.person)),
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   top: Constants.mq["width"]! * .075,
+              //   left: mq.width * .1,
+              //   child: ClipRRect(
+              //     borderRadius: BorderRadius.circular(mq.height * .25),
+              //     child: CachedNetworkImage(
+              //       width: mq.width * .5,
+              //       fit: BoxFit.cover,
+              //       imageUrl: user.image,
+              //       errorWidget: (context, url, error) =>
+              //           const CircleAvatar(child: Icon(CupertinoIcons.person)),
+              //     ),
+              //   ),
+              // ),
 
               //user name
               Positioned(
-                left: mq.width * .04,
-                top: mq.height * .02,
-                width: mq.width * .55,
+                left: Constants.mq["width"]! * .04,
+                top: Constants.mq["height"]! * .02,
+                width: Constants.mq["width"]! * .55,
                 child: Text(user.name,
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.w500)),

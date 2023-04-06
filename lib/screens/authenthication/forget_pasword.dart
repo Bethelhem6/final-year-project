@@ -10,6 +10,7 @@ class ForgotPassPage extends StatefulWidget {
 
 class _ForgotPassPageState extends State<ForgotPassPage> {
   final _emailController = TextEditingController();
+  String email = "";
 
   @override
   void dispose() {
@@ -22,7 +23,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Password Reset Page"),
+          title: const Text("Password Reset"),
           centerTitle: true,
           elevation: 0,
           backgroundColor: Colors.deepPurple,
@@ -42,11 +43,29 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                 ),
               ),
               const SizedBox(height: 50),
-               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                child: Textfield(
-                  icon: Icons.email,
-                  name: "E-mail",
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: textInputDecoration.copyWith(
+                    labelText: "E-mail",
+                    prefixIcon: const Icon(
+                      Icons.email,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                  onChanged: (val) {
+                    setState(() {
+                      email = val;
+                    });
+                  },
+                  validator: (val) {
+                    return RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(val!)
+                        ? null
+                        : "Please Enter a Valid E-mail";
+                  },
                 ),
               ),
               const SizedBox(height: 30),

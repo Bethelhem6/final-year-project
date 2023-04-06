@@ -1,20 +1,21 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:animate_do/animate_do.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:final_project/fav/favourite.dart';
-import 'package:final_project/screens/chat/chat.dart';
-import 'package:final_project/screens/home/detail_page.dart';
-import 'package:final_project/screens/search/search_result_page.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-import '../../models/base_model.dart';
+import '../../fav/favourite.dart';
 import '../../utils/colors.dart';
-import '../../models/app_data.dart';
-import '../auth_screen/login.dart';
+import '../../models/model.dart';
+import '../screens.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
-  // final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -23,13 +24,30 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final PageController _pageController =
       PageController(viewportFraction: 0.75, initialPage: 2);
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   late ScrollController _scrollController;
   double offset = 0.0;
   var _currentPage = 2.0;
 
-  void signOut() {
-    FirebaseAuth.instance.signOut();
+  var _url;
+  XFile? imgXFile;
+
+  String _uid = "";
+  String _name = "";
+  String _email = "";
+  String _image = "";
+
+  void _getData() async {
+    User? user = _auth.currentUser;
+    _uid = user!.uid;
+
+    final DocumentSnapshot userDocs =
+        await FirebaseFirestore.instance.collection("users").doc(_uid).get();
+    setState(() {
+      _name = userDocs.get('name');
+      _email = userDocs.get('email');
+      _image = userDocs.get('image');
+    });
   }
 
   @override
@@ -44,6 +62,7 @@ class _HomePageState extends State<HomePage> {
         _currentPage = _pageController.page!;
       });
     });
+    _getData();
   }
 
   void swapPageListener() {
@@ -75,6 +94,7 @@ class _HomePageState extends State<HomePage> {
     var textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: appBar(),
       drawer: drawer(),
       body: SingleChildScrollView(
@@ -215,8 +235,10 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.only(left: 10),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const DetailPage()),);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const DetailPage()),
+          );
         },
         child: Container(
           // padding: const EdgeInsets.only(left: 20),
@@ -310,9 +332,12 @@ class _HomePageState extends State<HomePage> {
   /// Page view Cards
   Widget card(BaseModel data, TextTheme theme, Size size) {
     return GestureDetector(
-     onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const DetailPage()),);},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const DetailPage()),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 0.0),
         child: Column(
@@ -367,6 +392,7 @@ class _HomePageState extends State<HomePage> {
 
   AppBar appBar() {
     // final user = FirebaseAuth.instance.currentUser!;
+
     return AppBar(
       backgroundColor: appbarColor,
       title: Column(
@@ -380,7 +406,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
             child: Text(
-              "Hello 👋,",
+              "Hello 👋, $_name...",
               style: TextStyle(fontSize: 18, color: Colors.grey.shade300),
             ),
           ),
@@ -435,7 +461,9 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(right: 10.0),
                         child: CircleAvatar(
-                          backgroundColor: textPrimaryLightColor,
+                          // backgroundColor: textPrimaryLightColor,
+                          backgroundImage:
+                              _image == null ? null : NetworkImage(_image!),
                           radius: 35,
                         ),
                       ),
@@ -445,7 +473,7 @@ class _HomePageState extends State<HomePage> {
                     height: 10,
                   ),
                   Text(
-                    'Bethelhem Misgina',
+                    _name,
                     style: TextStyle(
                       overflow: TextOverflow.ellipsis,
                       fontWeight: FontWeight.bold,
@@ -454,7 +482,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                    'bettymisg6@gmail.com',
+                    _email,
                     style: TextStyle(
                       overflow: TextOverflow.ellipsis,
                       fontSize: 16,
@@ -484,10 +512,8 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => const Favourite())));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => const Favourite())));
               // Navigator.pop(context);
             },
           ),
@@ -499,7 +525,7 @@ class _HomePageState extends State<HomePage> {
             ),
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => ChatPage())));
+                  MaterialPageRoute(builder: ((context) => const UserList())));
               // Navigator.pop(context);
             },
           ),
@@ -521,7 +547,11 @@ class _HomePageState extends State<HomePage> {
           ListTile(
             leading: Icon(Icons.logout, color: Colors.red.shade700),
             title: GestureDetector(
-              onTap: signOut,
+              onTap: () async {
+                await _auth.signOut();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              },
               child: const Text(
                 'LogOut',
                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),

@@ -43,10 +43,13 @@ dependencies:
   firebase_storage: ^11.0.16
   flutter:
     sdk: flutter
+  flutter_notification_channel: ^2.0.0
   gallery_saver: ^2.3.2
   google_fonts: ^4.0.3
+  google_sign_in: ^6.0.2
   hive_flutter: ^1.1.0
   image_picker: ^0.8.7+1
+  persistent_bottom_nav_bar: ^5.0.2
   provider: ^6.0.5
   shared_preferences: ^2.1.0
 

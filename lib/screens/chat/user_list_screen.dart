@@ -1,26 +1,25 @@
 import 'dart:developer';
 
-
-import 'package:final_project/chat/widgets/chat_user_card.dart';
+import 'package:final_project/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../helper/dialogs.dart';
 import '../../api/apis.dart';
-import '../../helper/dialogs.dart';
-import '../../main.dart';
-import '../../models/chat_user.dart';
+import '../../helper/helper.dart';
+import '../../models/model.dart';
+import '../../widgets/widgets.dart';
+import '../screens.dart';
 
 //home screen -- where all available contacts are shown
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class UserList extends StatefulWidget {
+  const UserList({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<UserList> createState() => _UserListState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _UserListState extends State<UserList> {
   // for storing all users
   List<ChatUser> _list = [];
 
@@ -55,6 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size mq = MediaQuery.of(context).size;
+
     return GestureDetector(
       //for hiding keyboard when a tap is detected on screen
       onTap: () => FocusScope.of(context).unfocus(),
@@ -74,7 +75,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
             //app bar
             appBar: AppBar(
-              leading: const Icon(CupertinoIcons.home),
+              backgroundColor: appbarColor,
+              centerTitle: true,
+              toolbarHeight: 80,
+              toolbarOpacity: 0.8,
+              elevation: 0,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20)),
+              ),
+              // leading: const Icon(CupertinoIcons.home),
               title: _isSearching
                   ? TextField(
                       decoration: const InputDecoration(
@@ -102,7 +113,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                     )
-                  : const Text('We Chat'),
+                  : const Text(
+                      'Message',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    ),
               actions: [
                 //search user button
                 IconButton(
@@ -118,24 +136,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 //more features button
                 IconButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (_) => ProfileScreen(user: APIs.me)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => ProfileScreen(user: APIs.me)));
                     },
                     icon: const Icon(Icons.more_vert))
               ],
             ),
 
             //floating button to add new user
-            floatingActionButton: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: FloatingActionButton(
-                  onPressed: () {
-                    _addChatUserDialog();
-                  },
-                  child: const Icon(Icons.add_comment_rounded)),
-            ),
+            // floatingActionButton: Padding(
+            //   padding: const EdgeInsets.only(bottom: 10),
+            //   child: FloatingActionButton(
+            //       onPressed: () {
+            //         _addChatUserDialog();
+            //       },
+            //       child: const Icon(Icons.add_comment_rounded)),
+            // ),
 
             //body
             body: StreamBuilder(
@@ -231,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: const Text('Cancel',
                         style: TextStyle(color: Colors.blue, fontSize: 16))),
 
-                //add button 
+                //add button
                 MaterialButton(
                     onPressed: () async {
                       //hide alert dialog

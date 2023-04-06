@@ -1,7 +1,11 @@
+
+import 'package:final_project/screens/chat/user_list_screen.dart';
+import 'package:final_project/utils/colors.dart';
+import 'package:final_project/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/colors.dart';
-import '../../widgets/widgets.dart';
+
+
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -14,8 +18,15 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-   appBar: AppBar(
-        title: const Text('Tsehay real estate'),
+      appBar: AppBar(
+        title: const Text(
+          'Tsehay real estate',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
         backgroundColor: appbarColor,
         centerTitle: true,
         toolbarHeight: 80,
@@ -109,7 +120,12 @@ class _DetailPageState extends State<DetailPage> {
                     Column(
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const UserList()));
+                          },
                           icon: const AppIcon(
                             icon: Icons.messenger,
                             iconColor: Colors.deepPurple,
