@@ -29,20 +29,26 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animate_do: ^3.0.2
+  cached_network_image: ^3.2.3
   cloud_firestore: ^4.4.5
   connectivity: ^3.0.6
   cupertino_icons: ^1.0.2
   custom_clippers: ^2.0.0
   dots_indicator: ^2.1.0
+  emoji_picker_flutter: ^1.5.2
   firebase_auth: ^4.3.0
   firebase_core: ^2.8.0
   firebase_database: ^10.0.16
+  firebase_messaging: ^14.4.0
   firebase_storage: ^11.0.16
   flutter:
     sdk: flutter
+  gallery_saver: ^2.3.2
   google_fonts: ^4.0.3
   hive_flutter: ^1.1.0
+  image_picker: ^0.8.7+1
   provider: ^6.0.5
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

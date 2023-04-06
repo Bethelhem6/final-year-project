@@ -5,6 +5,6 @@ export 'auth_screen/login.dart';
 export 'chat/chat.dart';
 export 'chat/chat_detail.dart';
 export 'auth_screen/signup.dart';
-export 'auth/auth_screen.dart';
+export 'auth_screen.dart';
 
 export '../screens/home/detail_page.dart';

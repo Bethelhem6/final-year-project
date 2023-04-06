@@ -1,8 +1,10 @@
 // import 'package:final_project/screens/search_result_page.dart';
-import 'package:final_project/screens/auth/auth_screen.dart';
+import 'package:final_project/screens/auth_screen.dart';
 import 'package:final_project/screens/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/screens.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         //   bodyLarge: GoogleFonts.cormorantGaramond(),
         // ),
       ),
-      home: const AuthStateScreen(),
+      home:  HomePage(),
     );
   }
 }

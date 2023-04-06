@@ -14,7 +14,7 @@ import '../auth_screen/login.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
-  final user = FirebaseAuth.instance.currentUser!;
+  // final user = FirebaseAuth.instance.currentUser!;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -366,7 +366,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   AppBar appBar() {
-    final user = FirebaseAuth.instance.currentUser!;
+    // final user = FirebaseAuth.instance.currentUser!;
     return AppBar(
       backgroundColor: appbarColor,
       title: Column(
@@ -380,7 +380,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
             child: Text(
-              "Hello 👋,${user.email!}",
+              "Hello 👋,",
               style: TextStyle(fontSize: 18, color: Colors.grey.shade300),
             ),
           ),
