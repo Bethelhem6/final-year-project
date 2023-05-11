@@ -13,8 +13,7 @@ import 'screens/screens.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
-
+  await Firebase.initializeApp();
 
   //enter full-screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -48,12 +47,11 @@ class MyApp extends StatelessWidget {
                   fontSize: 19),
               backgroundColor: Colors.white,
             )),
-        home: const AuthStateScreen());
+        home: const MainPage());
   }
 }
 
 _initializeFirebase() async {
-
   var result = await FlutterNotificationChannel.registerNotificationChannel(
       description: 'For Showing Message Notification',
       id: 'chats',

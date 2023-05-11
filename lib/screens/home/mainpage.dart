@@ -37,7 +37,7 @@ class _MainPageState extends State<MainPage> {
           inactiveColorPrimary: Colors.red[200]),
       PersistentBottomNavBarItem(
           icon: const Icon(
-            Icons.shopping_cart_outlined,
+            Icons.message,
           ),
           title: 'Message',
           activeColorPrimary: Colors.blue,

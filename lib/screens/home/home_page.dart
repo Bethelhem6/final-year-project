@@ -11,6 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import '../../fav/favourite.dart';
 import '../../utils/colors.dart';
 import '../../models/model.dart';
+import '../developers/developers.dart';
+import '../post_property/add_property.dart';
 import '../screens.dart';
 
 class HomePage extends StatefulWidget {
@@ -499,10 +501,10 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: ((context) => const MyOrdersScreen())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) =>  AddProperty())));
             },
           ),
           ListTile(
@@ -540,17 +542,17 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: ((context) => const AboutDevelopers())));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => const AboutDevelopers())));
             },
           ),
           ListTile(
             leading: Icon(Icons.logout, color: Colors.red.shade700),
             title: GestureDetector(
               onTap: () async {
-                await _auth.signOut();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
+                // await _auth.signOut();
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => LoginPage()));
               },
               child: const Text(
                 'LogOut',
