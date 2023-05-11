@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../screens.dart';
 
 // ignore: camel_case_types
 class user_profile extends StatefulWidget {
@@ -60,19 +63,8 @@ class _user_profileState extends State<user_profile> {
                         backgroundImage: AssetImage('assets/profile1.jpg'),
                       ),
                     ),
-                    // CircleAvatar(
-                    //   backgroundColor: Colors.red.shade300,
-                    //   minRadius: 35.0,
-                    //   child: Icon(
-                    //     Icons.message,
-                    //     size: 30.0,
-                    //   ),
-                    // ),
                   ],
                 ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
                 const Text(
                   'Afrah muhammed',
                   style: TextStyle(
@@ -81,13 +73,6 @@ class _user_profileState extends State<user_profile> {
                     color: Colors.black,
                   ),
                 ),
-                // const Text(
-                //   'Flutter Developer',
-                //   style: TextStyle(
-                //     color: Colors.white,
-                //     fontSize: 25,
-                //   ),
-                // ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -101,30 +86,6 @@ class _user_profileState extends State<user_profile> {
               ],
             ),
           ),
-          // Container(
-          //   margin: const EdgeInsets.only(top: 15),
-          //   child: Row(
-          //     children: <Widget>[
-          //       Expanded(
-          //         child: Container(
-          //           height: 60,
-          //           color: Colors.grey[50],
-          //           child: ListTile(
-          //             title:
-          //                 GestureDetector(child: const Icon(Icons.camera_alt)),
-          //           ),
-          //         ),
-          //       ),
-          //       Expanded(
-          //         child: Container(
-          //           height: 60,
-          //           color: Colors.grey[200],
-          //           child: const ListTile(title: Icon(Icons.image)),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Container(
             margin: const EdgeInsets.only(top: 30),
             child: Column(
@@ -246,7 +207,7 @@ class _user_profileState extends State<user_profile> {
                   child: const ListTile(
                     leading: Icon(
                       Icons.location_city_rounded,
-                      color: Colors.red,
+                      color: Colors.teal,
                     ),
                     title: Text(
                       'Adress',
@@ -259,6 +220,43 @@ class _user_profileState extends State<user_profile> {
                       'Addis Ababa',
                       style: TextStyle(
                         fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+
+                  //  color: Colors.grey[100],
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  margin: const EdgeInsets.all(5),
+
+                  child: ListTile(
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut();
+                      print("signed out");
+                      Navigator.pop(context);
+
+                      Navigator.pop(context);
+
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => LoginPage()));
+                    },
+                    leading: const Icon(
+                      Icons.logout,
+                      color: Colors.red,
+                    ),
+                    title: const Text(
+                      'Logout',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

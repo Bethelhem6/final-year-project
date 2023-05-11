@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +9,6 @@ import '../../helper/helper.dart';
 import '../../services/service.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
-
-
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -26,14 +23,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _isLoading = false;
   final formkey = GlobalKey<FormState>();
-  
+
   String email = "";
   String password = "";
   String name = "";
   String phonenumber = "";
   String image = "";
   String url = "";
-
 
   AuthService authService = AuthService();
 
@@ -318,7 +314,6 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-  
 
   Register() async {
     if (formkey.currentState!.validate()) {

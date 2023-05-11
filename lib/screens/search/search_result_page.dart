@@ -23,13 +23,30 @@ class SearchResult extends StatelessWidget {
                       bottomRight: Radius.circular(90),
                     ),
                   ),
-                  child: const Text(
-                    "Topia Rentals ",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
-                    textAlign: TextAlign.center,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 70),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const Text(
+                        "Topia Rentals ",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                 ),
                 Positioned(

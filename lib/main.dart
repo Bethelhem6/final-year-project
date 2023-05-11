@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
                   fontSize: 19),
               backgroundColor: Colors.white,
             )),
-        home: const SplashScreen());
+        home: const AuthStateScreen());
   }
 }
 

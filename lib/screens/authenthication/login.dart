@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_project/services/service.dart';
 
@@ -24,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   String email = "";
   String password = "";
   bool _isLoading = false;
+  String _uid = "";
   AuthService authService = AuthService();
 
   @override
@@ -188,11 +191,11 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 GestureDetector(
                                     onTap: () {
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             const ResetPassword()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ResetPassword()));
                                     },
                                     child: const Text("forget password?",
                                         style: TextStyle(
@@ -259,24 +262,48 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = true;
       });
-      await authService.loginUser(email, password).then((value) async {
-        if (value == true) {
-          QuerySnapshot snapshot =
-              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .gettingUserData(email);
+      formkey.currentState!.save();
 
-          // saving the values to our shared preferences
-          await Helperfunctions.saveUserLoggedInStatus(true);
-          await Helperfunctions.saveUserEmailSF(email);
-          // await Helperfunctions.saveUserNameSF(snapshot.docs[0]['fullname']);
-          nextScreenReplace(context, MainPage());
-        } else {
-          showSnackbar(context, Colors.red, value);
+      try {
+        final newUser = await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: email.toLowerCase().trim(),
+            password: password.toLowerCase().trim());
+
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  HomePage()),
+        );
+        print("logged in");
+      } catch (e) {
+        if (mounted) {
+          showSnackbar(context, Colors.red, e.toString());
+        }
+      } finally {
+        if (mounted) {
           setState(() {
             _isLoading = false;
           });
         }
-      });
+      }
+      // await authService.loginUser(email, password).then((value) async {
+      //   if (value == true) {
+      //     QuerySnapshot snapshot =
+      //         await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+      //             .gettingUserData(email);
+
+      //     // saving the values to our shared preferences
+      //     await Helperfunctions.saveUserLoggedInStatus(true);
+      //     await Helperfunctions.saveUserEmailSF(email);
+      //     // await Helperfunctions.saveUserNameSF(snapshot.docs[0]['fullname']);
+      //     nextScreenReplace(context, MainPage());
+      //   } else {
+      //     showSnackbar(context, Colors.red, value);
+      //     setState(() {
+      //       _isLoading = false;
+      //     });
+      //   }
+      // });
     }
   }
 }

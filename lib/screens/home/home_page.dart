@@ -3,6 +3,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:final_project/screens/home/view_more.dart';
 import 'package:final_project/screens/post_property/new_property.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,7 +19,6 @@ import '../screens.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
-  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -117,12 +117,22 @@ class _HomePageState extends State<HomePage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, right: 20),
-                child: Text(
-                  "View more",
-                  style: TextStyle(
-                    color: buttonColor,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) =>
+                              ViewMore(collection: "houses")),
+                        ));
+                  },
+                  child: Text(
+                    "View more",
+                    style: TextStyle(
+                      color: buttonColor,
+                      fontSize: 16,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
               ),
@@ -168,12 +178,22 @@ class _HomePageState extends State<HomePage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, right: 20),
-                child: Text(
-                  "View more",
-                  style: TextStyle(
-                    color: buttonColor,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) =>
+                              ViewMore(collection: "houses")),
+                        ));
+                  },
+                  child: Text(
+                    "View more",
+                    style: TextStyle(
+                      color: buttonColor,
+                      fontSize: 16,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
               ),
@@ -519,6 +539,20 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.person, color: Colors.deepPurple),
+            title: const Text(
+              ' My profile ',
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => const user_profile())));
+              // Navigator.pop(context);
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.groups, color: Colors.orange),
             title: const Text(
               ' Contact Users ',
@@ -551,9 +585,13 @@ class _HomePageState extends State<HomePage> {
             leading: Icon(Icons.logout, color: Colors.red.shade700),
             title: GestureDetector(
               onTap: () async {
-                // await _auth.signOut();
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => LoginPage()));
+                await FirebaseAuth.instance.signOut();
+                Navigator.pop(context);
+
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+                print("signed out");
               },
               child: const Text(
                 'LogOut',

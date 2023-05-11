@@ -168,7 +168,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         decoration: BoxDecoration(
                           color:Colors.black,
                           image: DecorationImage(
-                              image: NetworkImage(widget.user.image))),
+                              image: NetworkImage(widget.user.image.toString()))),
                       // imageUrl:
                       //     list.isNotEmpty ? list[0].image : widget.user.image,
                       // errorWidget: (context, url, error) => const CircleAvatar(

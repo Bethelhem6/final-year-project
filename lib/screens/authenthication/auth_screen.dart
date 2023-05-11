@@ -15,14 +15,14 @@ class AuthStateScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData) {
-            return  const MainPage();
+            return   HomePage();
           } else {
             return const LoginPage();
           }
         } else if (snapshot.hasError) {
           return const Text('Error Occured');
         }
-        return  const MainPage();
+        return  const SplashScreen();
       },
     );
   }
