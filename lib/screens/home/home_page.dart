@@ -3,6 +3,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:final_project/screens/post_property/new_property.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -495,16 +496,14 @@ class _HomePageState extends State<HomePage> {
                 ],
               )),
           ListTile(
-            leading: const Icon(Icons.search, color: Colors.blue),
+            leading: const Icon(Icons.add, color: Colors.blue),
             title: const Text(
-              ' Search property',
+              ' Add New Property',
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) =>  AddProperty())));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => AddHouseScreen())));
             },
           ),
           ListTile(
@@ -542,8 +541,10 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => const AboutDevelopers())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => const AboutDevelopers())));
             },
           ),
           ListTile(

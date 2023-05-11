@@ -38,6 +38,7 @@ class _UploadProductsState extends State<UploadPackages> {
 
   File? _image;
   _trySubmit() async {
+    print(_packageDescription);
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
@@ -45,7 +46,7 @@ class _UploadProductsState extends State<UploadPackages> {
     }
     try {
       if (_image == null) {
-      print( 'Please provide an image');
+        print('Please provide an image');
       } else {
         setState(() {
           _isLoading = true;
@@ -61,33 +62,20 @@ class _UploadProductsState extends State<UploadPackages> {
         final packageId = uuid.v4();
         // final User? user = _auth.currentUser;
         // final _uid = user!.uid;
-        if (widget.id != null) {
-          print(widget.title);
-         await FirebaseFirestore.instance
-              .collection('packages')
-              .doc(widget.id)
-              .update({
-            'title': _packageTitle,
-            'description': _packageDescription,
-            'price': _packagePrice,
-            'image': _url,
-            'id': widget.id,
-            'createdAt': Timestamp.now()
-          });
-          Navigator.pop(context);
-          // _globalMethods.showDialogues(context, "Successfully Added.");
-        } else {
-          await FirebaseFirestore.instance.collection('packages').doc(packageId).set({
-            'title': _packageTitle,
-            'description': _packageDescription,
-            'price': _packagePrice,
-            'image': _url,
-            'id': packageId,
-            'createdAt': Timestamp.now()
-          });
-          Navigator.pop(context);
-          // _globalMethods.showDialogues(context, "Successfully Added.");
-        }
+
+        await FirebaseFirestore.instance
+            .collection('packages')
+            .doc(packageId)
+            .set({
+          'title': _packageTitle,
+          'description': _packageDescription,
+          'price': _packagePrice,
+          'image': _url,
+          'id': packageId,
+          'createdAt': Timestamp.now()
+        });
+        Navigator.pop(context);
+        // _globalMethods.showDialogues(context, "Successfully Added.");
       }
     } catch (e) {
       // _globalMethods.showDialogues(context, e.toString());
@@ -143,7 +131,10 @@ class _UploadProductsState extends State<UploadPackages> {
         margin: const EdgeInsets.symmetric(vertical: 15),
         width: double.infinity,
         child: GestureDetector(
-          onTap: _trySubmit,
+          onTap: () {
+            print(_packageTitle);
+            _trySubmit();
+          },
           child: Container(
             alignment: Alignment.center,
             height: 45,
@@ -179,9 +170,9 @@ class _UploadProductsState extends State<UploadPackages> {
                                 height: 200,
                                 width: 200,
                                 decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                      image: AssetImage("assets/mocha.jpg"),
-                                      fit: BoxFit.cover),
+                                  // image: const DecorationImage(
+                                  //     image: AssetImage("assets/mocha.jpg"),
+                                  //     fit: BoxFit.cover),
                                   border:
                                       Border.all(width: 2, color: Colors.grey),
                                 ),

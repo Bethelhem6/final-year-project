@@ -9,11 +9,18 @@ class AboutDevelopers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
+          toolbarHeight: 70,
           title: const Text(
             "About Developers",
             style: TextStyle(fontSize: 25),
           ),
           centerTitle: true,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20)),
+          ),
           elevation: 0,
         ),
         body: Column(
@@ -100,7 +107,7 @@ class DevCrds extends StatelessWidget {
                       overflow: TextOverflow.fade,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 23,
+                        fontSize: 18,
                         color: Colors.black,
                       ),
                     ),
@@ -108,7 +115,7 @@ class DevCrds extends StatelessWidget {
                       role,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 15,
                         color: Colors.grey.shade500,
                       ),
                     ),
