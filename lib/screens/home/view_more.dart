@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 class ViewMore extends StatefulWidget {
   final String collection;
+  final String status;
 
-  const ViewMore({Key? key, required this.collection}) : super(key: key);
+  const ViewMore({Key? key, required this.collection, required this.status})
+      : super(key: key);
 
   @override
   State<ViewMore> createState() => _ViewMoreState();
@@ -31,6 +33,7 @@ class _ViewMoreState extends State<ViewMore> {
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: FirebaseFirestore.instance
               .collection(widget.collection)
+              .where("status", isEqualTo: widget.status)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
@@ -39,75 +42,124 @@ class _ViewMoreState extends State<ViewMore> {
                   child: CircularProgressIndicator(),
                 ),
               );
-            }
-            var data = snapshot.data!.docs;
+            } else if (snapshot.hasData) {
+              var data = snapshot.data!.docs;
 
-            return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 250,
-                  childAspectRatio: 3 / 3,
-                ),
-                itemCount: data.length,
-                itemBuilder: (ctx, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => DetailPage(id: "",)),
-                      // );
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      child: Stack(
-                        children: [
-                          Container(
-                            height: 200,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.deepPurple[200],
-                              // image: DecorationImage(
-                              // image: NetworkImage(data[index]['image']),
-                              // fit: BoxFit.cover),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: -5,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
+              return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 250,
+                    childAspectRatio: 3 / 3,
+                  ),
+                  itemCount: data.length,
+                  itemBuilder: (ctx, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        String location = "";
+                        String company = '';
+                        String status = '';
+                        String description = '';
+                        int price = 0;
+                        int bedroom = 0;
+                        int bathRoom = 0;
+                        int likes = 0;
+                        String dateAdded = "";
+                        String imageUrl = '';
+                        String name = "";
+                        String email = "";
+                        String ownerImage = "";
+
+                        setState(() {
+                          location = data[index]["address"];
+                          bedroom = data[index]["bedRoom"];
+                          likes = data[index]["likes"];
+                          bedroom = data[index]["bedRoom"];
+                          name = data[index]['ownerName'];
+                          email = data[index]['ownerEmail'];
+                          bathRoom = data[index]["bathRoom"];
+                          company = data[index]['companyName'];
+                          description = data[index]['description'];
+                          location = data[index]['address'];
+                          price = data[index]['price'];
+                          status = data[index]['status'];
+                          dateAdded = data[index]['dateAdded'];
+                          imageUrl = data[index]['imageUrls'][0];
+                          ownerImage = data[index]['ownerImage'];
+                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailPage(
+                                  bathRoom: bathRoom,
+                                  bedroom: bedroom,
+                                  company: company,
+                                  description: description,
+                                  location: location,
+                                  price: price,
+                                  status: status,
+                                  likes: likes,
+                                  name: name,
+                                  dateAdded: dateAdded,
+                                  email: email,
+                                  ownerImage: ownerImage,
+                                  image: imageUrl)),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 200,
+                              alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.deepPurple[200],
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        data[index]['imageUrls'][0]),
+                                    fit: BoxFit.cover),
                               ),
-                              height: 80,
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Home",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      " Birr2000000}",
-                                      style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ]),
                             ),
-                          ),
-                        ],
+                            Positioned(
+                              bottom: -5,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                height: 80,
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        data[index]["category"],
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        " Birr ${data[index]["price"]}",
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ]),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                });
+                    );
+                  });
+            }
+            return Container();
           }),
     );
   }

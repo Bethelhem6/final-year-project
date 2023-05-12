@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -16,6 +17,9 @@ class House {
   final String dateAdded;
   final int likes;
   final String description;
+  final String ownerName;
+  final String ownerImage;
+  final String ownerEmail;
 
   final int price;
   final List<String> imageUrls;
@@ -32,6 +36,9 @@ class House {
     required this.dateAdded,
     required this.likes,
     required this.description,
+    required this.ownerName,
+    required this.ownerEmail,
+    required this.ownerImage,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,6 +54,9 @@ class House {
       'dateAdded': dateAdded,
       'likes': likes,
       'description': description,
+      'ownerName': ownerName,
+      'ownerEmail': ownerEmail,
+      'ownerImage': ownerImage,
     };
   }
 }
@@ -71,9 +81,34 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
   bool _isLoading = false;
 
   List<File> _selectedImages = [];
-   CollectionReference housesCollection =
-          FirebaseFirestore.instance.collection('houses');
+  CollectionReference housesCollection =
+      FirebaseFirestore.instance.collection('houses');
+  var _url;
+  XFile? imgXFile;
 
+  String _uid = "";
+  String _name = "";
+  String _email = "";
+  String _image = "";
+
+  void _getData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    _uid = user!.uid;
+
+    final DocumentSnapshot userDocs =
+        await FirebaseFirestore.instance.collection("users").doc(_uid).get();
+    setState(() {
+      _name = userDocs.get('name');
+      _email = userDocs.get('email');
+      _image = userDocs.get('image');
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
 
   Future<void> _selectImage() async {
     final picker = ImagePicker();
@@ -91,8 +126,9 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
 
     for (File image in images) {
       String imageName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference storageRef =
-            FirebaseStorage.instance.ref().child('houses/${housesCollection.id}/$imageName');
+      Reference storageRef = FirebaseStorage.instance
+          .ref()
+          .child('houses/${housesCollection.id}/$imageName');
       await storageRef.putFile(image);
       String imageUrl = await storageRef.getDownloadURL();
       imageUrls.add(imageUrl);
@@ -111,10 +147,12 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
       final String companyName = _companyNameController.text;
       final String category = _categoryController.text;
       final String status = _statusController.text;
+
       final int bedRooms = int.parse(_bedRoomController.text);
 
       final int bathRoom = int.parse(_bathRoomController.text);
       final String description = _descriptionController.text;
+
       const int likes = 0;
       var date = DateTime.now().toString();
       var parsedDate = DateTime.parse(date);
@@ -124,18 +162,22 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
       List<String> imageUrls = await _uploadImages(_selectedImages);
 
       House house = House(
-          address: address,
-          price: price,
-          imageUrls: imageUrls,
-          companyName: companyName,
-          category: category,
-          status: status,
-          bedRooms: bedRooms,
-          bathRoom: bathRoom,
-          dateAdded: dateAdded,
-          likes: likes,
-          description: description);
-     
+        address: address,
+        price: price,
+        imageUrls: imageUrls,
+        companyName: companyName,
+        category: category,
+        status: status,
+        bedRooms: bedRooms,
+        bathRoom: bathRoom,
+        dateAdded: dateAdded,
+        likes: likes,
+        description: description,
+        ownerName: _name,
+        ownerEmail: _email,
+        ownerImage: _image,
+      );
+
       try {
         await housesCollection.add(house.toMap());
         ScaffoldMessenger.of(context).showSnackBar(
@@ -154,6 +196,7 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
           _selectedImages.clear();
           _isLoading = false;
         });
+        Navigator.pop(context);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to upload house')),

@@ -14,6 +14,7 @@ import '../../utils/colors.dart';
 import '../developers/developers.dart';
 import '../post_property/add_property.dart';
 import '../screens.dart';
+import '../search/search_result_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -120,8 +121,10 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: ((context) =>
-                              const ViewMore(collection: "houses")),
+                          builder: ((context) => const ViewMore(
+                                collection: "houses",
+                                status: "sell",
+                              )),
                         ));
                   },
                   child: Text(
@@ -273,8 +276,8 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: ((context) =>
-                            const ViewMore(collection: "houses")),
+                        builder: ((context) => const ViewMore(
+                            collection: "houses", status: "rent")),
                       ));
                 },
                 child: Padding(
@@ -327,19 +330,55 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.only(left: 10),
       child: GestureDetector(
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => DetailPage(
-          //             bathRoom: doc["bathRoom"],
-          //             bedroom: doc["bedroom"],
-          //             company: doc['companyName'],
-          //             description: doc['description'],
-          //             location: doc['address'],
-          //             price: doc['price'],
-          //             status: doc['status'],
-          //           )),
-          // );
+          String location = "";
+          String company = '';
+          String status = '';
+          String description = '';
+          int price = 0;
+          int bedroom = 0;
+          int bathRoom = 0;
+          int likes = 0;
+          String dateAdded = "";
+          String imageUrl = '';
+          String name = "";
+          String email = "";
+          String ownerImage = "";
+
+          setState(() {
+            location = doc["address"];
+            bedroom = doc["bedRoom"];
+            likes = doc["likes"];
+            bedroom = doc["bedRoom"];
+            name = doc['ownerName'];
+            email = doc['ownerEmail'];
+            bathRoom = doc["bathRoom"];
+            company = doc['companyName'];
+            description = doc['description'];
+            location = doc['address'];
+            price = doc['price'];
+            status = doc['status'];
+            dateAdded = doc['dateAdded'];
+            imageUrl = doc['imageUrls'][0];
+            ownerImage = doc['ownerImage'];
+          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailPage(
+                    bathRoom: bathRoom,
+                    bedroom: bedroom,
+                    company: company,
+                    description: description,
+                    location: location,
+                    price: price,
+                    status: status,
+                    likes: likes,
+                    name: name,
+                    dateAdded: dateAdded,
+                    email: email,
+                    ownerImage: ownerImage,
+                    image: imageUrl)),
+          );
         },
         child: Container(
           // padding: const EdgeInsets.only(left: 20),
@@ -382,7 +421,7 @@ class _HomePageState extends State<HomePage> {
               textWidget(
                 color: appbarColor,
                 size: 17,
-                title: doc['price'].toString(),
+                title: "Birr ${doc['price'].toString()}",
                 weight: FontWeight.bold,
               ),
               const SizedBox(
@@ -460,6 +499,11 @@ class _HomePageState extends State<HomePage> {
     int bathRoom = 0;
     int likes = 0;
     String dateAdded = "";
+    String name = "";
+    String email = "";
+    String ownerImage = "";
+
+    String image = '';
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -473,6 +517,10 @@ class _HomePageState extends State<HomePage> {
           price = data['price'];
           status = data['status'];
           dateAdded = data['dateAdded'];
+          image = data['imageUrls'][0];
+          name = data['ownerName'];
+          email = data['ownerEmail'];
+          ownerImage = data['ownerImage'];
         });
         print(data['address']);
 
@@ -489,6 +537,10 @@ class _HomePageState extends State<HomePage> {
                     status: status,
                     likes: likes,
                     dateAdded: dateAdded,
+                    image: image,
+                    name: name,
+                    email: email,
+                    ownerImage: ownerImage,
                   )),
         );
       },
@@ -583,7 +635,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const SearchResult(),
+                    builder: (context) => SearchResult(),
                   ));
             },
             icon: Icon(
