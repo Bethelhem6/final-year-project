@@ -94,8 +94,8 @@ class _ReviewPageState extends State<ReviewPage> {
           onPressed: () async {
             await bottomSheet(context);
           },
-          elevation: 2,
           backgroundColor: Colors.deepPurple,
+          elevation: 2,
           label: Row(
             children: const [
               Icon(
@@ -118,7 +118,7 @@ class _ReviewPageState extends State<ReviewPage> {
     var formattedDate =
         '${parsedDate.day}/${parsedDate.month}/${parsedDate.year}';
 
-    showModalBottomSheet(
+    showModalBottomSheet<dynamic>(
         elevation: 5,
         backgroundColor: Colors.green.shade50,
         isScrollControlled: true,
@@ -126,6 +126,7 @@ class _ReviewPageState extends State<ReviewPage> {
         builder: (BuildContext bc) {
           return SingleChildScrollView(
             child: Container(
+              height: 750,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25.0),
@@ -197,7 +198,7 @@ class _ReviewPageState extends State<ReviewPage> {
                           vertical: 15.0, horizontal: 35),
                       child: TextFormField(
                         controller: textarea,
-                        // keyboardType: TextInputType.multiline,
+                        keyboardType: TextInputType.multiline,
                         maxLines: 7,
                         onEditingComplete: () {
                           FocusScope.of(context).unfocus();
