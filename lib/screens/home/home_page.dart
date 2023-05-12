@@ -4,7 +4,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_project/screens/home/view_more.dart';
-import 'package:final_project/screens/post_property/new_property.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../fav/favourite.dart';
 import '../../utils/colors.dart';
-import '../../models/model.dart';
 import '../developers/developers.dart';
 import '../post_property/add_property.dart';
 import '../screens.dart';
@@ -123,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                         context,
                         MaterialPageRoute(
                           builder: ((context) =>
-                              ViewMore(collection: "houses")),
+                              const ViewMore(collection: "houses")),
                         ));
                   },
                   child: Text(
@@ -144,70 +142,118 @@ class _HomePageState extends State<HomePage> {
               margin: const EdgeInsets.all(20),
               width: size.width,
               height: size.height * 0.45,
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: categories.length,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return GestureDetector(child: view(index, textTheme, size));
+              child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: FirebaseFirestore.instance
+                    .collection("houses")
+                    .where("status", isEqualTo: "sell")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasData) {
+                    var doc = snapshot.data!.docs;
+
+                    return PageView.builder(
+                        controller: _pageController,
+                        itemCount: doc.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              child: view(index, textTheme, size));
+                        });
+                  }
+                  return Container();
                 },
               ),
             ),
           ),
-          DotsIndicator(
-            dotsCount: categories.length,
-            position: _currentPage,
-            decorator: const DotsDecorator(
-              color: Colors.grey, // Inactive color
-              activeColor: Colors.deepPurple,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-                child: Text(
-                  "Recently Added",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0, right: 20),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) =>
-                              ViewMore(collection: "houses")),
-                        ));
-                  },
-                  child: Text(
-                    "View more",
-                    style: TextStyle(
-                      color: buttonColor,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance
+                  .collection("houses")
+                  .where("status", isEqualTo: "sell")
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasData) {
+                  var doc = snapshot.data!.docs;
+
+                  return DotsIndicator(
+                    dotsCount: doc.length,
+                    position: _currentPage,
+                    decorator: const DotsDecorator(
+                      color: Colors.grey, // Inactive color
+                      activeColor: Colors.deepPurple,
                     ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 250,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return containerCards();
-                }),
-          ),
+                  );
+                }
+                return Container();
+              }),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     const Padding(
+          //       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          //       child: Text(
+          //         "Recently Added",
+          //         textAlign: TextAlign.start,
+          //         style: TextStyle(
+          //           fontSize: 18,
+          //           fontWeight: FontWeight.bold,
+          //         ),
+          //       ),
+          //     ),
+          //     Padding(
+          //       padding: const EdgeInsets.only(top: 10.0, right: 20),
+          //       child: GestureDetector(
+          //         onTap: () {
+          //           Navigator.push(
+          //               context,
+          //               MaterialPageRoute(
+          //                 builder: ((context) =>
+          //                     const ViewMore(collection: "houses")),
+          //               ));
+          //         },
+          //         child: Text(
+          //           "View more",
+          //           style: TextStyle(
+          //             color: buttonColor,
+          //             fontSize: 16,
+          //             decoration: TextDecoration.underline,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          //     stream:
+          //         FirebaseFirestore.instance.collection("houses").snapshots(),
+          //     builder: (context, snapshot) {
+          //       if (!snapshot.hasData) {
+          //         return const Center(
+          //           child: CircularProgressIndicator(),
+          //         );
+          //       } else if (snapshot.hasData) {
+          //         var doc = snapshot.data!.docs;
+
+          //         return SizedBox(
+          //           height: 250,
+          //           child: ListView.builder(
+          //               scrollDirection: Axis.horizontal,
+          //               itemCount: doc.length,
+          //               itemBuilder: (context, index) {
+          //                 if(doc[index]["status"] == "rent")
+          //                 return containerCards();
+          //               }),
+          //         );
+          //       }
+          //       return Container();
+          //     }),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -223,7 +269,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) =>
+                            const ViewMore(collection: "houses")),
+                      ));
+                },
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10.0, right: 20),
                   child: Text(
@@ -238,30 +291,55 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          SizedBox(
-            height: 250,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return containerCards();
-                }),
-          ),
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance
+                  .collection("houses")
+                  .where("status", isEqualTo: "rent")
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasData) {
+                  var doc = snapshot.data!.docs;
+
+                  return SizedBox(
+                    height: 250,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: doc.length,
+                        itemBuilder: (context, index) {
+                          return containerCards(doc[index]);
+                        }),
+                  );
+                }
+                return Container();
+              }),
         ]),
       ),
     );
   }
 
 //cards for containers
-  Container containerCards() {
+  Container containerCards(var doc) {
     return Container(
       padding: const EdgeInsets.only(left: 10),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const DetailPage()),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       builder: (context) => DetailPage(
+          //             bathRoom: doc["bathRoom"],
+          //             bedroom: doc["bedroom"],
+          //             company: doc['companyName'],
+          //             description: doc['description'],
+          //             location: doc['address'],
+          //             price: doc['price'],
+          //             status: doc['status'],
+          //           )),
+          // );
         },
         child: Container(
           // padding: const EdgeInsets.only(left: 20),
@@ -284,13 +362,14 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 height: 120,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple[200],
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                   ),
                   image: DecorationImage(
-                    image: AssetImage("assets/house1.jpg"),
+                    image: NetworkImage(doc["imageUrls"][0]),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -298,12 +377,12 @@ class _HomePageState extends State<HomePage> {
               textWidget(
                 color: textPrimaryDarkColor,
                 size: 15,
-                title: "Addis Ababa",
+                title: doc['address'],
               ),
               textWidget(
                 color: appbarColor,
                 size: 17,
-                title: "Birr 2,0000,000,000",
+                title: doc['price'].toString(),
                 weight: FontWeight.bold,
               ),
               const SizedBox(
@@ -347,18 +426,70 @@ class _HomePageState extends State<HomePage> {
           }
           return Transform.rotate(
             angle: 3.14 * value,
-            child: card(mainList[index], theme, size),
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: FirebaseFirestore.instance
+                    .collection("houses")
+                    .where("status", isEqualTo: "sell")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasData) {
+                    var doc = snapshot.data!.docs;
+
+                    return card(doc[index], theme, size);
+                  }
+
+                  return Container();
+                }),
           );
         });
   }
 
   /// Page view Cards
-  Widget card(BaseModel data, TextTheme theme, Size size) {
+  Widget card(QueryDocumentSnapshot<Map<String, dynamic>> data, TextTheme theme,
+      Size size) {
+    String location = "";
+    String company = '';
+    String status = '';
+    String description = '';
+    int price = 0;
+    int bedroom = 0;
+    int bathRoom = 0;
+    int likes = 0;
+    String dateAdded = "";
     return GestureDetector(
       onTap: () {
+        setState(() {
+          location = data["address"];
+          bedroom = data["bedRoom"];
+          likes = data["likes"];
+          bedroom = data["bathRoom"];
+          company = data['companyName'];
+          description = data['description'];
+          location = data['address'];
+          price = data['price'];
+          status = data['status'];
+          dateAdded = data['dateAdded'];
+        });
+        print(data['address']);
+
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const DetailPage()),
+          MaterialPageRoute(
+              builder: (context) => DetailPage(
+                    bathRoom: bathRoom,
+                    bedroom: bedroom,
+                    company: company,
+                    description: description,
+                    location: location,
+                    price: price,
+                    status: status,
+                    likes: likes,
+                    dateAdded: dateAdded,
+                  )),
         );
       },
       child: Padding(
@@ -372,8 +503,9 @@ class _HomePageState extends State<HomePage> {
                 height: size.height * 0.35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13),
+                  color: Colors.deepPurple[100],
                   image: DecorationImage(
-                    image: AssetImage(data.imageUrl),
+                    image: NetworkImage(data["imageUrls"][0]),
                     fit: BoxFit.cover,
                   ),
                   boxShadow: const [
@@ -395,7 +527,7 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.grey,
                   ),
                   textWidget(
-                      title: "Addis Ababa",
+                      title: data["address"],
                       color: Colors.grey.shade700,
                       size: 15,
                       weight: FontWeight.normal),
@@ -403,7 +535,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             textWidget(
-                title: "Birr 400,000,000",
+                title: "Birr ${data["price"]}",
                 color: appbarColor,
                 size: 18,
                 weight: FontWeight.bold),
@@ -590,7 +722,7 @@ class _HomePageState extends State<HomePage> {
 
                 Navigator.pop(context);
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
                 print("signed out");
               },
               child: const Text(

@@ -1,14 +1,32 @@
-
 import 'package:final_project/screens/chat/user_list_screen.dart';
 import 'package:final_project/utils/colors.dart';
 import 'package:final_project/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-
-
-
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+  DetailPage({
+    super.key,
+    required this.bathRoom,
+    required this.bedroom,
+    required this.company,
+    required this.description,
+    required this.location,
+    required this.price,
+    required this.status,
+    required this.likes,
+    required this.dateAdded,
+  });
+  String location;
+  String company;
+  String status;
+  String description;
+
+  String dateAdded;
+  int price;
+  int bedroom;
+  int bathRoom;
+
+  int likes;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -19,8 +37,8 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Tsehay real estate',
+        title: Text(
+          widget.company,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -166,9 +184,9 @@ class _DetailPageState extends State<DetailPage> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
-                        "Addis Ababa, Ethiopia",
+                        "${widget.location}, Ethiopia",
                         style: TextStyle(fontSize: 20),
                       ),
                       SizedBox(
@@ -213,9 +231,9 @@ class _DetailPageState extends State<DetailPage> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
-                        "Birr 40,000",
+                        "Birr ${widget.price}",
                         style: TextStyle(fontSize: 20),
                       ),
                       SizedBox(
@@ -231,15 +249,15 @@ class _DetailPageState extends State<DetailPage> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
-                        "Fully Furnished",
+                        widget.status,
                         style: TextStyle(fontSize: 20),
                       ),
                       SizedBox(
                         height: 5,
                       ),
-                      Text("Furnishing status")
+                      Text("Dealing status")
                     ],
                   ),
                 ],
@@ -281,7 +299,7 @@ class _DetailPageState extends State<DetailPage> {
                       TableRow(children: [
                         TableCell(
                             child: Row(
-                          children: const [
+                          children: [
                             AppIcon(
                               icon: Icons.bed_outlined,
                               iconColor: Colors.deepPurple,
@@ -289,12 +307,12 @@ class _DetailPageState extends State<DetailPage> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text("4 Bedroom")
+                            Text("${widget.bedroom} Bedroom")
                           ],
                         )),
                         TableCell(
                             child: Row(
-                          children: const [
+                          children: [
                             AppIcon(
                               icon: Icons.bathroom_outlined,
                               iconColor: Colors.deepPurple,
@@ -302,14 +320,14 @@ class _DetailPageState extends State<DetailPage> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text("4 Bathroom")
+                            Text("${widget.bathRoom} Bathroom")
                           ],
                         )),
                       ]),
                       TableRow(children: [
                         TableCell(
                             child: Row(
-                          children: const [
+                          children: [
                             AppIcon(
                               icon: Icons.favorite,
                               iconColor: Colors.deepPurple,
@@ -317,12 +335,12 @@ class _DetailPageState extends State<DetailPage> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text("260 Likes")
+                            Text("${widget.likes} Likes")
                           ],
                         )),
                         TableCell(
                             child: Row(
-                          children: const [
+                          children: [
                             AppIcon(
                               icon: Icons.date_range_rounded,
                               iconColor: Colors.deepPurple,
@@ -330,7 +348,7 @@ class _DetailPageState extends State<DetailPage> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text("23/5/2023")
+                            Text(widget.dateAdded)
                           ],
                         )),
                       ]),
@@ -360,23 +378,21 @@ class _DetailPageState extends State<DetailPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Descreption",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Descreption",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                          "In the same way that there are words that help your home sell faster or for more money, there are definitely some terms you’ll want to steer clear of. Unless you are truly selling your home as a fixer-upper or a flip, avoid these nine real estate marketing words: “Fixer,” “TLC” (as in the home needs some TLC), “cosmetic,” “investment,” “investor,” “potential,” “bargain,” “opportunity” and “nice.” While “nice” is a positive word, it can be highly subjective. Instead of saying you have an “older home in need of TLC,” say something like “A classic abode that can be customized to your liking.”")
-                    ],
-                  ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(widget.description)
+                      ]),
                 ),
               ),
             ),

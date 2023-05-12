@@ -51,10 +51,10 @@ class _ViewMoreState extends State<ViewMore> {
                 itemBuilder: (ctx, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DetailPage()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => DetailPage(id: "",)),
+                      // );
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(
