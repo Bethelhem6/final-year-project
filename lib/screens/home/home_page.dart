@@ -511,7 +511,7 @@ class _HomePageState extends State<HomePage> {
           location = data["address"];
           bedroom = data["bedRoom"];
           likes = data["likes"];
-          bedroom = data["bathRoom"];
+          bathRoom = data["bathRoom"];
           company = data['companyName'];
           description = data['description'];
           location = data['address'];
