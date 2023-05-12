@@ -44,6 +44,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_notification_channel: ^2.0.0
+  flutter_rating_bar: ^4.0.1
   gallery_saver: ^2.3.2
   google_fonts: ^4.0.3
   google_sign_in: ^6.0.2

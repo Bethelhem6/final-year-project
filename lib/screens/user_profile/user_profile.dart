@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +14,38 @@ class user_profile extends StatefulWidget {
 
 // ignore: camel_case_types
 class _user_profileState extends State<user_profile> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String _uid = "";
+  String _name = "";
+  String _email = "";
+  String _image = "";
+
+  void _getData() async {
+    User? user = _auth.currentUser;
+    _uid = user!.uid;
+
+    final DocumentSnapshot userDocs =
+        await FirebaseFirestore.instance.collection("users").doc(_uid).get();
+    setState(() {
+      _name = userDocs.get('name');
+      _email = userDocs.get('email');
+      _image = userDocs.get('image');
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         toolbarHeight: 70,
-        title: const Text('Afrah Muhammed'),
+        title: const Text("My Profile"),
         centerTitle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -45,7 +71,7 @@ class _user_profileState extends State<user_profile> {
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const <Widget>[
+                  children: <Widget>[
                     // CircleAvatar(
                     //   backgroundColor: Colors.red.shade300,
                     //   minRadius: 35.0,
@@ -60,14 +86,14 @@ class _user_profileState extends State<user_profile> {
                       minRadius: 80.0,
                       child: CircleAvatar(
                         radius: 75.0,
-                        backgroundImage: AssetImage('assets/profile1.jpg'),
+                        backgroundImage: NetworkImage(_image),
                       ),
                     ),
                   ],
                 ),
-                const Text(
-                  'Afrah muhammed',
-                  style: TextStyle(
+                Text(
+                  _name,
+                  style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -99,25 +125,25 @@ class _user_profileState extends State<user_profile> {
                     ),
                   ),
 
-                  //  height: 100.0,
+//  height: 100.0,
                   // color: Colors.grey[100],
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   margin: const EdgeInsets.all(5),
-                  child: const ListTile(
-                    leading: Icon(
+                  child: ListTile(
+                    leading: const Icon(
                       Icons.person,
                       color: Colors.deepPurple,
                     ),
-                    title: Text(
-                      'User name',
+                    title: const Text(
+                      "User Name",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     subtitle: Text(
-                      'Afi afi',
-                      style: TextStyle(
+                      _name,
+                      style: const TextStyle(
                         fontSize: 15,
                       ),
                     ),
@@ -170,12 +196,12 @@ class _user_profileState extends State<user_profile> {
                   //  color: Colors.grey[100],
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   margin: const EdgeInsets.all(5),
-                  child: const ListTile(
-                    leading: Icon(
+                  child: ListTile(
+                    leading: const Icon(
                       Icons.email,
                       color: Colors.blue,
                     ),
-                    title: Text(
+                    title: const Text(
                       'Email',
                       style: TextStyle(
                         // color: Colors.deepPurple,
@@ -184,8 +210,8 @@ class _user_profileState extends State<user_profile> {
                       ),
                     ),
                     subtitle: Text(
-                      'afrubintmame@gmail.com',
-                      style: TextStyle(
+                      _email,
+                      style: const TextStyle(
                         fontSize: 15,
                       ),
                     ),
@@ -240,7 +266,7 @@ class _user_profileState extends State<user_profile> {
                   child: ListTile(
                     onTap: () async {
                       await FirebaseAuth.instance.signOut();
-                      print("signed out");
+
                       Navigator.pop(context);
 
                       Navigator.pop(context);

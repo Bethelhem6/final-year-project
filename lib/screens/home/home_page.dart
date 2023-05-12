@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_project/screens/home/view_more.dart';
+import 'package:final_project/screens/review/review_page.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -669,8 +670,7 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.only(right: 10.0),
                         child: CircleAvatar(
                           // backgroundColor: textPrimaryLightColor,
-                          backgroundImage:
-                              _image == null ? null : NetworkImage(_image),
+                          backgroundImage: NetworkImage(_image),
                           radius: 35,
                         ),
                       ),
@@ -737,7 +737,7 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.groups, color: Colors.orange),
+            leading: const Icon(Icons.message, color: Colors.pink),
             title: const Text(
               ' Contact Users ',
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
@@ -745,6 +745,18 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: ((context) => const UserList())));
+              // Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.star, color: Colors.orange),
+            title: const Text(
+              ' Rate and Review ',
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+            ),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => ReviewPage())));
               // Navigator.pop(context);
             },
           ),
