@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:final_project/screens/chat/user_list_screen.dart';
 import 'package:final_project/utils/colors.dart';
 import 'package:final_project/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({
@@ -29,7 +31,7 @@ class DetailPage extends StatefulWidget {
   int price;
   int bedroom;
   int bathRoom;
-  String image;
+  List image;
   String name;
   String email;
   String ownerImage;
@@ -83,7 +85,7 @@ class _DetailPageState extends State<DetailPage> {
                     BoxShadow(color: Colors.white, offset: Offset(5, 0))
                   ]),
               child: Image.network(
-                widget.image,
+                widget.image[0],
                 fit: BoxFit.fill,
               ),
             ),
@@ -400,61 +402,60 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
             ),
-            // Container(
-            //   margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            //   width: 500,
-            //   height: 170,
-            //   decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(10),
-            //       color: Colors.white,
-            //       boxShadow: const [
-            //         BoxShadow(
-            //             color: Colors.black45,
-            //             blurRadius: 5,
-            //             offset: Offset(0, 3)),
-            //         BoxShadow(color: Colors.white, offset: Offset(-5, 0)),
-            //         BoxShadow(color: Colors.white, offset: Offset(5, 0))
-            //       ]),
-            //   child: Container(
-            //     padding:
-            //         const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.start,
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         const Text(
-            //           "Address",
-            //           style: TextStyle(
-            //             fontSize: 20,
-            //             fontWeight: FontWeight.bold,
-            //           ),
-            //         ),
-            //         const SizedBox(
-            //           height: 3,
-            //         ),
-            //         Text(
-            //           " @${widget.company}",
-            //         ),
-            //         const SizedBox(
-            //           height: 3,
-            //         ),
-            //         Text("${widget.location}, Ethiopia"),
-            //         const SizedBox(
-            //           height: 3,
-            //         ),
-            //         // const Text("Around Ayat"),
-            //         // const SizedBox(
-            //         //   height: 3,
-            //         // ),
-            //         // const Text("building number=7"),
-            //         // const SizedBox(
-            //         //   height: 3,
-            //         // ),
-            //         // const Text("home number=10")
-            //       ],
-            //     ),
-            //   ),
-            // ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              width: 500,
+              height: 320,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.black45,
+                        blurRadius: 5,
+                        offset: Offset(0, 3)),
+                    BoxShadow(color: Colors.white, offset: Offset(-5, 0)),
+                    BoxShadow(color: Colors.white, offset: Offset(5, 0))
+                  ]),
+              child: GridView.builder(
+                itemCount: widget.image.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black45,
+                              blurRadius: 5,
+                              offset: Offset(0, 3)),
+                          BoxShadow(color: Colors.white, offset: Offset(-5, 0)),
+                          BoxShadow(color: Colors.white, offset: Offset(5, 0))
+                        ]),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => PhotoScreen(
+                                  image: widget.image[index],
+                                )),
+                          ),
+                        );
+                      },
+                      child: Image.network(
+                        widget.image[index],
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               width: 500,
@@ -501,7 +502,7 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                       Text(
                         widget.company,
-                        style: TextStyle(fontSize: 15),
+                        style: const TextStyle(fontSize: 15),
                       ),
                       Row(
                         children: [
@@ -514,7 +515,7 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                       Text(
                         widget.email,
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       )
                     ],
                   ),
@@ -523,6 +524,34 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PhotoScreen extends StatelessWidget {
+  PhotoScreen({super.key, required this.image});
+  String image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        child: Center(
+          child: Hero(
+              tag: 'imageHero',
+              child: CachedNetworkImage(
+                imageUrl: image,
+                imageBuilder: (context, imageProvider) => PhotoView(
+                  imageProvider: imageProvider,
+                ),
+                placeholder: (context, url) => const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              )),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }

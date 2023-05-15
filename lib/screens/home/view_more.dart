@@ -63,7 +63,7 @@ class _ViewMoreState extends State<ViewMore> {
                         int bathRoom = 0;
                         int likes = 0;
                         String dateAdded = "";
-                        String imageUrl = '';
+                        List imageUrl = [];
                         String name = "";
                         String email = "";
                         String ownerImage = "";
@@ -82,7 +82,7 @@ class _ViewMoreState extends State<ViewMore> {
                           price = data[index]['price'];
                           status = data[index]['status'];
                           dateAdded = data[index]['dateAdded'];
-                          imageUrl = data[index]['imageUrls'][0];
+                          imageUrl = data[index]['imageUrls'];
                           ownerImage = data[index]['ownerImage'];
                         });
                         Navigator.push(

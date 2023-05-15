@@ -6,8 +6,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 class House {
+  final String id;
   final String address;
   final String companyName;
   final String category;
@@ -25,6 +27,7 @@ class House {
   final List<String> imageUrls;
 
   House({
+    required this.id,
     required this.address,
     required this.price,
     required this.imageUrls,
@@ -43,6 +46,7 @@ class House {
 
   Map<String, dynamic> toMap() {
     return {
+      'id':id,
       'address': address,
       'price': price,
       'imageUrls': imageUrls,
@@ -142,6 +146,8 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
       setState(() {
         _isLoading = true;
       });
+      var uuid = Uuid();
+      String houseId = uuid.v4();
       final String address = _addressController.text;
       final int price = int.parse(_priceController.text);
       final String companyName = _companyNameController.text;
@@ -162,6 +168,7 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
       List<String> imageUrls = await _uploadImages(_selectedImages);
 
       House house = House(
+        id:houseId ,
         address: address,
         price: price,
         imageUrls: imageUrls,

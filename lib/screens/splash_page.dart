@@ -50,7 +50,7 @@ class SplashScreenState extends State<SplashScreen> {
                     ),
                     const Center(
                         child: Text(
-                      'ABY\'s',
+                      'Topia Rental',
                       style: TextStyle(
                           letterSpacing: 5,
                           color: Colors.white,

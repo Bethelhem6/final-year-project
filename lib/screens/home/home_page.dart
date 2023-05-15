@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> {
           int bathRoom = 0;
           int likes = 0;
           String dateAdded = "";
-          String imageUrl = '';
+          List imageUrl = [];
           String name = "";
           String email = "";
           String ownerImage = "";
@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> {
             price = doc['price'];
             status = doc['status'];
             dateAdded = doc['dateAdded'];
-            imageUrl = doc['imageUrls'][0];
+            imageUrl = doc['imageUrls'];
             ownerImage = doc['ownerImage'];
           });
           Navigator.push(
@@ -504,7 +504,7 @@ class _HomePageState extends State<HomePage> {
     String email = "";
     String ownerImage = "";
 
-    String image = '';
+    List image = [];
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -518,7 +518,7 @@ class _HomePageState extends State<HomePage> {
           price = data['price'];
           status = data['status'];
           dateAdded = data['dateAdded'];
-          image = data['imageUrls'][0];
+          image = data['imageUrls'];
           name = data['ownerName'];
           email = data['ownerEmail'];
           ownerImage = data['ownerImage'];
