@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/colors.dart';
@@ -10,7 +12,30 @@ class MyProperties extends StatefulWidget {
 }
 
 class _MyPropertiesState extends State<MyProperties> {
+  String _uid = "";
+  String _name = "";
+  String _email = "";
+  String _image = "";
+
+  void _getData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    _uid = user!.uid;
+
+    final DocumentSnapshot userDocs =
+        await FirebaseFirestore.instance.collection("users").doc(_uid).get();
+    setState(() {
+      _name = userDocs.get('name');
+      _email = userDocs.get('email');
+      _image = userDocs.get('image');
+    });
+  }
+
   @override
+  void initState() {
+    super.initState();
+    // _getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -103,81 +128,100 @@ class TabViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    String _uid = user!.uid;
     return SizedBox(
-      child: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return Card(
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
-                    width: 150,
-                    height: 170,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Colors.black45,
-                            blurRadius: 5,
-                            offset: Offset(0, 3)),
-                        BoxShadow(color: Colors.white, offset: Offset(-5, 0)),
-                        BoxShadow(color: Colors.white, offset: Offset(5, 0)),
-                      ],
-                      image: const DecorationImage(
-                          image: AssetImage("assets/house1.jpg"),
-                          fit: BoxFit.cover),
-                    ),
-                  ),
-                  SizedBox(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          "Category: Real estate",
-                          style: TextStyle(
-                              fontSize: 16,
-                              overflow: TextOverflow.ellipsis,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          "Area: 1000sq ft.",
-                          style: TextStyle(
-                            fontSize: 16,
+      child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: FirebaseFirestore.instance
+              .collection("houses")
+              .where("ownerId", isEqualTo: _uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasData) {
+              var doc = snapshot.data!.docs;
+              return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            width: 150,
+                            height: 170,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.black45,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 3)),
+                                BoxShadow(
+                                    color: Colors.white, offset: Offset(-5, 0)),
+                                BoxShadow(
+                                    color: Colors.white, offset: Offset(5, 0)),
+                              ],
+                              image: const DecorationImage(
+                                  image: AssetImage("assets/house1.jpg"),
+                                  fit: BoxFit.cover),
+                            ),
                           ),
-                        ),
-                        Text(
-                          "For: Rent",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          "Price: Birr 20,000",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          "Status: FInished",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          "Location: Bahirdar",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
+                          SizedBox(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Category:  ${doc[index]["category"]}",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "Area: 1000sq ft.",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  "For: Rent",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  "Price: Birr 20,000",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  "Status: FInished",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  "Location: Bahirdar",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  });
+            }
+            return Container();
           }),
     );
   }

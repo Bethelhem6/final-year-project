@@ -17,6 +17,7 @@ class House {
   final String status;
   final int bedRooms;
   final int bathRoom;
+  final String ownerId;
 
   final int area;
   final String dateAdded;
@@ -30,6 +31,7 @@ class House {
   final List<String> imageUrls;
 
   House({
+    required this.ownerId,
     required this.id,
     required this.area,
     required this.whatFor,
@@ -68,6 +70,7 @@ class House {
       'ownerImage': ownerImage,
       "whatFor": whatFor,
       "area": area,
+      "ownerId": ownerId,
     };
   }
 }
@@ -208,23 +211,25 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
       List<String> imageUrls = await _uploadImages(_selectedImages);
 
       House house = House(
-          id: houseId,
-          address: address,
-          price: price,
-          imageUrls: imageUrls,
-          companyName: companyName,
-          category: category,
-          status: status,
-          bedRooms: bedRooms,
-          bathRoom: bathRoom,
-          dateAdded: dateAdded,
-          likes: likes,
-          description: description,
-          ownerName: _name,
-          ownerEmail: _email,
-          ownerImage: _image,
-          area: area,
-          whatFor: whatFor);
+        id: houseId,
+        address: address,
+        price: price,
+        imageUrls: imageUrls,
+        companyName: companyName,
+        category: category,
+        status: status,
+        bedRooms: bedRooms,
+        bathRoom: bathRoom,
+        dateAdded: dateAdded,
+        likes: likes,
+        description: description,
+        ownerName: _name,
+        ownerEmail: _email,
+        ownerImage: _image,
+        area: area,
+        whatFor: whatFor,
+        ownerId: _uid,
+      );
 
       try {
         await housesCollection.add(house.toMap());

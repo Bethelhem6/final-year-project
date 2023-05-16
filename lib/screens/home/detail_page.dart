@@ -198,7 +198,8 @@ class _DetailPageState extends State<DetailPage> {
                     children: [
                       Text(
                         "${widget.location}, Ethiopia",
-                        style: const TextStyle(fontSize: 20),
+                        style: const TextStyle(
+                            fontSize: 17, overflow: TextOverflow.ellipsis),
                       ),
                       const SizedBox(
                         height: 5,
