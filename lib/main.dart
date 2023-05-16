@@ -36,18 +36,22 @@ class MyApp extends StatelessWidget {
         title: 'AR based properties sell and rent',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primaryColor: appbarColor,
-            appBarTheme: const AppBarTheme(
-              centerTitle: true,
-              elevation: 1,
-              iconTheme: IconThemeData(color: Colors.white),
-              titleTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 19),
-              backgroundColor: Colors.white,
-            )),
-        home: const AuthStateScreen());
+          indicatorColor: buttonColor,
+          primaryColor: appbarColor,
+          progressIndicatorTheme: const ProgressIndicatorThemeData(
+              circularTrackColor: Colors.deepPurple, color: Colors.grey),
+          // appBarTheme: const AppBarTheme(
+          //   centerTitle: true,
+          //   elevation: 1,
+          //   iconTheme: IconThemeData(color: Colors.white),
+          //   titleTextStyle: TextStyle(
+          //       color: Colors.white,
+          //       fontWeight: FontWeight.normal,
+          //       fontSize: 19),
+          //   backgroundColor: Colors.white,
+          // )
+        ),
+        home: HomePage());
   }
 }
 

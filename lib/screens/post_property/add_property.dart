@@ -10,12 +10,15 @@ import 'package:uuid/uuid.dart';
 
 class House {
   final String id;
+  final String whatFor;
   final String address;
   final String companyName;
   final String category;
   final String status;
   final int bedRooms;
   final int bathRoom;
+
+  final int area;
   final String dateAdded;
   final int likes;
   final String description;
@@ -28,6 +31,8 @@ class House {
 
   House({
     required this.id,
+    required this.area,
+    required this.whatFor,
     required this.address,
     required this.price,
     required this.imageUrls,
@@ -46,7 +51,7 @@ class House {
 
   Map<String, dynamic> toMap() {
     return {
-      'id':id,
+      'id': id,
       'address': address,
       'price': price,
       'imageUrls': imageUrls,
@@ -61,6 +66,8 @@ class House {
       'ownerName': ownerName,
       'ownerEmail': ownerEmail,
       'ownerImage': ownerImage,
+      "whatFor": whatFor,
+      "area": area,
     };
   }
 }
@@ -75,7 +82,7 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
   final TextEditingController _priceController = TextEditingController();
 
   final TextEditingController _companyNameController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _areaController = TextEditingController();
   final TextEditingController _statusController = TextEditingController();
   final TextEditingController _bedRoomController = TextEditingController();
   final TextEditingController _bathRoomController = TextEditingController();
@@ -106,6 +113,37 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
       _email = userDocs.get('email');
       _image = userDocs.get('image');
     });
+  }
+
+  String category = 'Villa';
+  List<DropdownMenuItem<String>> get categories {
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(value: "Villa", child: Text("Villa")),
+      const DropdownMenuItem(value: "Apartment", child: Text("Apartment")),
+      const DropdownMenuItem(value: "Real estate", child: Text("Real estate")),
+      const DropdownMenuItem(value: "Condominium", child: Text("Condominium")),
+    ];
+    return menuItems;
+  }
+
+  String whatFor = 'Rent';
+  List<DropdownMenuItem<String>> get options {
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(value: "Rent", child: Text("Rent")),
+      const DropdownMenuItem(value: "Sell", child: Text("Sell")),
+    ];
+    return menuItems;
+  }
+
+  String status = 'Finished';
+  List<DropdownMenuItem<String>> get statuses {
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(value: "Finished", child: Text("Finished")),
+      const DropdownMenuItem(
+          value: "Half-finished", child: Text("Half-finished")),
+      // const DropdownMenuItem(value: "Half-finished", child: Text("Half-finished")),
+    ];
+    return menuItems;
   }
 
   @override
@@ -142,17 +180,19 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
   }
 
   Future<void> _uploadHouse() async {
+    print(category);
+
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
-      var uuid = Uuid();
+      var uuid = const Uuid();
       String houseId = uuid.v4();
       final String address = _addressController.text;
       final int price = int.parse(_priceController.text);
       final String companyName = _companyNameController.text;
-      final String category = _categoryController.text;
-      final String status = _statusController.text;
+      final int area = int.parse(_areaController.text);
+      // final String status = _statusController.text;
 
       final int bedRooms = int.parse(_bedRoomController.text);
 
@@ -168,22 +208,23 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
       List<String> imageUrls = await _uploadImages(_selectedImages);
 
       House house = House(
-        id:houseId ,
-        address: address,
-        price: price,
-        imageUrls: imageUrls,
-        companyName: companyName,
-        category: category,
-        status: status,
-        bedRooms: bedRooms,
-        bathRoom: bathRoom,
-        dateAdded: dateAdded,
-        likes: likes,
-        description: description,
-        ownerName: _name,
-        ownerEmail: _email,
-        ownerImage: _image,
-      );
+          id: houseId,
+          address: address,
+          price: price,
+          imageUrls: imageUrls,
+          companyName: companyName,
+          category: category,
+          status: status,
+          bedRooms: bedRooms,
+          bathRoom: bathRoom,
+          dateAdded: dateAdded,
+          likes: likes,
+          description: description,
+          ownerName: _name,
+          ownerEmail: _email,
+          ownerImage: _image,
+          area: area,
+          whatFor: whatFor);
 
       try {
         await housesCollection.add(house.toMap());
@@ -194,7 +235,7 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
         _priceController.clear();
         _bathRoomController.clear();
         _bedRoomController.clear();
-        _categoryController.clear();
+        _areaController.clear();
         _companyNameController.clear();
         _statusController.clear();
         _descriptionController.clear();
@@ -218,6 +259,7 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.deepPurple[100],
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         toolbarHeight: 70,
@@ -237,198 +279,236 @@ class _AddHouseScreenState extends State<AddHouseScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _companyNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Real estate company',
-                      prefixIcon: Icon(Icons.real_estate_agent_outlined,
-                          color: Colors.green),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter company name';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _categoryController,
-                        decoration: const InputDecoration(
-                          labelText: 'Category',
-                          prefixIcon: Icon(Icons.apartment_outlined,
-                              color: Colors.orange),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter property category';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _statusController,
-                        decoration: const InputDecoration(
-                          labelText: 'Status',
-                          prefixIcon: Icon(
-                            Icons.house_outlined,
-                            color: Colors.deepOrange,
+            child: Card(
+              elevation: 3,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _companyNameController,
+                          decoration: const InputDecoration(
+                            labelText: 'Real estate company',
+                            prefixIcon: Icon(Icons.real_estate_agent_outlined,
+                                color: Colors.green),
                           ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter company name';
+                            }
+                            return null;
+                          },
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter status';
-                          }
-                          return null;
-                        },
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _addressController,
-                        decoration: const InputDecoration(
-                          labelText: 'Location',
-                          prefixIcon: Icon(Icons.location_on_outlined,
-                              color: Colors.purple),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter location of property';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _priceController,
-                        decoration: const InputDecoration(
-                          labelText: 'Price',
-                          prefixIcon: Icon(Icons.money, color: Colors.teal),
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter property price';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _bedRoomController,
-                        decoration: const InputDecoration(
-                          labelText: 'Bed rooms',
-                          prefixIcon:
-                              Icon(Icons.bed_outlined, color: Colors.black),
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter how many bed rooms it has.';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _bathRoomController,
-                        decoration: const InputDecoration(
-                          labelText: 'Bath rooms',
-                          prefixIcon:
-                              Icon(Icons.shower_outlined, color: Colors.blue),
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter how many bath rooms it has.';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16.0),
-                Expanded(
-                  child: TextFormField(
-                    maxLines: 5,
-                    controller: _descriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Description',
-                      prefixIcon: Icon(Icons.description_outlined,
-                          color: Colors.blueGrey),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter short description about the property';
-                      }
-                      return null;
-                    },
+                    ],
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                MaterialButton(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  color: Colors.deepPurple,
-                  onPressed: _selectImage,
-                  child: const Text(
-                    'Select Images',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  const SizedBox(height: 16.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                          child: DropdownButton(
+                        value: category,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            category = newValue!;
+                          });
+                        },
+                        items: categories,
+                      )),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                          child: DropdownButton(
+                              value: whatFor,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  whatFor = newValue!;
+                                });
+                              },
+                              items: options)),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                Expanded(
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    children: _selectedImages.map((image) {
-                      return Image.file(image);
-                    }).toList(),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                MaterialButton(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  color: Colors.deepPurple,
-                  onPressed: _uploadHouse,
-                  child: _isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
+                  const SizedBox(height: 16.0),
+                  Row(
+                    children: [
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _addressController,
+                          decoration: const InputDecoration(
+                            labelText: 'Location',
+                            prefixIcon: Icon(Icons.location_on_outlined,
+                                color: Colors.purple),
                           ),
-                        )
-                      : const Text(
-                          'Upload',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter location of property';
+                            }
+                            return null;
+                          },
                         ),
-                )
-              ],
+                      ),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _priceController,
+                          decoration: const InputDecoration(
+                            labelText: 'Price',
+                            prefixIcon: Icon(Icons.money, color: Colors.teal),
+                          ),
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter property price';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _bedRoomController,
+                          decoration: const InputDecoration(
+                            labelText: 'Bed rooms',
+                            prefixIcon:
+                                Icon(Icons.bed_outlined, color: Colors.black),
+                          ),
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter how many bed rooms it has.';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _bathRoomController,
+                          decoration: const InputDecoration(
+                            labelText: 'Bath rooms',
+                            prefixIcon:
+                                Icon(Icons.shower_outlined, color: Colors.blue),
+                          ),
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter how many bath rooms it has.';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16.0),
+                  Expanded(
+                    child: TextFormField(
+                      maxLines: 5,
+                      controller: _descriptionController,
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                        prefixIcon: Icon(Icons.description_outlined,
+                            color: Colors.blueGrey),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter short description about the property';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+
+                  Row(
+                    children: [
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: DropdownButton(
+                          value: status,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              status = newValue!;
+                            });
+                          },
+                          items: statuses,
+                        ),
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _areaController,
+                          decoration: const InputDecoration(
+                            labelText: 'Area',
+                            prefixIcon: Icon(Icons.area_chart_outlined,
+                                color: Colors.pink),
+                          ),
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter property size';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+
+                  // const
+                  MaterialButton(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    color: Colors.deepPurple,
+                    onPressed: _selectImage,
+                    child: const Text(
+                      'Select Images',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Expanded(
+                    child: GridView.count(
+                      crossAxisCount: 3,
+                      children: _selectedImages.map((image) {
+                        return Image.file(image);
+                      }).toList(),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  MaterialButton(
+                    minWidth: 200,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    color: Colors.deepPurple,
+                    onPressed: _uploadHouse,
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Text(
+                            'Upload',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                  )
+                ],
+              ),
             )),
       ),
     );

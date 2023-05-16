@@ -21,12 +21,13 @@ class DetailPage extends StatefulWidget {
     required this.email,
     required this.name,
     required this.ownerImage,
+    required this.area,
   });
   String location;
   String company;
   String status;
   String description;
-
+  int area;
   String dateAdded;
   int price;
   int bedroom;
@@ -209,7 +210,7 @@ class _DetailPageState extends State<DetailPage> {
                     width: 40,
                   ),
                   const VerticalDivider(),
-                  const Text("1000 sq ft.")
+                  Text("${widget.area} sq ft.")
                 ],
               ),
             ),
@@ -258,12 +259,12 @@ class _DetailPageState extends State<DetailPage> {
                     children: [
                       Text(
                         widget.status,
-                        style: const TextStyle(fontSize: 20),
+                        style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      const Text("Dealing status")
+                      const Text("Status")
                     ],
                   ),
                 ],
@@ -545,7 +546,8 @@ class PhotoScreen extends StatelessWidget {
                 imageBuilder: (context, imageProvider) => PhotoView(
                   imageProvider: imageProvider,
                 ),
-                placeholder: (context, url) => const CircularProgressIndicator(),
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               )),
         ),

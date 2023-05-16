@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class ViewMore extends StatefulWidget {
   final String collection;
-  final String status;
+  final String whatFor;
 
-  const ViewMore({Key? key, required this.collection, required this.status})
+  const ViewMore({Key? key, required this.collection, required this.whatFor})
       : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class _ViewMoreState extends State<ViewMore> {
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: FirebaseFirestore.instance
               .collection(widget.collection)
-              .where("status", isEqualTo: widget.status)
+              .where("whatFor", isEqualTo: widget.whatFor)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
@@ -56,7 +56,7 @@ class _ViewMoreState extends State<ViewMore> {
                       onTap: () {
                         String location = "";
                         String company = '';
-                        String status = '';
+                        String whatFor = '';
                         String description = '';
                         int price = 0;
                         int bedroom = 0;
@@ -67,6 +67,8 @@ class _ViewMoreState extends State<ViewMore> {
                         String name = "";
                         String email = "";
                         String ownerImage = "";
+                        int area = 0;
+                        String status = "";
 
                         setState(() {
                           location = data[index]["address"];
@@ -80,28 +82,32 @@ class _ViewMoreState extends State<ViewMore> {
                           description = data[index]['description'];
                           location = data[index]['address'];
                           price = data[index]['price'];
-                          status = data[index]['status'];
+                          whatFor = data[index]['whatFor'];
                           dateAdded = data[index]['dateAdded'];
                           imageUrl = data[index]['imageUrls'];
                           ownerImage = data[index]['ownerImage'];
+                          area = data[index]["area"];
+                          status = data[index]['status'];
                         });
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => DetailPage(
-                                  bathRoom: bathRoom,
-                                  bedroom: bedroom,
-                                  company: company,
-                                  description: description,
-                                  location: location,
-                                  price: price,
-                                  status: status,
-                                  likes: likes,
-                                  name: name,
-                                  dateAdded: dateAdded,
-                                  email: email,
-                                  ownerImage: ownerImage,
-                                  image: imageUrl)),
+                                    bathRoom: bathRoom,
+                                    bedroom: bedroom,
+                                    company: company,
+                                    description: description,
+                                    location: location,
+                                    price: price,
+                                    status: status,
+                                    likes: likes,
+                                    name: name,
+                                    dateAdded: dateAdded,
+                                    email: email,
+                                    ownerImage: ownerImage,
+                                    image: imageUrl,
+                                    area: area,
+                                  )),
                         );
                       },
                       child: Container(

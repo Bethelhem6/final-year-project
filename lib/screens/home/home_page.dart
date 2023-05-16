@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_project/screens/home/view_more.dart';
+import 'package:final_project/screens/my_properties/my_properties.dart';
 import 'package:final_project/screens/review/review_page.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -124,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(
                           builder: ((context) => const ViewMore(
                                 collection: "houses",
-                                status: "sell",
+                                whatFor: "Sell",
                               )),
                         ));
                   },
@@ -149,7 +150,7 @@ class _HomePageState extends State<HomePage> {
               child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: FirebaseFirestore.instance
                     .collection("houses")
-                    .where("status", isEqualTo: "sell")
+                    .where("whatFor", isEqualTo: "Sell")
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
@@ -176,7 +177,7 @@ class _HomePageState extends State<HomePage> {
           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance
                   .collection("houses")
-                  .where("status", isEqualTo: "sell")
+                  .where("whatFor", isEqualTo: "Sell")
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
@@ -278,7 +279,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: ((context) => const ViewMore(
-                            collection: "houses", status: "rent")),
+                            collection: "houses", whatFor: "Rent")),
                       ));
                 },
                 child: Padding(
@@ -298,7 +299,7 @@ class _HomePageState extends State<HomePage> {
           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance
                   .collection("houses")
-                  .where("status", isEqualTo: "rent")
+                  .where("whatFor", isEqualTo: "Rent")
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
@@ -339,6 +340,8 @@ class _HomePageState extends State<HomePage> {
           int bedroom = 0;
           int bathRoom = 0;
           int likes = 0;
+
+          int area = 0;
           String dateAdded = "";
           List imageUrl = [];
           String name = "";
@@ -361,25 +364,28 @@ class _HomePageState extends State<HomePage> {
             dateAdded = doc['dateAdded'];
             imageUrl = doc['imageUrls'];
             ownerImage = doc['ownerImage'];
+            area = doc["area"];
           });
           Navigator.push(
-            context,
-            MaterialPageRoute(
+              context,
+              MaterialPageRoute(
                 builder: (context) => DetailPage(
-                    bathRoom: bathRoom,
-                    bedroom: bedroom,
-                    company: company,
-                    description: description,
-                    location: location,
-                    price: price,
-                    status: status,
-                    likes: likes,
-                    name: name,
-                    dateAdded: dateAdded,
-                    email: email,
-                    ownerImage: ownerImage,
-                    image: imageUrl)),
-          );
+                  bathRoom: bathRoom,
+                  bedroom: bedroom,
+                  company: company,
+                  description: description,
+                  location: location,
+                  price: price,
+                  status: status,
+                  likes: likes,
+                  name: name,
+                  dateAdded: dateAdded,
+                  email: email,
+                  ownerImage: ownerImage,
+                  image: imageUrl,
+                  area: area,
+                ),
+              ));
         },
         child: Container(
           // padding: const EdgeInsets.only(left: 20),
@@ -469,7 +475,7 @@ class _HomePageState extends State<HomePage> {
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: FirebaseFirestore.instance
                     .collection("houses")
-                    .where("status", isEqualTo: "sell")
+                    .where("whatFor", isEqualTo: "Sell")
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
@@ -503,7 +509,7 @@ class _HomePageState extends State<HomePage> {
     String name = "";
     String email = "";
     String ownerImage = "";
-
+    int area = 0;
     List image = [];
     return GestureDetector(
       onTap: () {
@@ -522,6 +528,7 @@ class _HomePageState extends State<HomePage> {
           name = data['ownerName'];
           email = data['ownerEmail'];
           ownerImage = data['ownerImage'];
+          area = data["area"];
         });
         print(data['address']);
 
@@ -542,6 +549,7 @@ class _HomePageState extends State<HomePage> {
                     name: name,
                     email: email,
                     ownerImage: ownerImage,
+                    area: area,
                   )),
         );
       },
@@ -733,6 +741,20 @@ class _HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                       builder: ((context) => const user_profile())));
+              // Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.home, color: Colors.deepPurple),
+            title: const Text(
+              ' My properties ',
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => const MyProperties())));
               // Navigator.pop(context);
             },
           ),
