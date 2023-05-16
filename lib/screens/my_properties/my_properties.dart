@@ -151,7 +151,7 @@ class TabViewWidget extends StatelessWidget {
                         children: [
                           Container(
                             margin: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 10),
+                                horizontal: 10, vertical: 10),
                             width: 150,
                             height: 170,
                             decoration: BoxDecoration(
@@ -167,8 +167,9 @@ class TabViewWidget extends StatelessWidget {
                                 BoxShadow(
                                     color: Colors.white, offset: Offset(5, 0)),
                               ],
-                              image: const DecorationImage(
-                                  image: AssetImage("assets/house1.jpg"),
+                              image: DecorationImage(
+                                  image:
+                                      NetworkImage(doc[index]["imageUrls"][0]),
                                   fit: BoxFit.cover),
                             ),
                           ),
@@ -178,39 +179,44 @@ class TabViewWidget extends StatelessWidget {
                               children: [
                                 Text(
                                   "Category:  ${doc[index]["category"]}",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       overflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  "Area: 1000sq ft.",
-                                  style: TextStyle(
+                                  "Area: ${doc[index]['area']} sq ft.",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Text(
+                                  "For: ${doc[index]['whatFor']}",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Text(
+                                  "Price: Birr ${doc[index]['price']}",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
                                 Text(
-                                  "For: Rent",
-                                  style: TextStyle(
+                                  "Status: ${doc[index]['status']}",
+                                  style: const TextStyle(
                                     fontSize: 16,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 Text(
-                                  "Price: Birr 20,000",
-                                  style: TextStyle(
+                                  "Location: ${doc[index]['address']}",
+                                  style: const TextStyle(
                                     fontSize: 16,
-                                  ),
-                                ),
-                                Text(
-                                  "Status: FInished",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Text(
-                                  "Location: Bahirdar",
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 )
                               ],

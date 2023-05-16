@@ -745,7 +745,7 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.home, color: Colors.deepPurple),
+            leading: const Icon(Icons.home, color: Colors.green),
             title: const Text(
               ' My properties ',
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
