@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           //   backgroundColor: Colors.white,
           // )
         ),
-        home: HomePage());
+        home: AuthStateScreen());
   }
 }
 

@@ -272,7 +272,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pop(context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>  HomePage()),
+          MaterialPageRoute(builder: (context) =>  MainPage()),
         );
         print("logged in");
       } catch (e) {

@@ -329,7 +329,7 @@ class _RegisterPageState extends State<RegisterPage> {
           await Helperfunctions.saveUserNameSF(name);
           // await Helperfunctions.saveUserNameSF(phonenumber);
           // await Helperfunctions.saveUserNameSF(image);
-          nextScreenReplace(context, HomePage());
+          nextScreenReplace(context, MainPage());
         } else {
           showSnackbar(context, Colors.red, value);
           setState(() {

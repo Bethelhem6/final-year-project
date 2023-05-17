@@ -269,9 +269,7 @@ class _user_profileState extends State<user_profile> {
 
                       Navigator.pop(context);
 
-                      Navigator.pop(context);
-
-                      Navigator.pushReplacement(context,
+                      Navigator.push(context,
                           MaterialPageRoute(builder: (context) => LoginPage()));
                     },
                     leading: const Icon(
