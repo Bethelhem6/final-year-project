@@ -4,7 +4,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_project/screens/home/view_more.dart';
-import 'package:final_project/screens/my_properties/my_properties.dart';
 import 'package:final_project/screens/review/review_page.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +13,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../fav/favourite.dart';
 import '../../utils/colors.dart';
 import '../developers/developers.dart';
-import '../post_property/add_property.dart';
 import '../screens.dart';
 import '../search/search_result_page.dart';
 
@@ -707,17 +705,17 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               )),
-          ListTile(
-            leading: const Icon(Icons.add, color: Colors.blue),
-            title: const Text(
-              ' Add New Property',
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-            ),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => AddHouseScreen())));
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.add, color: Colors.blue),
+          //   title: const Text(
+          //     ' Add New Property',
+          //     style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+          //   ),
+          //   onTap: () {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: ((context) => AddHouseScreen())));
+          //   },
+          // ),
           ListTile(
             leading: const Icon(Icons.favorite, color: Colors.red),
             title: const Text(
@@ -744,20 +742,20 @@ class _HomePageState extends State<HomePage> {
               // Navigator.pop(context);
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.home, color: Colors.green),
-            title: const Text(
-              ' My properties ',
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => const MyProperties())));
-              // Navigator.pop(context);
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.home, color: Colors.green),
+          //   title: const Text(
+          //     ' My properties ',
+          //     style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+          //   ),
+          //   onTap: () {
+          //     Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: ((context) => const MyProperties())));
+          //     // Navigator.pop(context);
+          //   },
+          // ),
           ListTile(
             leading: const Icon(Icons.message, color: Colors.pink),
             title: const Text(
