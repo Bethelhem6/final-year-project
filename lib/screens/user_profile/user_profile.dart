@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +57,7 @@ class _user_profileState extends State<user_profile> {
       ),
       body: ListView(
         children: <Widget>[
-          Container(
+          SizedBox(
             height: 250,
             // decoration: const BoxDecoration(
             //   gradient: LinearGradient(
@@ -270,7 +272,7 @@ class _user_profileState extends State<user_profile> {
                       Navigator.pop(context);
 
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                          MaterialPageRoute(builder: (context) => const LoginPage()));
                     },
                     leading: const Icon(
                       Icons.logout,

@@ -66,7 +66,6 @@ class _ViewMoreState extends State<ViewMore> {
                       onTap: () {
                         String location = "";
                         String company = '';
-                        String whatFor = '';
                         String description = '';
                         int price = 0;
                         int bedroom = 0;
@@ -93,7 +92,6 @@ class _ViewMoreState extends State<ViewMore> {
                           description = data[index]['description'];
                           location = data[index]['address'];
                           price = data[index]['price'];
-                          whatFor = data[index]['whatFor'];
                           dateAdded = data[index]['dateAdded'];
                           imageUrl = data[index]['imageUrls'];
                           ownerImage = data[index]['ownerImage'];

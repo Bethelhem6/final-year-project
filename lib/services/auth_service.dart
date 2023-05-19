@@ -1,12 +1,12 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:io';
 
 
 import 'database_service.dart';
 
 class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  File? _image;
 
   Future loginUser(
     String email,

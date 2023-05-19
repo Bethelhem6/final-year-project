@@ -1,22 +1,19 @@
 // // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: avoid_print
 
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_project/screens/review/review_widget.dart';
 import 'package:final_project/utils/colors.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../widgets/golobal_methods.dart';
 
 class ReviewPage extends StatefulWidget {
-  ReviewPage({
+  const ReviewPage({
     Key? key,
   }) : super(key: key);
 
@@ -33,7 +30,7 @@ class _ReviewPageState extends State<ReviewPage> {
   double star = 0.0;
   double initialStar = 2.5;
   final _formKey = GlobalKey<FormState>();
-  GlobalMethods _globalMethods = GlobalMethods();
+  final GlobalMethods _globalMethods = GlobalMethods();
 
   String id = DateTime.now().toString();
 
@@ -88,7 +85,7 @@ class _ReviewPageState extends State<ReviewPage> {
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
-        child: ReviewsWidget(),
+        child: const ReviewsWidget(),
       ),
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {

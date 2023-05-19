@@ -31,7 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size mq = MediaQuery.of(context).size;
 
     return GestureDetector(
       // for hiding keyboard

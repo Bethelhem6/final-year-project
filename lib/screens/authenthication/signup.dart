@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -329,7 +331,7 @@ class _RegisterPageState extends State<RegisterPage> {
           await Helperfunctions.saveUserNameSF(name);
           // await Helperfunctions.saveUserNameSF(phonenumber);
           // await Helperfunctions.saveUserNameSF(image);
-          nextScreenReplace(context, MainPage());
+          nextScreenReplace(context, const MainPage());
         } else {
           showSnackbar(context, Colors.red, value);
           setState(() {

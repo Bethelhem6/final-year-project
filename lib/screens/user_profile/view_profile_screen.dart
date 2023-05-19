@@ -97,7 +97,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                         Icons.person,
                         color: Colors.deepPurple.shade700,
                       ),
-                      title: Text("Name"),
+                      title: const Text("Name"),
                       subtitle: Text(widget.user.name),
                     ),
                   ),

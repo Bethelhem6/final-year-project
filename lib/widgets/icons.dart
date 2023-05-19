@@ -9,7 +9,7 @@ class AppIcon extends StatelessWidget {
     const AppIcon({
     Key?key,
     required this.icon,
-    this.iconColor:const Color.fromARGB(255, 255, 255, 255),
+    this.iconColor =const Color.fromARGB(255, 255, 255, 255),
     this.size=50,
     this.iconSize=35,
         })

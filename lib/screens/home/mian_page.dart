@@ -17,10 +17,10 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   final screens = [
-    HomePage(),
-    Favourite(),
-    UserList(),
-    user_profile(),
+    const HomePage(),
+    const Favourite(),
+    const UserList(),
+    const user_profile(),
   ];
   Future<bool> _onWillPop() async {
     return (await showDialog(
@@ -58,28 +58,28 @@ class _MainPageState extends State<MainPage> {
           showUnselectedLabels: true,
           currentIndex: currentIndex,
           unselectedItemColor: Colors.white,
-          selectedItemColor: Color.fromARGB(255, 240, 200, 21),
+          selectedItemColor: const Color.fromARGB(255, 240, 200, 21),
           onTap: (index) => setState(() {
             currentIndex = index;
           }),
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.today_outlined),
+              icon: const Icon(Icons.today_outlined),
               label: 'Properties',
               backgroundColor: appbarColor,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
+              icon: const Icon(Icons.favorite),
               label: 'Favorite',
               backgroundColor: appbarColor,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.message),
+              icon: const Icon(Icons.message),
               label: 'Chat',
               backgroundColor: appbarColor,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: const Icon(Icons.person),
               label: 'Profile',
               backgroundColor: appbarColor,
             ),

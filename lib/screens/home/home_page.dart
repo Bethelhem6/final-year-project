@@ -17,7 +17,7 @@ import '../screens.dart';
 import '../search/search_result_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -31,7 +31,6 @@ class _HomePageState extends State<HomePage> {
   double offset = 0.0;
   var _currentPage = 0.0;
 
-  var _url;
   XFile? imgXFile;
 
   String _uid = "";
@@ -533,7 +532,6 @@ class _HomePageState extends State<HomePage> {
           area = data["area"];
           id = data['id'];
         });
-        print(data['address']);
 
         Navigator.push(
           context,
@@ -649,7 +647,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SearchResult(),
+                    builder: (context) => const SearchResult(),
                   ));
             },
             icon: Icon(
@@ -783,7 +781,7 @@ class _HomePageState extends State<HomePage> {
             ),
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => ReviewPage())));
+                  MaterialPageRoute(builder: ((context) => const ReviewPage())));
               // Navigator.pop(context);
             },
           ),
@@ -814,7 +812,6 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const LoginPage()));
-                print("signed out");
               },
               child: const Text(
                 'LogOut',

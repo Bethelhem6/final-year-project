@@ -1,11 +1,15 @@
+// ignore_for_file: avoid_print, must_be_immutable
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_project/provider/whishlist_provider.dart';
 import 'package:final_project/screens/chat/user_list_screen.dart';
 import 'package:final_project/utils/colors.dart';
 import 'package:final_project/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:provider/provider.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({
@@ -126,6 +130,8 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final whishlistProvider = Provider.of<WhishlistProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -211,11 +217,28 @@ class _DetailPageState extends State<DetailPage> {
                     Column(
                       children: [
                         IconButton(
-                          onPressed: () {},
-                          icon: const AppIcon(
-                            icon: Icons.favorite,
-                            iconColor: Colors.deepPurple,
-                          ),
+                          onPressed: () async {
+                            whishlistProvider.addOrRemoveWish(widget.id,
+                                widget.company, widget.image, widget.price);
+                            //   Whishlist wishlist = Whishlist(
+                            //       image: productDoc['image'],
+                            //       title: productDoc['title'],
+                            //       price:  double.parse(productDoc['price']),
+                            //       id: productDoc['id']);
+                            //   var box = await Hive.openBox('wishlist_list');
+                            //       box.put(productDoc['id'], wishlist);
+                            print("addedddd");
+                          },
+                          icon: whishlistProvider.whishlist
+                                  .containsKey(widget.company)
+                              ? const AppIcon(
+                                  icon: Icons.favorite,
+                                  iconColor: Colors.red,
+                                )
+                              : const AppIcon(
+                                  icon: Icons.favorite_outline,
+                                  iconColor: Colors.deepPurple,
+                                ),
                         ),
                         const Text(
                           "Favorite",
@@ -236,7 +259,7 @@ class _DetailPageState extends State<DetailPage> {
                                     builder: (context) => const UserList()));
                           },
                           icon: const AppIcon(
-                            icon: Icons.messenger,
+                            icon: Icons.message,
                             iconColor: Colors.deepPurple,
                           ),
                         ),
@@ -255,14 +278,14 @@ class _DetailPageState extends State<DetailPage> {
                           onPressed: _toggleLikes,
                           icon: (_isLiked
                               ? const Icon(
-                                  Icons.favorite,
+                                  Icons.thumb_up,
                                   size: 35,
                                 )
                               : const Icon(
-                                  Icons.favorite_outline,
+                                  Icons.thumb_up_alt_outlined,
                                   size: 35,
                                 )),
-                          color: Colors.deepPurple,
+                          color: Colors.blue,
                         ),
                         Text(
                           '${widget.likes}',

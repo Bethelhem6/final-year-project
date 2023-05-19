@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:final_project/provider/whishlist_provider.dart';
 import 'package:final_project/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_notification_channel/flutter_notification_channel.dart';
 import 'package:flutter_notification_channel/notification_importance.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/screens.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +17,10 @@ import 'screens/screens.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+//  LocalNotificationService.initialize();
+  await Hive.initFlutter();
+  Hive.registerAdapter(WhishlistAdapter());
+  await Hive.openBox<Whishlist>('wishlist_houses');
 
   //enter full-screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -32,26 +39,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'AR based properties sell and rent',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          indicatorColor: buttonColor,
-          primaryColor: appbarColor,
-          progressIndicatorTheme: const ProgressIndicatorThemeData(
-              circularTrackColor: Colors.deepPurple, color: Colors.grey),
-          // appBarTheme: const AppBarTheme(
-          //   centerTitle: true,
-          //   elevation: 1,
-          //   iconTheme: IconThemeData(color: Colors.white),
-          //   titleTextStyle: TextStyle(
-          //       color: Colors.white,
-          //       fontWeight: FontWeight.normal,
-          //       fontSize: 19),
-          //   backgroundColor: Colors.white,
-          // )
-        ),
-        home: AuthStateScreen());
+    return MultiProvider(
+      providers: [
+         ChangeNotifierProvider(create: (ctx) => WhishlistProvider()),
+      ],
+      child: MaterialApp(
+          title: 'AR based properties sell and rent',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            indicatorColor: buttonColor,
+            primaryColor: appbarColor,
+            progressIndicatorTheme: const ProgressIndicatorThemeData(
+                circularTrackColor: Colors.deepPurple, color: Colors.grey),
+            
+          ),
+          home: const AuthStateScreen()),
+    );
   }
 }
 
