@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late ScrollController _scrollController;
   double offset = 0.0;
-  var _currentPage = 2.0;
+  var _currentPage = 0.0;
 
   var _url;
   XFile? imgXFile;
@@ -338,7 +338,7 @@ class _HomePageState extends State<HomePage> {
           int bedroom = 0;
           int bathRoom = 0;
           int likes = 0;
-
+          String id = "";
           int area = 0;
           String dateAdded = "";
           List imageUrl = [];
@@ -363,6 +363,7 @@ class _HomePageState extends State<HomePage> {
             imageUrl = doc['imageUrls'];
             ownerImage = doc['ownerImage'];
             area = doc["area"];
+            id = doc["id"];
           });
           Navigator.push(
               context,
@@ -382,6 +383,8 @@ class _HomePageState extends State<HomePage> {
                   ownerImage: ownerImage,
                   image: imageUrl,
                   area: area,
+                  uid: _uid,
+                  id: id,
                 ),
               ));
         },
@@ -509,6 +512,7 @@ class _HomePageState extends State<HomePage> {
     String ownerImage = "";
     int area = 0;
     List image = [];
+    String id = "";
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -527,6 +531,7 @@ class _HomePageState extends State<HomePage> {
           email = data['ownerEmail'];
           ownerImage = data['ownerImage'];
           area = data["area"];
+          id = data['id'];
         });
         print(data['address']);
 
@@ -534,6 +539,7 @@ class _HomePageState extends State<HomePage> {
           context,
           MaterialPageRoute(
               builder: (context) => DetailPage(
+                    uid: _uid,
                     bathRoom: bathRoom,
                     bedroom: bedroom,
                     company: company,
@@ -548,6 +554,7 @@ class _HomePageState extends State<HomePage> {
                     email: email,
                     ownerImage: ownerImage,
                     area: area,
+                    id: id,
                   )),
         );
       },

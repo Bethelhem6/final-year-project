@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_project/screens/chat/user_list_screen.dart';
 import 'package:final_project/utils/colors.dart';
 import 'package:final_project/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -22,6 +24,8 @@ class DetailPage extends StatefulWidget {
     required this.name,
     required this.ownerImage,
     required this.area,
+    required this.uid,
+    required this.id,
   });
   String location;
   String company;
@@ -36,7 +40,8 @@ class DetailPage extends StatefulWidget {
   String name;
   String email;
   String ownerImage;
-
+  String uid;
+  String id;
   int likes;
 
   @override
@@ -44,6 +49,81 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  bool _isLiked = false;
+  String uid = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    getData();
+  }
+
+  void getData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    uid = user!.uid;
+    try {
+      var likeCount = await FirebaseFirestore.instance
+          .collection('Likes')
+          .where("id", isEqualTo: widget.id)
+          .get();
+
+      widget.likes = likeCount.size;
+      //Assuming I have a collection I would do like this
+      await FirebaseFirestore.instance
+          .collection("Likes")
+          .doc("$uid${widget.id}")
+          .get()
+          .then((doc) async {
+        //If such document exist I know the user has liked the image or media f
+        if (doc.exists) {
+          if (mounted) {
+            setState(() {
+              _isLiked = true;
+            });
+          }
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<bool> _toggleLikes() async {
+    setState(() {
+      if (_isLiked) {
+        _isLiked = false;
+        widget.likes > 0 ? widget.likes -= 1 : 0;
+      } else {
+        _isLiked = true;
+        widget.likes += 1;
+      }
+    });
+
+    try {
+      if (_isLiked == true) {
+        await FirebaseFirestore.instance
+            .collection("Likes")
+            .doc("$uid${widget.id}")
+            .set({'value': true, "id": widget.id, "uid": uid});
+        await FirebaseFirestore.instance
+            .collection('houses')
+            .doc(widget.id)
+            .update({
+          "likes": widget.likes,
+        });
+      } else {
+        await FirebaseFirestore.instance
+            .collection("Likes")
+            .doc("$uid${widget.id}")
+            .delete();
+      }
+    } catch (e) {
+      print(e);
+    }
+    return !_isLiked;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +152,7 @@ class _DetailPageState extends State<DetailPage> {
           children: [
             Container(
               margin: const EdgeInsets.all(10),
-              width: 500,
+              width: 600,
               height: 300,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -94,8 +174,8 @@ class _DetailPageState extends State<DetailPage> {
               height: 10,
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 90),
-              width: 500,
+              margin: const EdgeInsets.symmetric(horizontal: 50),
+              width: 600,
               height: 70,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -163,6 +243,30 @@ class _DetailPageState extends State<DetailPage> {
                         const Text(
                           "Message",
                           style: TextStyle(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    Column(
+                      children: [
+                        IconButton(
+                          onPressed: _toggleLikes,
+                          icon: (_isLiked
+                              ? const Icon(
+                                  Icons.favorite,
+                                  size: 35,
+                                )
+                              : const Icon(
+                                  Icons.favorite_outline,
+                                  size: 35,
+                                )),
+                          color: Colors.deepPurple,
+                        ),
+                        Text(
+                          '${widget.likes}',
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ],
                     ),

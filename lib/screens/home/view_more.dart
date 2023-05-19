@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_project/screens/home/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ViewMore extends StatefulWidget {
@@ -13,7 +14,16 @@ class ViewMore extends StatefulWidget {
   State<ViewMore> createState() => _ViewMoreState();
 }
 
+String uid = "";
+User? user = FirebaseAuth.instance.currentUser;
+
 class _ViewMoreState extends State<ViewMore> {
+  @override
+  void initState() {
+    super.initState();
+    uid = user!.uid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +79,7 @@ class _ViewMoreState extends State<ViewMore> {
                         String ownerImage = "";
                         int area = 0;
                         String status = "";
+                        String id = "";
 
                         setState(() {
                           location = data[index]["address"];
@@ -88,11 +99,13 @@ class _ViewMoreState extends State<ViewMore> {
                           ownerImage = data[index]['ownerImage'];
                           area = data[index]["area"];
                           status = data[index]['status'];
+                          id = data[index]['id'];
                         });
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => DetailPage(
+                                    uid: uid,
                                     bathRoom: bathRoom,
                                     bedroom: bedroom,
                                     company: company,
@@ -107,6 +120,7 @@ class _ViewMoreState extends State<ViewMore> {
                                     ownerImage: ownerImage,
                                     image: imageUrl,
                                     area: area,
+                                    id: id,
                                   )),
                         );
                       },
