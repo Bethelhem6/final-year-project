@@ -54,7 +54,7 @@ class DataSearch extends SearchDelegate<String> {
         border: InputBorder.none,
 
         // Use this change the placeholder's text style
-        hintStyle: TextStyle(fontSize: 24.0),
+        hintStyle: TextStyle(fontSize: 18.0),
       ),
     );
   }
@@ -416,7 +416,6 @@ class DataSearch extends SearchDelegate<String> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -479,7 +478,7 @@ class DataSearch extends SearchDelegate<String> {
               Container(
                 height: 200,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                   ),
@@ -540,22 +539,27 @@ class DataSearch extends SearchDelegate<String> {
             ],
           ),
         ),
-        Positioned(
-          top: 20,
-          right: 20,
-          child: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50 / 2),
-                color: backgroundColor),
-            child: const Icon(
-              Icons.favorite_border_outlined,
-              color: Colors.red,
-              size: 35,
-            ),
-          ),
-        ),
+        // Positioned(
+        //   top: 20,
+        //   right: 20,
+        //   child: Container(
+        //     width: 50,
+        //     height: 50,
+        //     decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(50 / 2),
+        //         color: backgroundColor),
+        //     child: GestureDetector(
+        //       onTap: (){
+
+        //       },
+        //       child: const Icon(
+        //         Icons.favorite_border_outlined,
+        //         color: Colors.red,
+        //         size: 35,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
