@@ -1,13 +1,9 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:firebase_auth/firebase_auth.dart';
-
-
 import 'database_service.dart';
 
 class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
+  
   Future loginUser(
     String email,
     String password,
@@ -22,14 +18,14 @@ class AuthService {
     }
   }
 
-  Future registerUser(String fullname, String email, String password,
-      String phonenumber, String image) async {
+  Future registerUser(String name, String email, String password,
+      String phonenumber, String _imageP) async {
     try {
       User user = (await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: password))
           .user!;
       await DatabaseService(uid: user.uid)
-          .updateUserData(email, fullname,phonenumber, image,);
+          .updateUserData(email, name, phonenumber, _imageP,);
       return true;
     } on FirebaseAuthException catch (e) {
       return e.message;

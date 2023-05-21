@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
                 circularTrackColor: Colors.deepPurple, color: Colors.grey),
             
           ),
-          home: const AuthStateScreen()),
+          home: const MainPage()),
     );
   }
 }

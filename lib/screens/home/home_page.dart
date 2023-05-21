@@ -8,6 +8,7 @@ import 'package:final_project/screens/review/review_page.dart';
 import 'package:final_project/screens/search/search_result_page.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -739,7 +740,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: ((context) => const user_profile())));
+                      builder: ((context) => const UserProfile())));
               // Navigator.pop(context);
             },
           ),

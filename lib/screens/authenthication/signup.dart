@@ -1,7 +1,7 @@
-// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
-
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +11,7 @@ import '../../helper/helper.dart';
 import '../../services/service.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
+import 'package:final_project/global_methods.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -23,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool obscureText = true;
   bool _isVisible = false;
 
+  final GlobalMethods _globalMethods = GlobalMethods();
   bool _isLoading = false;
   final formkey = GlobalKey<FormState>();
 
@@ -30,11 +32,12 @@ class _RegisterPageState extends State<RegisterPage> {
   String password = "";
   String name = "";
   String phonenumber = "";
-  String image = "";
+  // ignore: prefer_typing_uninitialized_variables
+  var _imageP;
   String url = "";
+  final String _uid = "";
 
   AuthService authService = AuthService();
-
   File? _image;
   XFile? imgXFile;
 
@@ -44,6 +47,15 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() {
       _image = File(image!.path);
     });
+    final ref =
+        FirebaseStorage.instance.ref().child('userimages').child('$name.jpg');
+
+    await ref.putFile(_image!);
+    _imageP = await ref.getDownloadURL();
+    await FirebaseFirestore.instance.collection("users").doc(_uid).update({
+      "image": _imageP,
+    });
+    setState(() {});
   }
 
   @override
@@ -323,15 +335,15 @@ class _RegisterPageState extends State<RegisterPage> {
         _isLoading = true;
       });
       await authService
-          .registerUser(name, email, password, phonenumber, image)
+          .registerUser(name, email, password, phonenumber, _imageP)
           .then((value) async {
         if (value == true) {
           await Helperfunctions.saveUserLoggedInStatus(true);
           await Helperfunctions.saveUserEmailSF(email);
           await Helperfunctions.saveUserNameSF(name);
           // await Helperfunctions.saveUserNameSF(phonenumber);
-          // await Helperfunctions.saveUserNameSF(image);
-          nextScreenReplace(context, const MainPage());
+          // await Helperfunctions.saveUserNameSF(_imageP);
+          nextScreenReplace(context, MainPage());
         } else {
           showSnackbar(context, Colors.red, value);
           setState(() {

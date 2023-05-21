@@ -3,8 +3,6 @@ import 'package:final_project/models/model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
-
-
 class DatabaseService {
   final String? uid;
   DatabaseService({this.uid});
@@ -14,7 +12,7 @@ class DatabaseService {
   var user = FirebaseAuth.instance.currentUser!;
 
   Future updateUserData(
-      String email, String name, String phonenumber, String image) async {
+      String email, String name, String phonenumber, String _imageP) async {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
 
     final chatUser = ChatUser(
@@ -22,11 +20,13 @@ class DatabaseService {
         name: name,
         email: email,
         about: "Hey there!",
-        image: image,
+        image: _imageP,
         createdAt: time,
         isOnline: false,
         lastActive: time,
-        pushToken: '');
+        pushToken: '',
+        phonenumber: phonenumber,
+    );
 
     return await userCollection.doc(uid).set(chatUser.toJson());
   }

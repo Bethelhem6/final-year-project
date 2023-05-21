@@ -147,7 +147,10 @@ class APIs {
         createdAt: time,
         isOnline: false,
         lastActive: time,
-        pushToken: '');
+        pushToken: '',
+        phonenumber: '',
+    
+    );
 
     return await firestore
         .collection('users')
