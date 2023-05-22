@@ -58,7 +58,10 @@ class _RegisterPageState extends State<RegisterPage> {
     });
     } catch (e) {
       // ignore: use_build_context_synchronously
-      _globalMethods.showDialogues(context, "Image is Required!");
+      if(mounted){
+              _globalMethods.showDialogues(context, "Image is Required!");
+
+      }
     }
    
   }
