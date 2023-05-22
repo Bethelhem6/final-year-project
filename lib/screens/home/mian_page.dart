@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const Favourite(),
     const UserList(),
-    const user_profile(),
+    const UserProfile(),
   ];
   Future<bool> _onWillPop() async {
     return (await showDialog(
