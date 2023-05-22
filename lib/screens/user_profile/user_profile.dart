@@ -21,7 +21,7 @@ class _UserProfileState extends State<UserProfile> {
   String _name = "";
   String _email = "";
   String _phonenumber = "";
-  var _imageP;
+  var _imageP="";
   File? _image;
   XFile? imgXFile;
 

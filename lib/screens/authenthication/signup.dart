@@ -43,16 +43,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future _getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = File(image!.path);
-    });
+    try {
+      setState(() {
+        _image = File(image!.path);
+      });
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      _globalMethods.showDialogues(context, "Image is Required!");
+    }
     final ref =
         FirebaseStorage.instance.ref().child('userimages').child('$name.jpg');
 
     await ref.putFile(_image!);
     _imageP = await ref.getDownloadURL();
-    await FirebaseFirestore.instance.collection("users").doc(_uid).update({
+    await FirebaseFirestore.instance.collection("users").doc(_uid).set({
       "image": _imageP,
     });
     setState(() {});
@@ -341,8 +345,8 @@ class _RegisterPageState extends State<RegisterPage> {
           await Helperfunctions.saveUserLoggedInStatus(true);
           await Helperfunctions.saveUserEmailSF(email);
           await Helperfunctions.saveUserNameSF(name);
-          // await Helperfunctions.saveUserNameSF(phonenumber);
-          // await Helperfunctions.saveUserNameSF(_imageP);
+          await Helperfunctions.saveUserNameSF(phonenumber);
+          await Helperfunctions.saveUserNameSF(_imageP);
           nextScreenReplace(context, MainPage());
         } else {
           showSnackbar(context, Colors.red, value);
