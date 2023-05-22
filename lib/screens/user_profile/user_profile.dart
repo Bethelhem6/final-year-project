@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../global_methods.dart';
 import '../screens.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -24,6 +25,8 @@ class _UserProfileState extends State<UserProfile> {
   var _imageP="";
   File? _image;
   XFile? imgXFile;
+    final GlobalMethods _globalMethods = GlobalMethods();
+
 
   void _getData() async {
     User? user = _auth.currentUser;
@@ -47,7 +50,9 @@ class _UserProfileState extends State<UserProfile> {
 
   Future _getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
+   
+    try {
+       setState(() {
       _image = File(image!.path);
     });
     final ref =
@@ -58,7 +63,13 @@ class _UserProfileState extends State<UserProfile> {
     await FirebaseFirestore.instance.collection("users").doc(_uid).update({
       "image": _imageP,
     });
-    setState(() {});
+
+    // setState(() {});
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      _globalMethods.showDialogues(context, "Image is Required!");
+    }
+    
   }
 
   logoutMessage() async {

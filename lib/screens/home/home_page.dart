@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                   var doc = snapshot.data!.docs;
 
                   return DotsIndicator(
-                    dotsCount: doc.length,
+                    dotsCount: 5,
                     position: _currentPage,
                     decorator: const DotsDecorator(
                       color: Colors.grey, // Inactive color
