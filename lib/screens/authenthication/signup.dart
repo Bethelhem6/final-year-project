@@ -1,11 +1,7 @@
 import 'dart:io';
 
-<<<<<<< HEAD
-import 'package:final_project/widgets/golobal_methods.dart';
-=======
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
->>>>>>> 296a0f066ed944748e998930326295081f06e3b8
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -37,15 +33,11 @@ class _RegisterPageState extends State<RegisterPage> {
   String name = "";
   String phonenumber = "";
   // ignore: prefer_typing_uninitialized_variables
-  String _imageP="";
+  var _imageP;
   String url = "";
   final String _uid = "";
 
   AuthService authService = AuthService();
-<<<<<<< HEAD
-  GlobalMethods _globalMethods = GlobalMethods();
-=======
->>>>>>> 296a0f066ed944748e998930326295081f06e3b8
   File? _image;
   XFile? imgXFile;
 
@@ -55,12 +47,11 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         _image = File(image!.path);
       });
-<<<<<<< HEAD
     } catch (e) {
-      _globalMethods.showDialogues(context, "Image is required");
+      // ignore: use_build_context_synchronously
+      _globalMethods.showDialogues(context, "Image is Required!");
     }
-=======
-      final ref =
+    final ref =
         FirebaseStorage.instance.ref().child('userimages').child('$name.jpg');
 
     await ref.putFile(_image!);
@@ -68,13 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
     await FirebaseFirestore.instance.collection("users").doc(_uid).set({
       "image": _imageP,
     });
-    // setState(() {});
-    } catch (e) {
-      // ignore: use_build_context_synchronously
-      _globalMethods.showDialogues(context, "Image is Required!");
-    }
-    
->>>>>>> 296a0f066ed944748e998930326295081f06e3b8
+    setState(() {});
   }
 
   @override
