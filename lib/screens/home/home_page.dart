@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
                 child: Text(
-                  "Available for sell",
+                  "Available houses",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -124,7 +124,6 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(
                           builder: ((context) => const ViewMore(
                                 collection: "houses",
-                                whatFor: "Sell",
                               )),
                         ));
                   },
@@ -147,10 +146,8 @@ class _HomePageState extends State<HomePage> {
               width: size.width,
               height: size.height * 0.45,
               child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: FirebaseFirestore.instance
-                    .collection("houses")
-                    .where("whatFor", isEqualTo: "Sell")
-                    .snapshots(),
+                stream:
+                    FirebaseFirestore.instance.collection("houses").snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
@@ -174,10 +171,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance
-                  .collection("houses")
-                  .where("whatFor", isEqualTo: "Sell")
-                  .snapshots(),
+              stream:
+                  FirebaseFirestore.instance.collection("houses").snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
@@ -197,67 +192,70 @@ class _HomePageState extends State<HomePage> {
                 }
                 return Container();
               }),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     const Padding(
-          //       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-          //       child: Text(
-          //         "Recently Added",
-          //         textAlign: TextAlign.start,
-          //         style: TextStyle(
-          //           fontSize: 18,
-          //           fontWeight: FontWeight.bold,
-          //         ),
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: const EdgeInsets.only(top: 10.0, right: 20),
-          //       child: GestureDetector(
-          //         onTap: () {
-          //           Navigator.push(
-          //               context,
-          //               MaterialPageRoute(
-          //                 builder: ((context) =>
-          //                     const ViewMore(collection: "houses")),
-          //               ));
-          //         },
-          //         child: Text(
-          //           "View more",
-          //           style: TextStyle(
-          //             color: buttonColor,
-          //             fontSize: 16,
-          //             decoration: TextDecoration.underline,
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          //     stream:
-          //         FirebaseFirestore.instance.collection("houses").snapshots(),
-          //     builder: (context, snapshot) {
-          //       if (!snapshot.hasData) {
-          //         return const Center(
-          //           child: CircularProgressIndicator(),
-          //         );
-          //       } else if (snapshot.hasData) {
-          //         var doc = snapshot.data!.docs;
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                child: Text(
+                  "Available for sell",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, right: 20),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => ViewMore(
+                                collection: "houses",
+                                whatFor: "Sell",
+                              )),
+                        ));
+                  },
+                  child: Text(
+                    "View more",
+                    style: TextStyle(
+                      color: buttonColor,
+                      fontSize: 16,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance
+                  .collection("houses")
+                  .where("whatFor", isEqualTo: "Sell")
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasData) {
+                  var doc = snapshot.data!.docs;
 
-          //         return SizedBox(
-          //           height: 250,
-          //           child: ListView.builder(
-          //               scrollDirection: Axis.horizontal,
-          //               itemCount: doc.length,
-          //               itemBuilder: (context, index) {
-          //                 if(doc[index]["status"] == "rent")
-          //                 return containerCards();
-          //               }),
-          //         );
-          //       }
-          //       return Container();
-          //     }),
+                  return SizedBox(
+                    height: 250,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: doc.length,
+                        itemBuilder: (context, index) {
+                          return containerCards(doc[index]);
+                        }),
+                  );
+                }
+                return Container();
+              }),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -475,10 +473,8 @@ class _HomePageState extends State<HomePage> {
           return Transform.rotate(
             angle: 3.14 * value,
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: FirebaseFirestore.instance
-                    .collection("houses")
-                    .where("whatFor", isEqualTo: "Sell")
-                    .snapshots(),
+                stream:
+                    FirebaseFirestore.instance.collection("houses").snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(

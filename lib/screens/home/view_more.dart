@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class ViewMore extends StatefulWidget {
   final String collection;
-  final String whatFor;
+  final String ?whatFor;
 
-  const ViewMore({Key? key, required this.collection, required this.whatFor})
+  const ViewMore({Key? key, required this.collection,  this.whatFor})
       : super(key: key);
 
   @override

@@ -65,7 +65,7 @@ class _MainPageState extends State<MainPage> {
           items: [
             BottomNavigationBarItem(
               icon: const Icon(Icons.today_outlined),
-              label: 'Properties',
+              label: 'Home',
               backgroundColor: appbarColor,
             ),
             BottomNavigationBarItem(
