@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_project/screens/home/view_more.dart';
 import 'package:final_project/screens/review/review_page.dart';
+import 'package:final_project/screens/search/filter.dart';
 import 'package:final_project/screens/search/search_result_page.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -644,7 +645,8 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(right: 18.0, left: 10),
           child: IconButton(
             onPressed: () {
-              showSearch(context: context, delegate: DataSearch());
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => SearchHouse())));
             },
             icon: Icon(
               Icons.search,

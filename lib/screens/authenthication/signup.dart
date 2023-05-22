@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:final_project/widgets/golobal_methods.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -34,16 +35,19 @@ class _RegisterPageState extends State<RegisterPage> {
   String url = "";
 
   AuthService authService = AuthService();
-
+  GlobalMethods _globalMethods = GlobalMethods();
   File? _image;
   XFile? imgXFile;
 
   Future _getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = File(image!.path);
-    });
+    try {
+      setState(() {
+        _image = File(image!.path);
+      });
+    } catch (e) {
+      _globalMethods.showDialogues(context, "Image is required");
+    }
   }
 
   @override
