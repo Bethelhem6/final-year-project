@@ -33,7 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String name = "";
   String phonenumber = "";
   // ignore: prefer_typing_uninitialized_variables
-  var _imageP;
+  String _imageP = "";
   String url = "";
   final String _uid = "";
 
@@ -47,11 +47,8 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         _image = File(image!.path);
       });
-    } catch (e) {
-      // ignore: use_build_context_synchronously
-      _globalMethods.showDialogues(context, "Image is Required!");
-    }
-    final ref =
+
+       final ref =
         FirebaseStorage.instance.ref().child('userimages').child('$name.jpg');
 
     await ref.putFile(_image!);
@@ -59,7 +56,11 @@ class _RegisterPageState extends State<RegisterPage> {
     await FirebaseFirestore.instance.collection("users").doc(_uid).set({
       "image": _imageP,
     });
-    setState(() {});
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      _globalMethods.showDialogues(context, "Image is Required!");
+    }
+   
   }
 
   @override
