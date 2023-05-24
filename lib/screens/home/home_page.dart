@@ -6,10 +6,8 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_project/screens/home/view_more.dart';
 import 'package:final_project/screens/review/review_page.dart';
 import 'package:final_project/screens/search/filter.dart';
-import 'package:final_project/screens/search/search_result_page.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -199,28 +197,14 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream:
-                  FirebaseFirestore.instance.collection("houses").snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasData) {
-                  var doc = snapshot.data!.docs;
-
-                  return DotsIndicator(
-                    dotsCount: 5,
-                    position: _currentPage,
-                    decorator: const DotsDecorator(
-                      color: Colors.grey, // Inactive color
-                      activeColor: Colors.deepPurple,
-                    ),
-                  );
-                }
-                return Container();
-              }),
+          DotsIndicator(
+            dotsCount: 5,
+            position: _currentPage,
+            decorator: const DotsDecorator(
+              color: Colors.grey, // Inactive color
+              activeColor: Colors.deepPurple,
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -242,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: ((context) => ViewMore(
+                          builder: ((context) => const ViewMore(
                                 collection: "houses",
                                 whatFor: "Sell",
                               )),
@@ -585,7 +569,7 @@ class _HomePageState extends State<HomePage> {
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 0.0),
-        child: Column(
+        child: Stack(
           children: [
             Hero(
               tag: data.id,
@@ -608,28 +592,61 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.location_on_outlined,
-                    color: Colors.grey,
-                  ),
-                  textWidget(
-                      title: data["address"],
-                      color: Colors.grey.shade700,
-                      size: 15,
-                      weight: FontWeight.normal),
-                ],
+            Positioned(
+              bottom: 10,
+              left: 45,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.location_on_outlined,
+                      color: Colors.grey,
+                    ),
+                    textWidget(
+                        title: data["address"],
+                        color: Colors.grey.shade700,
+                        size: 15,
+                        weight: FontWeight.normal),
+                  ],
+                ),
               ),
             ),
-            textWidget(
-                title: "Birr ${data["price"]}",
-                color: appbarColor,
-                size: 18,
-                weight: FontWeight.bold),
+            Positioned(
+              bottom: 45,
+              left: 45,
+              child: textWidget(
+                  title: "Birr ${data["price"]}",
+                  color: appbarColor,
+                  size: 18,
+                  weight: FontWeight.bold),
+            ),
+            Positioned(
+                top: 10,
+                right: 20,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.black45,
+                            blurRadius: 5,
+                            offset: Offset(0, 3)),
+                        BoxShadow(color: Colors.white, offset: Offset(-5, 0)),
+                        BoxShadow(color: Colors.white, offset: Offset(5, 0))
+                      ]),
+                  child: Text(
+                    "For ${data['whatFor']}",
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ))
           ],
         ),
       ),
@@ -671,8 +688,10 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(right: 18.0, left: 10),
           child: IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => SearchHouse())));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => const SearchHouse())));
             },
             icon: Icon(
               Icons.search,

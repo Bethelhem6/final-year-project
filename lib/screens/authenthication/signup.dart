@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, duplicate_ignore
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -348,7 +350,7 @@ class _RegisterPageState extends State<RegisterPage> {
           await Helperfunctions.saveUserNameSF(name);
           await Helperfunctions.saveUserNameSF(phonenumber);
           await Helperfunctions.saveUserNameSF(_imageP);
-          nextScreenReplace(context, MainPage());
+          nextScreenReplace(context, const MainPage());
         } else {
           showSnackbar(context, Colors.red, value);
           setState(() {

@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'database_service.dart';
 
@@ -9,7 +11,7 @@ class AuthService {
     String password,
   ) async {
     try {
-      User user = (await firebaseAuth.signInWithEmailAndPassword(
+      (await firebaseAuth.signInWithEmailAndPassword(
               email: email, password: password))
           .user!;
       return true;

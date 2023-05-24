@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously, duplicate_ignore
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../global_methods.dart';
+import '../../utils/colors.dart';
 import '../screens.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -105,10 +108,19 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        toolbarHeight: 70,
-        title: const Text("My Profile"),
+       title: const Text(
+          "My Profile",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
+        backgroundColor: appbarColor,
         centerTitle: true,
+        toolbarHeight: 80,
+        toolbarOpacity: 0.8,
+        elevation: 0,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(20),
@@ -117,7 +129,7 @@ class _UserProfileState extends State<UserProfile> {
       ),
       body: ListView(
         children: <Widget>[
-          Container(
+          SizedBox(
             height: 250,
             // decoration: const BoxDecoration(
             //   gradient: LinearGradient(
