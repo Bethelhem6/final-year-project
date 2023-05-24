@@ -206,31 +206,30 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           SizedBox(
-                              width: double.infinity,
+                              // width: double.infinity,
                               child: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Login();
-                                  },
-                                  child: Container(
-                                    width: 250,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        color: Colors.deepPurple,
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: const Center(
-                                        child: Text(
-                                      "Login",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                  ),
-                                ),
-                              )),
+                            padding: const EdgeInsets.fromLTRB(15, 30, 15, 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Login();
+                              },
+                              child: Container(
+                                width: 200,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.deepPurple,
+                                    borderRadius: BorderRadius.circular(35)),
+                                child: const Center(
+                                    child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                            ),
+                          )),
                           const SizedBox(height: 10),
                           Text.rich(TextSpan(
                               text: "Don't have an account?",

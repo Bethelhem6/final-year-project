@@ -71,7 +71,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         case ConnectionState.waiting:
                         case ConnectionState.none:
                           return const SizedBox();
-
+                          
                         //if some or all data is loaded then show it
                         case ConnectionState.active:
                         case ConnectionState.done:

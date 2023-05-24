@@ -10,6 +10,7 @@ class AuthStateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

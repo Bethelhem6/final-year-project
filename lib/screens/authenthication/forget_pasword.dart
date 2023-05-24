@@ -76,6 +76,7 @@ class _Login extends State<ResetPassword> {
           centerTitle: true,
           elevation: 0,
         ),
+        backgroundColor: Colors.grey[200],
         body: SingleChildScrollView(
           child: Padding(
             padding:
@@ -141,7 +142,21 @@ class _Login extends State<ResetPassword> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        prefixIcon: const Icon(Icons.email),
+        prefixIcon: const Icon(
+          Icons.email,
+          color: Colors.deepPurple,
+        ),
+        labelStyle:
+            const TextStyle(color: Colors.black, fontWeight: FontWeight.w300),
+        focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.deepPurple),
+            borderRadius: BorderRadius.circular(18)),
+        enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(18)),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+        ),
       ),
     );
   }

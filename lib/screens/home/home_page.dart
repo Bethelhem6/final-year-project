@@ -53,6 +53,35 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+   logoutMessage() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Are you sure?'),
+            content: const Text('Do you want to Logout?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('No'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  User? user = _auth.currentUser;
+                  _uid = user!.uid;
+                  await _auth.signOut();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()));
+                },
+                child: const Text('Yes'),
+              ),
+            ],
+          ),
+        )) ??
+        false;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -705,17 +734,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               )),
-          // ListTile(
-          //   leading: const Icon(Icons.add, color: Colors.blue),
-          //   title: const Text(
-          //     ' Add New Property',
-          //     style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-          //   ),
-          //   onTap: () {
-          //     Navigator.push(context,
-          //         MaterialPageRoute(builder: ((context) => AddHouseScreen())));
-          //   },
-          // ),
           ListTile(
             leading: const Icon(Icons.favorite, color: Colors.red),
             title: const Text(
@@ -728,10 +746,10 @@ class _HomePageState extends State<HomePage> {
               // Navigator.pop(context);
             },
           ),
-          ListTile(
+           ListTile(
             leading: const Icon(Icons.person, color: Colors.deepPurple),
             title: const Text(
-              ' My profile ',
+              ' My Profile ',
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             onTap: () {
@@ -742,20 +760,6 @@ class _HomePageState extends State<HomePage> {
               // Navigator.pop(context);
             },
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.home, color: Colors.green),
-          //   title: const Text(
-          //     ' My properties ',
-          //     style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-          //   ),
-          //   onTap: () {
-          //     Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //             builder: ((context) => const MyProperties())));
-          //     // Navigator.pop(context);
-          //   },
-          // ),
           ListTile(
             leading: const Icon(Icons.message, color: Colors.pink),
             title: const Text(
@@ -802,14 +806,16 @@ class _HomePageState extends State<HomePage> {
           ListTile(
             leading: Icon(Icons.logout, color: Colors.red.shade700),
             title: GestureDetector(
-              onTap: () async {
-                await FirebaseAuth.instance.signOut();
-                Navigator.pop(context);
+              onTap: logoutMessage
+              // () async {
+              //   await FirebaseAuth.instance.signOut();
+              //   Navigator.pop(context);
 
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()));
-              },
+              //   Navigator.pop(context);
+              //   Navigator.push(context,
+              //       MaterialPageRoute(builder: (context) => const LoginPage()));
+              // }
+              ,
               child: const Text(
                 'LogOut',
                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),

@@ -48,22 +48,20 @@ class _RegisterPageState extends State<RegisterPage> {
         _image = File(image!.path);
       });
 
-       final ref =
-        FirebaseStorage.instance.ref().child('userimages').child('$name.jpg');
+      final ref =
+          FirebaseStorage.instance.ref().child('userimages').child('$name.jpg');
 
-    await ref.putFile(_image!);
-    _imageP = await ref.getDownloadURL();
-    await FirebaseFirestore.instance.collection("users").doc(_uid).set({
-      "image": _imageP,
-    });
+      await ref.putFile(_image!);
+      _imageP = await ref.getDownloadURL();
+      await FirebaseFirestore.instance.collection("users").doc(_uid).set({
+        "image": _imageP,
+      });
     } catch (e) {
       // ignore: use_build_context_synchronously
-      if(mounted){
-              _globalMethods.showDialogues(context, "Image is Required!");
-
+      if (mounted) {
+        _globalMethods.showDialogues(context, "Image is Required!");
       }
     }
-   
   }
 
   @override
@@ -164,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 if (val!.isNotEmpty) {
                                   return null;
                                 } else {
-                                  return "Name Can/'t be Empty";
+                                  return "Please Enter Full Name";
                                 }
                               }),
                           const SizedBox(height: 20),
@@ -177,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               validator: (val) {
                                 return RegExp(r"^[0-9]").hasMatch(val!)
                                     ? null
-                                    : "Please Enter a Valid Phone Number";
+                                    : "Please Enter a Valid Phone Number.";
                               },
                               keyboardType: TextInputType.number,
                               decoration: textInputDecoration.copyWith(
@@ -208,7 +206,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                       .hasMatch(val!)
                                   ? null
-                                  : "Please enter a valid email";
+                                  : "Please enter a valid E-mail.";
                             },
                           ),
                           const SizedBox(height: 15),
@@ -285,31 +283,30 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           const SizedBox(height: 20),
                           SizedBox(
-                              width: double.infinity,
+                              // width: double.infinity,
                               child: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Register();
-                                  },
-                                  child: Container(
-                                    width: 250,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        color: Colors.deepPurple,
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: const Center(
-                                        child: Text(
-                                      "Sign Up",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                  ),
-                                ),
-                              )),
+                            padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Register();
+                              },
+                              child: Container(
+                                width: 200,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.deepPurple,
+                                    borderRadius: BorderRadius.circular(35)),
+                                child: const Center(
+                                    child: Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                            ),
+                          )),
                           const SizedBox(height: 10),
                           Text.rich(TextSpan(
                               text: "Already have an account? ",

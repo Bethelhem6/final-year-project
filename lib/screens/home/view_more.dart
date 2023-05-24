@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class ViewMore extends StatefulWidget {
   final String collection;
-  final String ?whatFor;
+  final String? whatFor;
 
-  const ViewMore({Key? key, required this.collection,  this.whatFor})
+  const ViewMore({Key? key, required this.collection, this.whatFor})
       : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class _ViewMoreState extends State<ViewMore> {
     return Scaffold(
       backgroundColor: Colors.deepPurple[50],
       appBar: AppBar(
-        title: const Text("More Products"),
+        title: const Text("Available Houses"),
         backgroundColor: Colors.deepPurple,
         toolbarHeight: 70,
         centerTitle: true,

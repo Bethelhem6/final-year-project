@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:final_project/firebase_options.dart';
 import 'package:final_project/provider/whishlist_provider.dart';
 import 'package:final_project/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_notification_channel/notification_importance.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-
 import 'screens/screens.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
@@ -59,6 +59,8 @@ class MyApp extends StatelessWidget {
 }
 
 _initializeFirebase() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   var result = await FlutterNotificationChannel.registerNotificationChannel(
       description: 'For Showing Message Notification',
       id: 'chats',

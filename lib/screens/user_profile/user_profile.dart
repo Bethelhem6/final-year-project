@@ -22,11 +22,10 @@ class _UserProfileState extends State<UserProfile> {
   String _name = "";
   String _email = "";
   String _phonenumber = "";
-  var _imageP="";
+  var _imageP = "";
   File? _image;
   XFile? imgXFile;
-    final GlobalMethods _globalMethods = GlobalMethods();
-
+  final GlobalMethods _globalMethods = GlobalMethods();
 
   void _getData() async {
     User? user = _auth.currentUser;
@@ -50,26 +49,27 @@ class _UserProfileState extends State<UserProfile> {
 
   Future _getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-   
+
     try {
-       setState(() {
-      _image = File(image!.path);
-    });
-    final ref =
-        FirebaseStorage.instance.ref().child('userimages').child('$_name.jpg');
+      setState(() {
+        _image = File(image!.path);
+      });
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('userimages')
+          .child('$_name.jpg');
 
-    await ref.putFile(_image!);
-    _imageP = await ref.getDownloadURL();
-    await FirebaseFirestore.instance.collection("users").doc(_uid).update({
-      "image": _imageP,
-    });
+      await ref.putFile(_image!);
+      _imageP = await ref.getDownloadURL();
+      await FirebaseFirestore.instance.collection("users").doc(_uid).update({
+        "image": _imageP,
+      });
 
-    // setState(() {});
+      // setState(() {});
     } catch (e) {
       // ignore: use_build_context_synchronously
       _globalMethods.showDialogues(context, "Image is Required!");
     }
-    
   }
 
   logoutMessage() async {
@@ -149,7 +149,7 @@ class _UserProfileState extends State<UserProfile> {
                       child: CircleAvatar(
                         radius: 75.0,
                         backgroundImage:
-                            _imageP == "" ? null : NetworkImage(_imageP!),
+                            _imageP == "" ? null : NetworkImage(_imageP),
                       ),
                     ),
                   ],
