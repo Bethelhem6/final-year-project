@@ -1,7 +1,6 @@
 // // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: avoid_print
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_project/screens/review/review_widget.dart';
 import 'package:final_project/utils/colors.dart';
@@ -72,7 +71,6 @@ class _ReviewPageState extends State<ReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: appbarColor,
         title: const Text(
           "⭐Rating & Reviews⭐",
           style: TextStyle(
@@ -81,7 +79,16 @@ class _ReviewPageState extends State<ReviewPage> {
             color: Colors.white,
           ),
         ),
+        backgroundColor: appbarColor,
         centerTitle: true,
+        toolbarHeight: 80,
+        toolbarOpacity: 0.8,
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(20),
+              bottomLeft: Radius.circular(20)),
+        ),
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
