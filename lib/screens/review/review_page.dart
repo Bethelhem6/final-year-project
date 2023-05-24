@@ -42,9 +42,11 @@ class _ReviewPageState extends State<ReviewPage> {
 
     final DocumentSnapshot userDocs =
         await FirebaseFirestore.instance.collection("users").doc(_uid).get();
-    setState(() {
-      _name = userDocs.get("name");
-    });
+    if (mounted) {
+      setState(() {
+        _name = userDocs.get("name");
+      });
+    }
     print(_name);
   }
 
