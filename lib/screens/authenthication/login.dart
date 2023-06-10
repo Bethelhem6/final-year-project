@@ -284,10 +284,11 @@ class _LoginPageState extends State<LoginPage> {
               print("logged in");
             } else {
               showSnackbar(
-                  context, Colors.red, "Account is not customer account ");
+                  context, Colors.red, "Account is not customer account. ");
             }
           } else {
-            showSnackbar(context, Colors.red, "Account is blocked ");
+            showSnackbar(context, Colors.red,
+                "Account is blocked. Contact customer services. ");
           }
         }
       } catch (e) {
