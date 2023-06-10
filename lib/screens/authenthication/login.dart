@@ -268,13 +268,28 @@ class _LoginPageState extends State<LoginPage> {
         final newUser = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: email.toLowerCase().trim(),
             password: password.toLowerCase().trim());
+        if (newUser != null) {
+          final doc = await FirebaseFirestore.instance
+              .collection("users")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .get();
 
-        Navigator.pop(context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const MainPage()),
-        );
-        print("logged in");
+          if (doc.exists) {
+            if (doc["role"] == "customer") {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MainPage()),
+              );
+              print("logged in");
+            } else {
+              showSnackbar(
+                  context, Colors.red, "Account is not customer account ");
+            }
+          } else {
+            showSnackbar(context, Colors.red, "Account is blocked ");
+          }
+        }
       } catch (e) {
         if (mounted) {
           showSnackbar(context, Colors.red, e.toString());

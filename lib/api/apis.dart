@@ -149,6 +149,8 @@ class APIs {
         lastActive: time,
         pushToken: '',
         phonenumber: '',
+        inactive: false,
+        role:"customer",
     
     );
 

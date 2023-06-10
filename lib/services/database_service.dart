@@ -28,6 +28,8 @@ class DatabaseService {
         lastActive: time,
         pushToken: '',
         phonenumber: phonenumber,
+        inactive:false,
+        role:"customer"
     );
 
     return await userCollection.doc(uid).set(chatUser.toJson());

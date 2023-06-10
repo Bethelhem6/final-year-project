@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-         ChangeNotifierProvider(create: (ctx) => WhishlistProvider()),
+        ChangeNotifierProvider(create: (ctx) => WhishlistProvider()),
       ],
       child: MaterialApp(
           title: 'AR based properties sell and rent',
@@ -49,9 +49,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             indicatorColor: buttonColor,
             primaryColor: appbarColor,
+            primarySwatch: Colors.deepPurple,
             progressIndicatorTheme: const ProgressIndicatorThemeData(
                 circularTrackColor: Colors.deepPurple, color: Colors.grey),
-            
           ),
           home: const AuthStateScreen()),
     );

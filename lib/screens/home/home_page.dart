@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
           ),
           DotsIndicator(
             dotsCount: 5,
-            position: _currentPage,
+            position: _currentPage > 4 ? 0 : _currentPage,
             decorator: const DotsDecorator(
               color: Colors.grey, // Inactive color
               activeColor: Colors.deepPurple,
