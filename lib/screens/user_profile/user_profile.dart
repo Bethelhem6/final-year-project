@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../global_methods.dart';
-import '../../utils/colors.dart';
 import '../screens.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -227,8 +226,8 @@ class _UserProfileState extends State<UserProfile> {
             child: Column(
               children: <Widget>[
                 Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
@@ -259,8 +258,8 @@ class _UserProfileState extends State<UserProfile> {
                 // Divider(),
 
                 Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
@@ -290,8 +289,8 @@ class _UserProfileState extends State<UserProfile> {
                 ),
                 // Divider(),
                 Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
@@ -322,8 +321,8 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
@@ -404,8 +403,8 @@ class _UserProfileState extends State<UserProfile> {
                 //   ),
                 // ),
                 Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),

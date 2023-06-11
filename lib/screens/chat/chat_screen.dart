@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:final_project/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -235,7 +234,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         FocusScope.of(context).unfocus();
                         setState(() => _showEmoji = !_showEmoji);
                       },
-                      icon: Icon(Icons.emoji_emotions, size: 25)),
+                      icon: const Icon(Icons.emoji_emotions, size: 25)),
 
                   Expanded(
                       child: TextField(
@@ -268,7 +267,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() => _isUploading = false);
                         }
                       },
-                      icon: Icon(Icons.image, size: 26)),
+                      icon: const Icon(Icons.image, size: 26)),
 
                   //take image from camera button
                   IconButton(
@@ -287,7 +286,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() => _isUploading = false);
                         }
                       },
-                      icon: Icon(Icons.camera_alt_rounded, size: 26)),
+                      icon: const Icon(Icons.camera_alt_rounded, size: 26)),
 
                   //adding some space
                   SizedBox(width: Constants.mq["width"]! * .02),

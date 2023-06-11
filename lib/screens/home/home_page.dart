@@ -14,7 +14,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../fav/favourite.dart';
-import '../../utils/colors.dart';
 import '../developers/developers.dart';
 import '../screens.dart';
 
@@ -130,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                   child: const Text(
                     "View more",
                     style: TextStyle(
-                      // color: buttonColor,
+                      color: Colors.blue,
                       fontSize: 16,
                       decoration: TextDecoration.underline,
                     ),
@@ -208,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                   child: const Text(
                     "View more",
                     style: TextStyle(
-                      // color: buttonColor,
+                      color: Colors.blue,
                       fontSize: 16,
                       decoration: TextDecoration.underline,
                     ),
@@ -270,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     "View more",
                     style: TextStyle(
-                      // color: buttonColor,
+                      color: Colors.blue,
                       fontSize: 16,
                       decoration: TextDecoration.underline,
                     ),

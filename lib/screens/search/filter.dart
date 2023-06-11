@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_project/screens/search/result.dart';
-import 'package:final_project/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../home/detail_page.dart';

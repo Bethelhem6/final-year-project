@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/colors.dart';
 import '../home/detail_page.dart';
 
 class ResultCard extends StatefulWidget {

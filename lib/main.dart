@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:final_project/provider/whishlist_provider.dart';
 import 'package:final_project/services/dark_theme_provider.dart';
-import 'package:final_project/utils/colors.dart';
 import 'package:final_project/utils/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

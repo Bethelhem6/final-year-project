@@ -1,4 +1,3 @@
-import 'package:final_project/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../fav/favourite.dart';
@@ -57,8 +56,8 @@ class _MainPageState extends State<MainPage> {
           showSelectedLabels: true,
           showUnselectedLabels: true,
           currentIndex: currentIndex,
-          unselectedItemColor: Color.fromARGB(255, 202, 199, 199),
-          selectedItemColor: Color.fromARGB(255, 69, 0, 230),
+          unselectedItemColor: const Color.fromARGB(255, 202, 199, 199),
+          selectedItemColor: const Color.fromARGB(255, 69, 0, 230),
           onTap: (index) => setState(() {
             currentIndex = index;
           }),

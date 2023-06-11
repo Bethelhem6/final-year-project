@@ -4,7 +4,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/whishlist_provider.dart';
-import '../utils/colors.dart';
 
 class Favourite extends StatefulWidget {
   const Favourite({Key? key}) : super(key: key);

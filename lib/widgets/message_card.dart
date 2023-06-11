@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:final_project/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -47,11 +46,11 @@ class _MessageCardState extends State<MessageCard> {
                 EdgeInsets.all(widget.message.type == Type.image ? 30 : 40),
             margin: const EdgeInsets.symmetric(
                 horizontal: 400 * .04, vertical: 800 * .01),
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 221, 245, 255),
+            decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 221, 245, 255),
                 // border: Border.all(color: appbarColor),
                 //making borders curved
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                     bottomRight: Radius.circular(30))),
@@ -107,7 +106,7 @@ class _MessageCardState extends State<MessageCard> {
 
             //double tick blue icon for message read
             if (widget.message.read.isNotEmpty)
-              Icon(Icons.done_all_rounded, size: 20),
+              const Icon(Icons.done_all_rounded, size: 20),
 
             //for adding some space
             const SizedBox(width: 2),
@@ -189,7 +188,7 @@ class _MessageCardState extends State<MessageCard> {
                   ?
                   //copy option
                   _OptionItem(
-                      icon: Icon(Icons.copy_all_rounded, size: 26),
+                      icon: const Icon(Icons.copy_all_rounded, size: 26),
                       name: 'Copy Text',
                       onTap: () async {
                         await Clipboard.setData(
@@ -204,7 +203,7 @@ class _MessageCardState extends State<MessageCard> {
                   :
                   //save option
                   _OptionItem(
-                      icon: Icon(Icons.download_rounded, size: 26),
+                      icon: const Icon(Icons.download_rounded, size: 26),
                       name: 'Save Image',
                       onTap: () async {
                         try {
@@ -235,7 +234,7 @@ class _MessageCardState extends State<MessageCard> {
               //edit option
               if (widget.message.type == Type.text && isMe)
                 _OptionItem(
-                    icon: Icon(Icons.edit, size: 26),
+                    icon: const Icon(Icons.edit, size: 26),
                     name: 'Edit Message',
                     onTap: () {
                       //for hiding bottom sheet
@@ -266,7 +265,7 @@ class _MessageCardState extends State<MessageCard> {
 
               //sent time
               _OptionItem(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.remove_red_eye,
                   ),
                   name:
@@ -300,12 +299,12 @@ class _MessageCardState extends State<MessageCard> {
 
               //title
               title: Row(
-                children: [
+                children: const [
                   Icon(
                     Icons.message,
                     size: 28,
                   ),
-                  const Text(' Update Message')
+                  Text(' Update Message')
                 ],
               ),
 
@@ -327,7 +326,7 @@ class _MessageCardState extends State<MessageCard> {
                       //hide alert dialog
                       Navigator.pop(context);
                     },
-                    child: Text(
+                    child: const Text(
                       'Cancel',
                       style: TextStyle(fontSize: 16),
                     )),
@@ -339,7 +338,7 @@ class _MessageCardState extends State<MessageCard> {
                       Navigator.pop(context);
                       APIs.updateMessage(widget.message, updatedMsg);
                     },
-                    child: Text(
+                    child: const Text(
                       'Update',
                       style: TextStyle(fontSize: 16),
                     ))
