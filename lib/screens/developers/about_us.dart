@@ -9,11 +9,10 @@ class AboutDevelopers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
           toolbarHeight: 70,
           title: const Text(
             "About Developers",
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
           shape: const RoundedRectangleBorder(
