@@ -364,12 +364,12 @@ class _SearchHouseState extends State<SearchHouse> {
         decoration: BoxDecoration(
           boxShadow: const [
             BoxShadow(
-              color: Colors.grey,
+              color: Color.fromARGB(255, 214, 211, 211),
               offset: Offset(0.0, 1.0), //(x,y)
               blurRadius: 6.0,
             ),
           ],
-          // color: textPrimaryLightColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(20),
         ),
         height: 270,

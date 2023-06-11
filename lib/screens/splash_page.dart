@@ -50,7 +50,6 @@ class SplashScreenState extends State<SplashScreen> {
                       'Topia Rental',
                       style: TextStyle(
                           letterSpacing: 5,
-                          color: Colors.white,
                           fontSize: 30,
                           fontWeight: FontWeight.bold),
                     ))

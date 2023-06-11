@@ -119,12 +119,12 @@ class _ResultCardState extends State<ResultCard> {
   Container resultWidget(String image, int area, int bedRoom, String address,
       int price, String whatFor) {
     return Container(
-      // padding: const EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 20),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(255, 211, 210, 210),
+            color: Color.fromARGB(255, 255, 253, 253),
             offset: Offset(0.0, 1.0), //(x,y)
             blurRadius: 6.0,
           ),
@@ -133,7 +133,6 @@ class _ResultCardState extends State<ResultCard> {
         borderRadius: BorderRadius.circular(20),
       ),
       height: 270,
-
       child: Column(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
