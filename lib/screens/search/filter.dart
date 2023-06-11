@@ -58,11 +58,11 @@ class _SearchHouseState extends State<SearchHouse> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: appbarColor,
+          // backgroundColor: appbarColor,
           title: TextFormField(
             style: const TextStyle(
-              color: Colors.white,
-            ),
+                // color: Colors.white,
+                ),
             // autofocus: true,
             onEditingComplete: () {
               FocusScopeNode currentFocus = FocusScope.of(context);
@@ -203,7 +203,7 @@ class _SearchHouseState extends State<SearchHouse> {
   Future<void> showBottomSheet(BuildContext context) {
     return showModalBottomSheet<void>(
         elevation: 5,
-        backgroundColor: Colors.deepPurple.shade50,
+        // backgroundColor: Colors.deepPurple.shade50,
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
@@ -370,7 +370,7 @@ class _SearchHouseState extends State<SearchHouse> {
               blurRadius: 6.0,
             ),
           ],
-          color: textPrimaryLightColor,
+          // color: textPrimaryLightColor,
           borderRadius: BorderRadius.circular(20),
         ),
         height: 270,
@@ -401,11 +401,12 @@ class _SearchHouseState extends State<SearchHouse> {
                   Text(
                     "$area \nsq.ft",
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 15,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.w300,
-                        color: textPrimaryDarkColor),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeight.w300,
+                      // color: textPrimaryDarkColor
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const VerticalDivider(
@@ -415,11 +416,12 @@ class _SearchHouseState extends State<SearchHouse> {
                   Text(
                     "$bedRoom Bedrooms \nin $address",
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 15,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.w300,
-                        color: textPrimaryDarkColor),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeight.w300,
+                      // color: textPrimaryDarkColor
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const VerticalDivider(
@@ -429,11 +431,12 @@ class _SearchHouseState extends State<SearchHouse> {
                   Text(
                     "Birr $price",
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 15,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.w300,
-                        color: textPrimaryDarkColor),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeight.w300,
+                      // color: textPrimaryDarkColor
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ],

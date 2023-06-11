@@ -13,7 +13,6 @@ import '../../utils/Constants.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
 
-
 class ChatScreen extends StatefulWidget {
   final ChatUser user;
 
@@ -57,8 +56,6 @@ class _ChatScreenState extends State<ChatScreen> {
               flexibleSpace: _appBar(),
             ),
 
-            backgroundColor: const Color.fromARGB(255, 234, 248, 255),
-
             //body
             body: Column(
               children: [
@@ -85,7 +82,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             return ListView.builder(
                                 reverse: true,
                                 itemCount: _list.length,
-                                padding: EdgeInsets.only(top: Constants.mq["height"]! * .01),
+                                padding: EdgeInsets.only(
+                                    top: Constants.mq["height"]! * .01),
                                 physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return MessageCard(message: _list[index]);
@@ -155,20 +153,23 @@ class _ChatScreenState extends State<ChatScreen> {
                   //back button
                   IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon:
-                          const Icon(Icons.arrow_back, color: Colors.black54)),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                      )),
 
                   //user profile picture
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(Constants.mq["height"]! * .03),
+                    borderRadius:
+                        BorderRadius.circular(Constants.mq["height"]! * .03),
                     child: Container(
                       width: Constants.mq["height"]! * .05,
                       height: Constants.mq["height"]! * .05,
-                      
-                        decoration: BoxDecoration(
-                          color:Colors.black,
+
+                      decoration: BoxDecoration(
+                          color: Colors.white,
                           image: DecorationImage(
-                              image: NetworkImage(widget.user.image.toString()))),
+                              image:
+                                  NetworkImage(widget.user.image.toString()))),
                       // imageUrl:
                       //     list.isNotEmpty ? list[0].image : widget.user.image,
                       // errorWidget: (context, url, error) => const CircleAvatar(
@@ -187,9 +188,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       //user name
                       Text(list.isNotEmpty ? list[0].name : widget.user.name,
                           style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w500)),
+                              fontSize: 16, fontWeight: FontWeight.w500)),
 
                       //for adding some space
                       const SizedBox(height: 2),
@@ -206,7 +205,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                   context: context,
                                   lastActive: widget.user.lastActive),
                           style: const TextStyle(
-                              fontSize: 13, color: Colors.black54)),
+                            fontSize: 13,
+                          )),
                     ],
                   )
                 ],
@@ -218,7 +218,8 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _chatInput() {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: Constants.mq["height"]! * .01, horizontal: Constants.mq["width"]! * .025),
+          vertical: Constants.mq["height"]! * .01,
+          horizontal: Constants.mq["width"]! * .025),
       child: Row(
         children: [
           //input field & buttons
@@ -234,8 +235,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         FocusScope.of(context).unfocus();
                         setState(() => _showEmoji = !_showEmoji);
                       },
-                      icon:  Icon(Icons.emoji_emotions,
-                          color: buttonColor, size: 25)),
+                      icon: Icon(Icons.emoji_emotions, size: 25)),
 
                   Expanded(
                       child: TextField(
@@ -245,9 +245,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     onTap: () {
                       if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
                     },
-                    decoration:  InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: 'Type Something...',
-                        hintStyle: TextStyle(color: buttonColor),
+                        // hintStyle: TextStyle(color: ),
                         border: InputBorder.none),
                   )),
 
@@ -268,8 +268,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() => _isUploading = false);
                         }
                       },
-                      icon:  Icon(Icons.image,
-                          color: buttonColor, size: 26)),
+                      icon: Icon(Icons.image, size: 26)),
 
                   //take image from camera button
                   IconButton(
@@ -288,8 +287,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() => _isUploading = false);
                         }
                       },
-                      icon:  Icon(Icons.camera_alt_rounded,
-                          color: buttonColor, size: 26)),
+                      icon: Icon(Icons.camera_alt_rounded, size: 26)),
 
                   //adding some space
                   SizedBox(width: Constants.mq["width"]! * .02),

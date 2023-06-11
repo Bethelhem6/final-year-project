@@ -31,24 +31,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       // for hiding keyboard
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
           //app bar
           appBar: AppBar(
-              backgroundColor: appbarColor,
-              centerTitle: true,
-              toolbarHeight: 80,
-              toolbarOpacity: 0.8,
-              elevation: 0,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20)),
-              ),
-              title: const Text('Profile Screen')),
+            // backgroundColor: appbarColor,
+            centerTitle: true,
+            toolbarHeight: 80,
+            toolbarOpacity: 0.8,
+            elevation: 0,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20)),
+            ),
+            title: const Text('Profile Screen'),
+            titleTextStyle:
+                const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          ),
 
           //floating button to log out
           floatingActionButton: Padding(
@@ -60,9 +62,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Dialogs.showProgressBar(context);
 
                   await APIs.updateActiveStatus(false);
-                   await FirebaseAuth.instance.signOut();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()));
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()));
 
                   //sign out from app
                   // await APIs.auth.signOut().then((value) async {
@@ -126,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: Constants.mq["height"]! * .2,
                                   height: Constants.mq["height"]! * .2,
                                   decoration: BoxDecoration(
-                                      color: appbarColor,
+                                      // color: appbarColor,
                                       image: DecorationImage(
                                           image:
                                               NetworkImage(widget.user.image))),
@@ -149,7 +153,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             },
                             shape: const CircleBorder(),
                             color: Colors.white,
-                            child: Icon(Icons.edit, color: buttonColor),
+                            child: const Icon(
+                              Icons.edit,
+                            ),
                           ),
                         )
                       ],
@@ -160,8 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     // user email label
                     Text(widget.user.email,
-                        style: const TextStyle(
-                            color: Colors.black54, fontSize: 16)),
+                        style: const TextStyle(fontSize: 16)),
 
                     // for adding some space
                     SizedBox(height: Constants.mq["height"]! * .05),
@@ -174,7 +179,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ? null
                           : 'Required Field',
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.person, color: buttonColor),
+                          prefixIcon: const Icon(
+                            Icons.person,
+                          ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
                           hintText: 'eg. Happy Singh',
@@ -192,8 +199,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ? null
                           : 'Required Field',
                       decoration: InputDecoration(
-                          prefixIcon:
-                              Icon(Icons.info_outline, color: buttonColor),
+                          prefixIcon: const Icon(
+                            Icons.info_outline,
+                          ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
                           hintText: 'eg. Feeling Happy',
@@ -206,7 +214,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // update profile button
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: buttonColor,
                           shape: const StadiumBorder(),
                           minimumSize: Size(Constants.mq["width"]! * .5,
                               Constants.mq["height"]! * .06)),

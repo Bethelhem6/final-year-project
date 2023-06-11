@@ -26,7 +26,7 @@ class SplashScreenState extends State<SplashScreen> {
 
     return SafeArea(
       child: Scaffold(
-          backgroundColor: appbarColor,
+          // backgroundColor: appbarColor,
           body: Padding(
               padding: const EdgeInsets.all(52.0),
               child: Column(

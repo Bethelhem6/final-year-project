@@ -6,10 +6,12 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_project/screens/home/view_more.dart';
 import 'package:final_project/screens/review/review_page.dart';
 import 'package:final_project/screens/search/filter.dart';
+import 'package:final_project/services/dark_theme_provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../../fav/favourite.dart';
 import '../../utils/colors.dart';
@@ -93,11 +95,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
+    final themeState = Provider.of<DarkThemeProvider>(context);
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
       appBar: appBar(),
-      drawer: drawer(),
+      drawer: drawer(themeState: themeState),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Row(
@@ -125,10 +127,10 @@ class _HomePageState extends State<HomePage> {
                               )),
                         ));
                   },
-                  child: Text(
+                  child: const Text(
                     "View more",
                     style: TextStyle(
-                      color: buttonColor,
+                      // color: buttonColor,
                       fontSize: 16,
                       decoration: TextDecoration.underline,
                     ),
@@ -173,7 +175,7 @@ class _HomePageState extends State<HomePage> {
             position: _currentPage > 4 ? 0 : _currentPage,
             decorator: const DotsDecorator(
               color: Colors.grey, // Inactive color
-              activeColor: Colors.deepPurple,
+              // activeColor: Colors.deepPurple,
             ),
           ),
           Row(
@@ -203,10 +205,10 @@ class _HomePageState extends State<HomePage> {
                               )),
                         ));
                   },
-                  child: Text(
+                  child: const Text(
                     "View more",
                     style: TextStyle(
-                      color: buttonColor,
+                      // color: buttonColor,
                       fontSize: 16,
                       decoration: TextDecoration.underline,
                     ),
@@ -263,12 +265,12 @@ class _HomePageState extends State<HomePage> {
                             collection: "houses", whatFor: "Rent")),
                       ));
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, right: 20),
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 10.0, right: 20),
                   child: Text(
                     "View more",
                     style: TextStyle(
-                      color: buttonColor,
+                      // color: buttonColor,
                       fontSize: 16,
                       decoration: TextDecoration.underline,
                     ),
@@ -374,51 +376,50 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           // padding: const EdgeInsets.only(left: 20),
           margin: const EdgeInsets.only(left: 10, bottom: 10),
-          decoration: BoxDecoration(
-            boxShadow: const [
+          decoration: const BoxDecoration(
+            boxShadow: [
               BoxShadow(
-                color: Colors.grey,
-                offset: Offset(0.0, 1.0), //(x,y)
+                color: Color.fromARGB(255, 155, 155, 155),
+                // offset: Offset(0.0, 0.5), //(x,y)
                 blurRadius: 6.0,
               ),
             ],
-            color: textPrimaryLightColor,
-            borderRadius: BorderRadius.circular(20),
           ),
           height: 200,
           width: 250,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 120,
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple[200],
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  image: DecorationImage(
-                    image: NetworkImage(doc["imageUrls"][0]),
-                    fit: BoxFit.cover,
+          child: Card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 120,
+                  decoration: BoxDecoration(
+                    // borderRadius: const BorderRadius.only(
+                    //   topLeft: Radius.circular(20),
+                    //   topRight: Radius.circular(20),
+                    // ),
+                    image: DecorationImage(
+                      image: NetworkImage(doc["imageUrls"][0]),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              textWidget(
-                color: textPrimaryDarkColor,
-                size: 15,
-                title: doc['address'],
-              ),
-              textWidget(
-                color: appbarColor,
-                size: 17,
-                title: "Birr ${doc['price'].toString()}",
-                weight: FontWeight.bold,
-              ),
-              const SizedBox(
-                height: 10,
-              )
-            ],
+                textWidget(
+                  // color: Colors.white,
+                  size: 15,
+                  title: doc['address'],
+                ),
+                textWidget(
+                  // color: Colors.white,
+                  size: 17,
+                  title: "Birr ${doc['price'].toString()}",
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -427,7 +428,7 @@ class _HomePageState extends State<HomePage> {
 
   Padding textWidget(
       {required String title,
-      required Color color,
+      // required Color color,
       required double size,
       FontWeight? weight}) {
     return Padding(
@@ -436,7 +437,7 @@ class _HomePageState extends State<HomePage> {
         title,
         style: TextStyle(
           overflow: TextOverflow.ellipsis,
-          color: color,
+          // color: color,
           fontSize: size,
           fontWeight: weight,
         ),
@@ -549,7 +550,7 @@ class _HomePageState extends State<HomePage> {
                 height: size.height * 0.35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13),
-                  color: Colors.deepPurple[100],
+                  // color: Colors.deepPurple[100],
                   image: DecorationImage(
                     image: NetworkImage(data["imageUrls"][0]),
                     fit: BoxFit.cover,
@@ -577,7 +578,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     textWidget(
                         title: data["address"],
-                        color: Colors.grey.shade700,
+                        // color: Colors.grey.shade700,
                         size: 15,
                         weight: FontWeight.normal),
                   ],
@@ -589,7 +590,7 @@ class _HomePageState extends State<HomePage> {
               left: 45,
               child: textWidget(
                   title: "Birr ${data["price"]}",
-                  color: appbarColor,
+                  // color: Colors.white,
                   size: 18,
                   weight: FontWeight.bold),
             ),
@@ -600,7 +601,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
+                      // color: Colors.white,
                       boxShadow: const [
                         BoxShadow(
                             color: Colors.black45,
@@ -628,7 +629,6 @@ class _HomePageState extends State<HomePage> {
     // final user = FirebaseAuth.instance.currentUser!;
 
     return AppBar(
-      backgroundColor: appbarColor,
       title: Column(
         children: [
           const Text(
@@ -664,9 +664,9 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                       builder: ((context) => const SearchHouse())));
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
-              color: textPrimaryLightColor,
+              color: Colors.white,
               size: 33,
             ),
           ),
@@ -676,16 +676,14 @@ class _HomePageState extends State<HomePage> {
   }
 
 //drawer
-  Drawer drawer() {
+  Drawer drawer({themeState}) {
     return Drawer(
       elevation: 5,
       child: ListView(
         // padding: const EdgeInsets.only(bottom: 10),
         children: [
           DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.deepPurple.shade400,
-              ),
+              decoration: const BoxDecoration(),
               child: Column(
                 children: [
                   Row(
@@ -694,7 +692,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(right: 10.0),
                         child: CircleAvatar(
-                          // backgroundColor: textPrimaryLightColor,
+                          // backgroundColor: Colors.white,
                           backgroundImage: NetworkImage(_image),
                           radius: 35,
                         ),
@@ -706,11 +704,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Text(
                     _name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       overflow: TextOverflow.ellipsis,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: textPrimaryLightColor,
+                      // color: Colors.white,
                     ),
                   ),
                   Text(
@@ -719,7 +717,7 @@ class _HomePageState extends State<HomePage> {
                       overflow: TextOverflow.ellipsis,
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: Colors.grey[300],
+                      color: Colors.grey[500],
                     ),
                   ),
                 ],
@@ -735,6 +733,18 @@ class _HomePageState extends State<HomePage> {
           //         MaterialPageRoute(builder: ((context) => AddHouseScreen())));
           //   },
           // ),
+          SwitchListTile(
+            title: const Text('Theme'),
+            secondary: Icon(themeState.getDarkTheme
+                ? Icons.dark_mode_outlined
+                : Icons.light_mode_outlined),
+            onChanged: (bool value) {
+              setState(() {
+                themeState.setDarkTheme = value;
+              });
+            },
+            value: themeState.getDarkTheme,
+          ),
           ListTile(
             leading: const Icon(Icons.favorite, color: Colors.red),
             title: const Text(
@@ -803,7 +813,6 @@ class _HomePageState extends State<HomePage> {
           ),
           const Divider(
             height: 5,
-            color: Colors.deepPurple,
           ),
           ListTile(
             leading: const Icon(Icons.code, color: Colors.blueGrey),

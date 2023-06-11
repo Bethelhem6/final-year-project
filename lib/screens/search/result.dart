@@ -25,8 +25,6 @@ class ResultCard extends StatefulWidget {
 }
 
 class _ResultCardState extends State<ResultCard> {
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +37,7 @@ class _ResultCardState extends State<ResultCard> {
             fontSize: 25,
           ),
         ),
-        backgroundColor: appbarColor,
+        // backgroundColor: appbarColor,
         centerTitle: true,
         toolbarHeight: 80,
         toolbarOpacity: 0.8,
@@ -127,12 +125,12 @@ class _ResultCardState extends State<ResultCard> {
       decoration: BoxDecoration(
         boxShadow: const [
           BoxShadow(
-            color: Colors.grey,
+            color: Color.fromARGB(255, 211, 210, 210),
             offset: Offset(0.0, 1.0), //(x,y)
             blurRadius: 6.0,
           ),
         ],
-        color: textPrimaryLightColor,
+        // color: textPrimaryLightColor,
         borderRadius: BorderRadius.circular(20),
       ),
       height: 270,
@@ -163,11 +161,12 @@ class _ResultCardState extends State<ResultCard> {
                 Text(
                   "$area \nsq.ft",
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 15,
-                      overflow: TextOverflow.ellipsis,
-                      fontWeight: FontWeight.w300,
-                      color: textPrimaryDarkColor),
+                  style: const TextStyle(
+                    fontSize: 15,
+                    overflow: TextOverflow.ellipsis,
+                    fontWeight: FontWeight.w300,
+                    // color: textPrimaryDarkColor
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const VerticalDivider(
@@ -177,11 +176,12 @@ class _ResultCardState extends State<ResultCard> {
                 Text(
                   "$bedRoom Bedrooms \nin $address",
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 15,
-                      overflow: TextOverflow.ellipsis,
-                      fontWeight: FontWeight.w300,
-                      color: textPrimaryDarkColor),
+                  style: const TextStyle(
+                    fontSize: 15,
+                    overflow: TextOverflow.ellipsis,
+                    fontWeight: FontWeight.w300,
+                    // color: textPrimaryDarkColor
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const VerticalDivider(
@@ -191,11 +191,12 @@ class _ResultCardState extends State<ResultCard> {
                 Text(
                   "Birr $price",
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 15,
-                      overflow: TextOverflow.ellipsis,
-                      fontWeight: FontWeight.w300,
-                      color: textPrimaryDarkColor),
+                  style: const TextStyle(
+                    fontSize: 15,
+                    overflow: TextOverflow.ellipsis,
+                    fontWeight: FontWeight.w300,
+                    // color: textPrimaryDarkColor
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],

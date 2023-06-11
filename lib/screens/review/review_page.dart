@@ -81,7 +81,7 @@ class _ReviewPageState extends State<ReviewPage> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: appbarColor,
+        // backgroundColor: appbarColor,
         centerTitle: true,
         toolbarHeight: 80,
         toolbarOpacity: 0.8,
@@ -100,7 +100,6 @@ class _ReviewPageState extends State<ReviewPage> {
           onPressed: () async {
             await bottomSheet(context);
           },
-          backgroundColor: Colors.deepPurple,
           elevation: 2,
           label: Row(
             children: const [
@@ -219,13 +218,14 @@ class _ReviewPageState extends State<ReviewPage> {
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide:
-                                const BorderSide(color: Colors.green, width: 0),
+                            // borderSide:
+                            //     const BorderSide(color: Colors.green, width: 0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide:
-                                  const BorderSide(color: Colors.green)),
+                            borderRadius: BorderRadius.circular(20),
+                            // borderSide:
+                            //     const BorderSide(color: Colors.green)
+                          ),
                         ),
                       ),
                     ),
@@ -244,7 +244,7 @@ class _ReviewPageState extends State<ReviewPage> {
                         margin: const EdgeInsets.symmetric(
                             horizontal: 30, vertical: 20),
                         decoration: BoxDecoration(
-                          color: appbarColor,
+                          // color: appbarColor,
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: const Padding(
@@ -252,7 +252,7 @@ class _ReviewPageState extends State<ReviewPage> {
                           child: Text(
                             "SEND REVIEW",
                             style: TextStyle(
-                              color: Colors.white,
+                              // color: Colors.white,
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
                             ),
@@ -287,7 +287,6 @@ class _ReviewPageState extends State<ReviewPage> {
                   child: const Text(
                     "Okay.", // ignore: unnecessary_const
                     style: TextStyle(
-                        color: Colors.deepPurple,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),

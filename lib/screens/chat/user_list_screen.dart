@@ -74,7 +74,7 @@ class _UserListState extends State<UserList> {
         child: Scaffold(
             //app bar
             appBar: AppBar(
-              backgroundColor: appbarColor,
+              // backgroundColor: appbarColor,
               centerTitle: true,
               toolbarHeight: 80,
               toolbarOpacity: 0.8,

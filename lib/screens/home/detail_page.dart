@@ -142,7 +142,7 @@ class _DetailPageState extends State<DetailPage> {
             fontSize: 25,
           ),
         ),
-        backgroundColor: appbarColor,
+        // backgroundColor: appbarColor,
         centerTitle: true,
         toolbarHeight: 80,
         toolbarOpacity: 0.8,

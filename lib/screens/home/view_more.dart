@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class ViewMore extends StatefulWidget {
   final String collection;
-  final String ?whatFor;
+  final String? whatFor;
 
-  const ViewMore({Key? key, required this.collection,  this.whatFor})
+  const ViewMore({Key? key, required this.collection, this.whatFor})
       : super(key: key);
 
   @override
@@ -27,10 +27,13 @@ class _ViewMoreState extends State<ViewMore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple[50],
+      // backgroundColor: Colors.deepPurple[50],
       appBar: AppBar(
-        title: const Text("More Products"),
-        backgroundColor: Colors.deepPurple,
+        title: const Text(
+          "More Products",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+        ),
+        // backgroundColor: Colors.deepPurple,
         toolbarHeight: 70,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
@@ -132,7 +135,6 @@ class _ViewMoreState extends State<ViewMore> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
-                                color: Colors.deepPurple[200],
                                 image: DecorationImage(
                                     image: NetworkImage(
                                         data[index]['imageUrls'][0]),

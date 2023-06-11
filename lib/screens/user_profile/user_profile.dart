@@ -121,7 +121,7 @@ class _UserProfileState extends State<UserProfile> {
             fontSize: 25,
           ),
         ),
-        backgroundColor: appbarColor,
+        // backgroundColor: appbarColor,
         centerTitle: true,
         toolbarHeight: 80,
         toolbarOpacity: 0.8,
@@ -198,7 +198,7 @@ class _UserProfileState extends State<UserProfile> {
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    // color: Colors.black,
                   ),
                 ),
                 // ElevatedButton.icon(
@@ -217,9 +217,9 @@ class _UserProfileState extends State<UserProfile> {
             child: Text(
               "User Information",
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: Colors.grey),
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
             ),
           ),
           Container(
@@ -228,7 +228,6 @@ class _UserProfileState extends State<UserProfile> {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey[100],
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
@@ -261,13 +260,12 @@ class _UserProfileState extends State<UserProfile> {
 
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey[100],
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
                   ),
-                  //  color: Colors.grey[100],
+                  //[100],
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   margin: const EdgeInsets.all(5),
                   child: ListTile(
@@ -293,14 +291,13 @@ class _UserProfileState extends State<UserProfile> {
                 // Divider(),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey[100],
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
                   ),
 
-                  //  color: Colors.grey[100],
+                  //[100],
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   margin: const EdgeInsets.all(5),
                   child: ListTile(
@@ -326,14 +323,13 @@ class _UserProfileState extends State<UserProfile> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey[100],
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
                   ),
 
-                  //  color: Colors.grey[100],
+                  //[100],
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   margin: const EdgeInsets.all(5),
 
@@ -365,9 +361,9 @@ class _UserProfileState extends State<UserProfile> {
                       Text(
                         "User Setting",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            color: Colors.grey),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
                     ],
                   ),
@@ -381,14 +377,14 @@ class _UserProfileState extends State<UserProfile> {
                 //   },
                 //   child: Container(
                 //     decoration: BoxDecoration(
-                //       color: Colors.grey[100],
+                //
                 //       borderRadius: const BorderRadius.only(
                 //         topLeft: Radius.circular(20),
                 //         topRight: Radius.circular(20),
                 //       ),
                 //     ),
 
-                //     //  color: Colors.grey[100],
+                //     //[100],
                 //     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 //     margin: const EdgeInsets.all(5),
 
@@ -409,14 +405,13 @@ class _UserProfileState extends State<UserProfile> {
                 // ),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey[100],
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
                   ),
 
-                  //  color: Colors.grey[100],
+                  //[100],
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                   margin: const EdgeInsets.all(5),
 

@@ -49,7 +49,7 @@ class _MessageCardState extends State<MessageCard> {
                 horizontal: 400 * .04, vertical: 800 * .01),
             decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 221, 245, 255),
-                border: Border.all(color: appbarColor),
+                // border: Border.all(color: appbarColor),
                 //making borders curved
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -107,7 +107,7 @@ class _MessageCardState extends State<MessageCard> {
 
             //double tick blue icon for message read
             if (widget.message.read.isNotEmpty)
-              Icon(Icons.done_all_rounded, color: buttonColor, size: 20),
+              Icon(Icons.done_all_rounded, size: 20),
 
             //for adding some space
             const SizedBox(width: 2),
@@ -170,7 +170,6 @@ class _MessageCardState extends State<MessageCard> {
     showModalBottomSheet(
         context: context,
         shape: const RoundedRectangleBorder(
-          
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20))),
         builder: (_) {
@@ -190,8 +189,7 @@ class _MessageCardState extends State<MessageCard> {
                   ?
                   //copy option
                   _OptionItem(
-                      icon: Icon(Icons.copy_all_rounded,
-                          color: buttonColor, size: 26),
+                      icon: Icon(Icons.copy_all_rounded, size: 26),
                       name: 'Copy Text',
                       onTap: () async {
                         await Clipboard.setData(
@@ -206,8 +204,7 @@ class _MessageCardState extends State<MessageCard> {
                   :
                   //save option
                   _OptionItem(
-                      icon: Icon(Icons.download_rounded,
-                          color: buttonColor, size: 26),
+                      icon: Icon(Icons.download_rounded, size: 26),
                       name: 'Save Image',
                       onTap: () async {
                         try {
@@ -238,7 +235,7 @@ class _MessageCardState extends State<MessageCard> {
               //edit option
               if (widget.message.type == Type.text && isMe)
                 _OptionItem(
-                    icon: Icon(Icons.edit, color: buttonColor, size: 26),
+                    icon: Icon(Icons.edit, size: 26),
                     name: 'Edit Message',
                     onTap: () {
                       //for hiding bottom sheet
@@ -250,8 +247,8 @@ class _MessageCardState extends State<MessageCard> {
               //delete option
               if (isMe)
                 _OptionItem(
-                    icon:
-                        const Icon(Icons.delete_forever, color: Colors.red, size: 26),
+                    icon: const Icon(Icons.delete_forever,
+                        color: Colors.red, size: 26),
                     name: 'Delete Message',
                     onTap: () async {
                       await APIs.deleteMessage(widget.message).then((value) {
@@ -269,7 +266,9 @@ class _MessageCardState extends State<MessageCard> {
 
               //sent time
               _OptionItem(
-                  icon: Icon(Icons.remove_red_eye, color: buttonColor),
+                  icon: Icon(
+                    Icons.remove_red_eye,
+                  ),
                   name:
                       'Sent At: ${MyDateUtil.getMessageTime(context: context, time: widget.message.sent)}',
                   onTap: () {}),
@@ -293,8 +292,8 @@ class _MessageCardState extends State<MessageCard> {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
-              contentPadding:
-                  const EdgeInsets.only(left: 24, right: 24, top: 20, bottom: 10),
+              contentPadding: const EdgeInsets.only(
+                  left: 24, right: 24, top: 20, bottom: 10),
 
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
@@ -304,7 +303,6 @@ class _MessageCardState extends State<MessageCard> {
                 children: [
                   Icon(
                     Icons.message,
-                    color: buttonColor,
                     size: 28,
                   ),
                   const Text(' Update Message')
@@ -331,7 +329,7 @@ class _MessageCardState extends State<MessageCard> {
                     },
                     child: Text(
                       'Cancel',
-                      style: TextStyle(color: buttonColor, fontSize: 16),
+                      style: TextStyle(fontSize: 16),
                     )),
 
                 //update button
@@ -343,7 +341,7 @@ class _MessageCardState extends State<MessageCard> {
                     },
                     child: Text(
                       'Update',
-                      style: TextStyle(color: buttonColor, fontSize: 16),
+                      style: TextStyle(fontSize: 16),
                     ))
               ],
             ));
@@ -356,7 +354,8 @@ class _OptionItem extends StatelessWidget {
   final String name;
   final VoidCallback onTap;
 
-  const _OptionItem({required this.icon, required this.name, required this.onTap});
+  const _OptionItem(
+      {required this.icon, required this.name, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -370,9 +369,7 @@ class _OptionItem extends StatelessWidget {
             Flexible(
                 child: Text('    $name',
                     style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.black54,
-                        letterSpacing: 0.5)))
+                        fontSize: 15, color: Colors.white, letterSpacing: 0.5)))
           ]),
         ));
   }

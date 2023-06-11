@@ -22,27 +22,21 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
           //app bar
-          appBar: AppBar(
-              backgroundColor: Colors.deepPurple,
-              toolbarHeight: 70,
-              title: Text(widget.user.name)),
+          appBar: AppBar(toolbarHeight: 70, title: Text(widget.user.name)),
           floatingActionButton: //user about
               Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 'Joined On: ',
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15),
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
               ),
               Text(
                   MyDateUtil.getLastMessageTime(
                       context: context,
                       time: widget.user.createdAt,
                       showYear: true),
-                  style: const TextStyle(color: Colors.black54, fontSize: 15)),
+                  style: const TextStyle(fontSize: 15)),
             ],
           ),
 

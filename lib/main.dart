@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:final_project/provider/whishlist_provider.dart';
+import 'package:final_project/services/dark_theme_provider.dart';
 import 'package:final_project/utils/colors.dart';
+import 'package:final_project/utils/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_notification_channel/flutter_notification_channel.dart';
@@ -34,26 +36,50 @@ void main() async {
   });
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  DarkThemeProvider themeChangeProvider = DarkThemeProvider();
+  void getCurrentAppTheme() async {
+    themeChangeProvider.setDarkTheme =
+        await themeChangeProvider.darkThemePrefs.getTheme();
+  }
+
+  @override
+  void initState() {
+    getCurrentAppTheme();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => WhishlistProvider()),
+        ChangeNotifierProvider(create: (_) {
+          return themeChangeProvider;
+        })
       ],
-      child: MaterialApp(
-          title: 'AR based properties sell and rent',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            indicatorColor: buttonColor,
-            primaryColor: appbarColor,
-            primarySwatch: Colors.deepPurple,
-            progressIndicatorTheme: const ProgressIndicatorThemeData(
-                circularTrackColor: Colors.deepPurple, color: Colors.grey),
-          ),
-          home: const AuthStateScreen()),
+      child:
+          Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
+        return MaterialApp(
+            title: 'AR based properties sell and rent',
+            debugShowCheckedModeBanner: false,
+            theme: Styles.themeData(themeProvider.getDarkTheme, context),
+            // theme: ThemeData(
+            //   indicatorColor: buttonColor,
+            //   primaryColor: appbarColor,
+            //   primarySwatch: Colors.deepPurple,
+            //   progressIndicatorTheme: const ProgressIndicatorThemeData(
+            //       circularTrackColor: Colors.deepPurple, color: Colors.grey),
+            // ),
+            home: const AuthStateScreen());
+      }),
     );
   }
 }

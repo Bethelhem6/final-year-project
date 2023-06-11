@@ -53,35 +53,46 @@ class _MainPageState extends State<MainPage> {
           children: screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: appbarColor,
+          // backgroundColor: Colors.deepPurple,
           showSelectedLabels: true,
           showUnselectedLabels: true,
           currentIndex: currentIndex,
-          unselectedItemColor: Colors.white,
-          selectedItemColor: const Color.fromARGB(255, 240, 200, 21),
+          unselectedItemColor: Color.fromARGB(255, 202, 199, 199),
+          selectedItemColor: Color.fromARGB(255, 69, 0, 230),
           onTap: (index) => setState(() {
             currentIndex = index;
           }),
-          items: [
+          items: const [
             BottomNavigationBarItem(
-              icon: const Icon(Icons.home),
+              icon: Icon(Icons.home, color: Colors.deepPurple),
               label: 'Home',
-              backgroundColor: appbarColor,
+
+              // backgroundColor: Colors.deepPurple,
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.favorite),
+              icon: Icon(
+                Icons.favorite,
+                color: Colors.red,
+              ),
               label: 'Favorite',
-              backgroundColor: appbarColor,
+              // backgroundColor: Colors.deepPurple,
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.message),
+              icon: Icon(
+                Icons.message,
+                color: Colors.blue,
+              ),
               label: 'Chat',
-              backgroundColor: appbarColor,
+
+              // backgroundColor: Colors.deepPurple,
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.person),
+              icon: Icon(
+                Icons.person,
+                color: Colors.orange,
+              ),
               label: 'Profile',
-              backgroundColor: appbarColor,
+              // backgroundColor: Colors.deepPurple,
             ),
           ],
         ),

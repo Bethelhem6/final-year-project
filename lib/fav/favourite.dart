@@ -80,7 +80,7 @@ class _FavouriteState extends State<Favourite> {
                       )),
                 )
               ],
-              backgroundColor: appbarColor,
+              // backgroundColor: appbarColor,
               centerTitle: true,
               toolbarHeight: 80,
               toolbarOpacity: 0.8,
