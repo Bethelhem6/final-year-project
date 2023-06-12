@@ -30,7 +30,7 @@ class _ViewMoreState extends State<ViewMore> {
       // backgroundColor: Colors.deepPurple[50],
       appBar: AppBar(
         title: const Text(
-          "More Products",
+          "More Houses",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         ),
         // backgroundColor: Colors.deepPurple,
@@ -82,7 +82,7 @@ class _ViewMoreState extends State<ViewMore> {
                         int area = 0;
                         String status = "";
                         String id = "";
-
+                        String category = "";
                         setState(() {
                           location = data[index]["address"];
                           bedroom = data[index]["bedRoom"];
@@ -101,6 +101,8 @@ class _ViewMoreState extends State<ViewMore> {
                           area = data[index]["area"];
                           status = data[index]['status'];
                           id = data[index]['id'];
+                          category = data[index]['category'];
+
                         });
                         Navigator.push(
                           context,
@@ -122,6 +124,7 @@ class _ViewMoreState extends State<ViewMore> {
                                     image: imageUrl,
                                     area: area,
                                     id: id,
+                                    category: category,
                                   )),
                         );
                       },

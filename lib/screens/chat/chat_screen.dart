@@ -51,6 +51,7 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Scaffold(
             //app bar
             appBar: AppBar(
+              
               automaticallyImplyLeading: false,
               flexibleSpace: _appBar(),
             ),
@@ -186,7 +187,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     children: [
                       //user name
                       Text(list.isNotEmpty ? list[0].name : widget.user.name,
-                          style: const TextStyle(
+                          style: const TextStyle(color: Colors.white,
                               fontSize: 16, fontWeight: FontWeight.w500)),
 
                       //for adding some space
@@ -205,6 +206,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   lastActive: widget.user.lastActive),
                           style: const TextStyle(
                             fontSize: 13,
+                            color: Colors.white
                           )),
                     ],
                   )

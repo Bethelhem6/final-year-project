@@ -71,6 +71,7 @@ class _ResultCardState extends State<ResultCard> {
                     final int bedRoom = doc[index].get('bedRoom');
                     final String address = doc[index].get('address');
                     final int area = doc[index].get('area');
+                    final String category = doc[index].get('category');
 
                     final String image = doc[index].get('imageUrls')[0];
                     final int price = doc[index].get('price');
@@ -97,6 +98,7 @@ class _ResultCardState extends State<ResultCard> {
                                       ownerImage: doc[index].get('ownerImage'),
                                       area: doc[index].get('area'),
                                       uid: doc[index].get('ownerId'),
+                                      category: doc[index].get('category'),
                                       id: doc[index].get('id'))));
                         },
                         child: resultWidget(image, area, bedRoom, address,

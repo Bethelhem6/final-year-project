@@ -177,6 +177,7 @@ class _SearchHouseState extends State<SearchHouse> {
                                         ownerImage: data.get('ownerImage'),
                                         area: data.get('area'),
                                         uid: data.get('id'),
+                                        category: data.get("category"),
                                         id: data.get('id')),
                                   ));
                             },

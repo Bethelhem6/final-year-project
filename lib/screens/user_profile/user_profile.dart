@@ -320,38 +320,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   ),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
 
-                  //[100],
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  margin: const EdgeInsets.all(5),
-
-                  child: const ListTile(
-                    leading: Icon(
-                      Icons.location_city_rounded,
-                      color: Colors.teal,
-                    ),
-                    title: Text(
-                      'Adress',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Addis Ababa',
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 5, 0, 10),
                   child: Row(

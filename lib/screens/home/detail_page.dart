@@ -29,6 +29,7 @@ class DetailPage extends StatefulWidget {
     required this.area,
     required this.uid,
     required this.id,
+    required this.category,
   });
   String location;
   String company;
@@ -46,6 +47,7 @@ class DetailPage extends StatefulWidget {
   String uid;
   String id;
   int likes;
+  String category;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -133,13 +135,25 @@ class _DetailPageState extends State<DetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.company,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-          ),
+        title: Column(
+          children: [
+            Text(
+              widget.company,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
+            ),
+            Text(
+              widget.category,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ],
         ),
         // backgroundColor: appbarColor,
         centerTitle: true,

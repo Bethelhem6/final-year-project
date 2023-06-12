@@ -51,6 +51,7 @@ class SplashScreenState extends State<SplashScreen> {
                       style: TextStyle(
                           letterSpacing: 5,
                           fontSize: 30,
+                          color: Colors.deepPurple,
                           fontWeight: FontWeight.bold),
                     ))
                   ]))),

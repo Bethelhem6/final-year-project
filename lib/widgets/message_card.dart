@@ -304,7 +304,7 @@ class _MessageCardState extends State<MessageCard> {
                     Icons.message,
                     size: 28,
                   ),
-                  Text(' Update Message')
+                  Text(' Update Message', style: TextStyle(color: Colors.black))
                 ],
               ),
 
@@ -328,7 +328,7 @@ class _MessageCardState extends State<MessageCard> {
                     },
                     child: const Text(
                       'Cancel',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16, color: Colors.black),
                     )),
 
                 //update button
@@ -340,7 +340,7 @@ class _MessageCardState extends State<MessageCard> {
                     },
                     child: const Text(
                       'Update',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16, color: Colors.black),
                     ))
               ],
             ));
@@ -368,7 +368,7 @@ class _OptionItem extends StatelessWidget {
             Flexible(
                 child: Text('    $name',
                     style: const TextStyle(
-                        fontSize: 15, color: Colors.white, letterSpacing: 0.5)))
+                        fontSize: 15, color: Colors.black, letterSpacing: 0.5)))
           ]),
         ));
   }

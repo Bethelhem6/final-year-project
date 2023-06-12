@@ -96,6 +96,7 @@ class _ReviewPageState extends State<ReviewPage> {
         child: const ReviewsWidget(),
       ),
       floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Colors.deepPurple,
           onPressed: () async {
             await bottomSheet(context);
           },
@@ -109,7 +110,10 @@ class _ReviewPageState extends State<ReviewPage> {
               SizedBox(
                 width: 5,
               ),
-              Text("Write a review")
+              Text(
+                "Write a review",
+                style: TextStyle(color: Colors.white),
+              )
             ],
           )),
     );
@@ -285,9 +289,7 @@ class _ReviewPageState extends State<ReviewPage> {
                   },
                   child: const Text(
                     "Okay.", // ignore: unnecessary_const
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 )
               ],

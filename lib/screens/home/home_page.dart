@@ -329,7 +329,7 @@ class _HomePageState extends State<HomePage> {
           String name = "";
           String email = "";
           String ownerImage = "";
-
+          String category = "";
           setState(() {
             location = doc["address"];
             bedroom = doc["bedRoom"];
@@ -348,6 +348,7 @@ class _HomePageState extends State<HomePage> {
             ownerImage = doc['ownerImage'];
             area = doc["area"];
             id = doc["id"];
+            category = doc["category"];
           });
           Navigator.push(
               context,
@@ -369,6 +370,7 @@ class _HomePageState extends State<HomePage> {
                   area: area,
                   uid: _uid,
                   id: id,
+                  category: category,
                 ),
               ));
         },
@@ -494,6 +496,7 @@ class _HomePageState extends State<HomePage> {
     int area = 0;
     List image = [];
     String id = "";
+    String category = "";
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -513,6 +516,7 @@ class _HomePageState extends State<HomePage> {
           ownerImage = data['ownerImage'];
           area = data["area"];
           id = data['id'];
+          category = data['category'];
         });
 
         Navigator.push(
@@ -535,6 +539,7 @@ class _HomePageState extends State<HomePage> {
                     ownerImage: ownerImage,
                     area: area,
                     id: id,
+                    category: category,
                   )),
         );
       },
