@@ -60,7 +60,7 @@ class _SearchHouseState extends State<SearchHouse> {
           // backgroundColor: appbarColor,
           title: TextFormField(
             style: const TextStyle(
-                // color: Colors.white,
+                color: Colors.white,
                 ),
             // autofocus: true,
             onEditingComplete: () {

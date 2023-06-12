@@ -68,21 +68,21 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                   // for adding some space
                   SizedBox(height: Constants.mq["height"]! * .03),
 
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(120, 2, 0, 3),
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.star,
-                          color: Colors.red,
-                        ),
-                        Icon(Icons.star, color: Colors.red),
-                        Icon(Icons.star, color: Colors.red),
-                        Icon(Icons.star),
-                        Icon(Icons.star),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.fromLTRB(120, 2, 0, 3),
+                  //   child: Row(
+                  //     children: const [
+                  //       Icon(
+                  //         Icons.star,
+                  //         color: Colors.red,
+                  //       ),
+                  //       Icon(Icons.star, color: Colors.red),
+                  //       Icon(Icons.star, color: Colors.red),
+                  //       Icon(Icons.star),
+                  //       Icon(Icons.star),
+                  //     ],
+                  //   ),
+                  // ),
 
                   // user email label
                   Card(
@@ -129,16 +129,16 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                     ),
                   ),
 
-                  Card(
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.history,
-                        color: Colors.redAccent.shade100,
-                      ),
-                      title: const Text("Posts"),
-                      subtitle: Text(widget.user.about),
-                    ),
-                  ),
+                  // Card(
+                  //   child: ListTile(
+                  //     leading: Icon(
+                  //       Icons.history,
+                  //       color: Colors.redAccent.shade100,
+                  //     ),
+                  //     title: const Text("Posts"),
+                  //     subtitle: Text(widget.user.about),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
